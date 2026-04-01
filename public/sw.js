@@ -1,5 +1,5 @@
 // Service Worker for Algebra Quiz PWA
-const CACHE = 'algebra-quiz-v1';
+const CACHE = 'algebra-quiz-v2';
 const BASE = '/algebra-quiz';
 
 const ASSETS = [
