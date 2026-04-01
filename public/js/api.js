@@ -74,6 +74,7 @@ const API = {
       percentage: Math.round((data.score / data.total) * 100),
       quizId: data.quizId || 'unknown',
       quizTitle: data.quizTitle || 'Квіз',
+      mode: data.mode || 'exam',
       answers: data.answers,
       timeSpent: data.timeSpent,
       date: new Date().toISOString()

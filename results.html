@@ -332,13 +332,14 @@ async function loadResults() {
     filteredResults = [...allResults];
     populateFilters();
     renderStats();
-    renderCharts();
     renderHardQuestions();
     renderTable();
   } catch (e) {
     document.getElementById('tableContainer').innerHTML =
       '<div class="empty-state"><h3>Помилка завантаження</h3><p>Не вдалося отримати результати</p></div>';
   }
+  // Charts are optional — if Chart.js fails, the rest still works
+  try { renderCharts(); } catch(e) { document.getElementById('chartsRow').style.display = 'none'; }
 }
 
 function populateFilters() {
@@ -381,7 +382,7 @@ function applyFilters() {
   });
 
   renderStats();
-  renderCharts();
+  try { renderCharts(); } catch(e) { document.getElementById('chartsRow').style.display = 'none'; }
   renderHardQuestions();
   renderTable();
 }
@@ -392,7 +393,7 @@ function clearFilters() {
   document.getElementById('filterGrade').value = '';
   filteredResults = [...allResults];
   renderStats();
-  renderCharts();
+  try { renderCharts(); } catch(e) { document.getElementById('chartsRow').style.display = 'none'; }
   renderHardQuestions();
   renderTable();
 }
