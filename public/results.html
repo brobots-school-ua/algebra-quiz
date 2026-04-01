@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Результати квізу</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    .header h1 {
+      font-size: 2em;
+      background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #a0a0c0;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .stat-box .value {
+      font-size: 2em;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-box .label {
+      font-size: 0.85em;
+      color: #a0a0c0;
+      margin-top: 4px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+    }
+
+    .btn-danger {
+      background: rgba(248, 113, 113, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #c0c0e0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 12px 15px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+      color: #a0a0c0;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    thead th:hover { color: #fff; }
+    thead th.sorted { color: #818cf8; }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.2s;
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    tbody td {
+      padding: 12px 15px;
+      font-size: 0.95em;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+
+    .badge-excellent { background: rgba(52, 211, 153, 0.15); color: #34d399; }
+    .badge-good { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+    .badge-ok { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+    .badge-bad { background: rgba(248, 113, 113, 0.15); color: #f87171; }
+
+    .detail-toggle {
+      cursor: pointer;
+      color: #818cf8;
+      font-size: 0.85em;
+    }
+
+    .detail-toggle:hover { text-decoration: underline; }
+
+    .detail-row { display: none; }
+    .detail-row.open { display: table-row; }
+
+    .detail-content {
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    .detail-answer {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.9em;
+    }
+
+    .detail-answer:last-child { border-bottom: none; }
+    .answer-correct { color: #34d399; }
+    .answer-wrong { color: #f87171; }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+
+    .empty-state h3 { color: #a0a0c0; margin-bottom: 10px; }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .header h1 { font-size: 1.5em; }
+      table { font-size: 0.85em; }
+      tbody td, thead th { padding: 10px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Результати квізу</h1>
+      <p>Тригонометричні формули додавання та пониження степеня</p>
+    </div>
+
+    <div class="stats-row" id="statsRow" style="display:none;">
+      <div class="stat-box">
+        <div class="value" id="totalAttempts">0</div>
+        <div class="label">Проходжень</div>
+      </div>
+      <div class="stat-box">
+        <div class="value" id="avgScore">0%</div>
+        <div class="label">Середній бал</div>
+      </div>
+      <div class="stat-box">
+        <div class="value" id="bestScore">0%</div>
+        <div class="label">Найкращий</div>
+      </div>
+      <div class="stat-box">
+        <div class="value" id="uniqueStudents">0</div>
+        <div class="label">Учнів</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <a href="/" class="btn btn-secondary">← Назад до квізу</a>
+        <div>
+          <button class="btn btn-primary" onclick="loadResults()" style="margin-right: 8px;">Оновити</button>
+          <button class="btn btn-danger" onclick="clearResults()">Очистити все</button>
+        </div>
+      </div>
+
+      <div id="tableContainer"></div>
+    </div>
+  </div>
+
+<script>
+let allResults = [];
+let sortKey = 'date';
+let sortAsc = false;
+
+async function loadResults() {
+  try {
+    const res = await fetch('/api/results');
+    allResults = await res.json();
+    renderStats();
+    renderTable();
+  } catch (e) {
+    document.getElementById('tableContainer').innerHTML =
+      '<div class="empty-state"><h3>Помилка завантаження</h3><p>Не вдалося отримати результати</p></div>';
+  }
+}
+
+function renderStats() {
+  const statsRow = document.getElementById('statsRow');
+  if (allResults.length === 0) {
+    statsRow.style.display = 'none';
+    return;
+  }
+  statsRow.style.display = 'grid';
+
+  document.getElementById('totalAttempts').textContent = allResults.length;
+
+  const avg = Math.round(allResults.reduce((s, r) => s + r.percentage, 0) / allResults.length);
+  document.getElementById('avgScore').textContent = avg + '%';
+
+  const best = Math.max(...allResults.map(r => r.percentage));
+  document.getElementById('bestScore').textContent = best + '%';
+
+  const unique = new Set(allResults.map(r => r.name.toLowerCase())).size;
+  document.getElementById('uniqueStudents').textContent = unique;
+}
+
+function renderTable() {
+  if (allResults.length === 0) {
+    document.getElementById('tableContainer').innerHTML =
+      '<div class="empty-state"><h3>Поки немає результатів</h3><p>Результати з\'являться тут після проходження квізу</p></div>';
+    return;
+  }
+
+  // Sort
+  const sorted = [...allResults].sort((a, b) => {
+    let va = a[sortKey], vb = b[sortKey];
+    if (sortKey === 'name') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
+    if (va < vb) return sortAsc ? -1 : 1;
+    if (va > vb) return sortAsc ? 1 : -1;
+    return 0;
+  });
+
+  let html = `
+    <table>
+      <thead>
+        <tr>
+          <th onclick="sortBy('name')" class="${sortKey === 'name' ? 'sorted' : ''}">Ім'я ${sortKey === 'name' ? (sortAsc ? '↑' : '↓') : ''}</th>
+          <th onclick="sortBy('percentage')" class="${sortKey === 'percentage' ? 'sorted' : ''}">Результат ${sortKey === 'percentage' ? (sortAsc ? '↑' : '↓') : ''}</th>
+          <th onclick="sortBy('score')" class="${sortKey === 'score' ? 'sorted' : ''}">Бал ${sortKey === 'score' ? (sortAsc ? '↑' : '↓') : ''}</th>
+          <th onclick="sortBy('timeSpent')" class="${sortKey === 'timeSpent' ? 'sorted' : ''}">Час ${sortKey === 'timeSpent' ? (sortAsc ? '↑' : '↓') : ''}</th>
+          <th onclick="sortBy('date')" class="${sortKey === 'date' ? 'sorted' : ''}">Дата ${sortKey === 'date' ? (sortAsc ? '↑' : '↓') : ''}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  sorted.forEach((r, i) => {
+    const badge = getBadge(r.percentage);
+    const min = Math.floor(r.timeSpent / 60);
+    const sec = r.timeSpent % 60;
+    const date = new Date(r.date);
+    const dateStr = date.toLocaleDateString('uk-UA') + ' ' + date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+
+    html += `
+      <tr>
+        <td><strong>${escapeHtml(r.name)}</strong></td>
+        <td><span class="badge ${badge.cls}">${r.percentage}%</span></td>
+        <td>${r.score} / ${r.total}</td>
+        <td>${min}:${sec.toString().padStart(2, '0')}</td>
+        <td>${dateStr}</td>
+        <td><span class="detail-toggle" onclick="toggleDetail(${i})">Деталі</span></td>
+      </tr>
+      <tr class="detail-row" id="detail-${i}">
+        <td colspan="6">
+          <div class="detail-content">
+            ${r.answers ? r.answers.map((a, j) => `
+              <div class="detail-answer">
+                <span class="${a.isCorrect ? 'answer-correct' : 'answer-wrong'}">${a.isCorrect ? '✓' : '✗'}</span>
+                <strong>${j + 1}.</strong> ${escapeHtml(a.question)}
+                ${!a.isCorrect ? `<br>&nbsp;&nbsp;&nbsp;&nbsp;Відповідь: <span class="answer-wrong">${escapeHtml(a.selected)}</span> → Правильна: <span class="answer-correct">${escapeHtml(a.correct)}</span>` : ''}
+              </div>
+            `).join('') : '<em>Детальні відповіді недоступні</em>'}
+          </div>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('tableContainer').innerHTML = html;
+}
+
+function getBadge(pct) {
+  if (pct >= 90) return { cls: 'badge-excellent' };
+  if (pct >= 75) return { cls: 'badge-good' };
+  if (pct >= 50) return { cls: 'badge-ok' };
+  return { cls: 'badge-bad' };
+}
+
+function sortBy(key) {
+  if (sortKey === key) { sortAsc = !sortAsc; }
+  else { sortKey = key; sortAsc = key === 'name'; }
+  renderTable();
+}
+
+function toggleDetail(i) {
+  document.getElementById(`detail-${i}`).classList.toggle('open');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+async function clearResults() {
+  if (!confirm('Ви впевнені? Всі результати буде видалено назавжди.')) return;
+  try {
+    await fetch('/api/results', { method: 'DELETE' });
+    loadResults();
+  } catch (e) {
+    alert('Помилка видалення');
+  }
+}
+
+// Load on page open
+loadResults();
+</script>
+</body>
+</html>
