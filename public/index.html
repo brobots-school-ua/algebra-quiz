@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Алгебра 10 клас — Квізи</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -138,6 +139,30 @@
       font-style: italic;
     }
 
+    /* Auth styles */
+    .user-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 30px;
+      padding: 6px 16px 6px 6px;
+    }
+    .user-avatar { width: 32px; height: 32px; border-radius: 50%; }
+    .user-name { color: #e0e0e0; font-size: 0.95em; }
+    .btn-signout {
+      background: none; border: none; color: #888;
+      cursor: pointer; font-size: 1em; padding: 2px 6px;
+    }
+    .btn-signout:hover { color: #f87171; }
+    .auth-area { margin-top: 15px; }
+    .my-results-link {
+      display: inline-block; margin-top: 10px;
+      color: #818cf8; text-decoration: none; font-size: 0.9em;
+    }
+    .my-results-link:hover { text-decoration: underline; }
+
     @media (max-width: 600px) {
       .header h1 { font-size: 1.6em; }
       .quiz-grid { grid-template-columns: 1fr; }
@@ -149,6 +174,7 @@
     <div class="header">
       <h1>Алгебра та початки аналізу</h1>
       <p>Інтерактивні квізи для 10 класу</p>
+      <div class="auth-area" id="authArea"></div>
     </div>
 
     <div class="cat-welcome">
@@ -161,6 +187,22 @@
 
   <script src="js/quizzes.js"></script>
   <script src="js/quizzes-extra.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Google Sign-In on catalog page
+    window.addEventListener('load', () => {
+      const user = Auth.getUser();
+      const authArea = document.getElementById('authArea');
+      if (user) {
+        authArea.innerHTML = Auth.profileBadgeHTML(user) +
+          '<br><a href="my-results.html" class="my-results-link">📊 Мої результати</a>';
+      } else {
+        authArea.innerHTML = '<div id="googleBtn"></div>';
+        Auth.init(() => location.reload());
+        setTimeout(() => { Auth.renderButton('googleBtn'); Auth.prompt(); }, 100);
+      }
+    });
+  </script>
   <script>
     // Group quizzes by section
     const sections = {};

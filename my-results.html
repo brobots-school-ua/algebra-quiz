@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мої результати — Алгебра</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+    .profile-header {
+      display: flex; align-items: center; gap: 20px;
+      padding: 25px; margin-bottom: 20px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+    }
+    .profile-header img { width: 64px; height: 64px; border-radius: 50%; }
+    .profile-header .name { font-size: 1.4em; font-weight: 700; color: #fff; }
+    .profile-header .email { color: #a0a0c0; font-size: 0.9em; }
+
+    .stats-row {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-bottom: 25px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px; padding: 18px; text-align: center;
+    }
+    .stat-box .value { font-size: 2em; font-weight: 700; color: #fff; }
+    .stat-box .label { font-size: 0.85em; color: #a0a0c0; margin-top: 4px; }
+
+    .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 25px; margin-bottom: 20px;
+    }
+    .card h3 { color: #818cf8; margin-bottom: 15px; }
+
+    .result-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .result-item:last-child { border-bottom: none; }
+    .result-item .quiz-name { color: #fff; font-weight: 600; }
+    .result-item .quiz-date { color: #888; font-size: 0.85em; }
+
+    .badge {
+      display: inline-block; padding: 4px 12px;
+      border-radius: 20px; font-size: 0.85em; font-weight: 600;
+    }
+    .badge-excellent { background: rgba(52,211,153,0.15); color: #34d399; }
+    .badge-good { background: rgba(96,165,250,0.15); color: #60a5fa; }
+    .badge-ok { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .badge-bad { background: rgba(248,113,113,0.15); color: #f87171; }
+
+    .back-link { color: #818cf8; text-decoration: none; font-size: 0.95em; }
+    .back-link:hover { text-decoration: underline; }
+
+    .login-card {
+      text-align: center; padding: 60px 20px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+    }
+    .login-card h2 { color: #fff; margin-bottom: 15px; }
+    .login-card p { color: #a0a0c0; margin-bottom: 20px; }
+
+    .empty { text-align: center; padding: 40px; color: #888; }
+    .empty h3 { color: #a0a0c0; margin-bottom: 10px; }
+
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr; }
+      .profile-header { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="./" class="back-link">← Всі квізи</a>
+    <div id="content" style="margin-top: 15px;"></div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+  function getBadgeClass(pct) {
+    if (pct >= 90) return 'badge-excellent';
+    if (pct >= 75) return 'badge-good';
+    if (pct >= 50) return 'badge-ok';
+    return 'badge-bad';
+  }
+
+  window.addEventListener('load', async () => {
+    const content = document.getElementById('content');
+    const user = Auth.getUser();
+
+    if (!user) {
+      content.innerHTML = `
+        <div class="login-card">
+          <h2>Мої результати</h2>
+          <p>Увійди через Google, щоб побачити свою історію</p>
+          <div id="googleBtn" style="display:inline-block;"></div>
+        </div>`;
+      Auth.init(() => location.reload());
+      setTimeout(() => Auth.renderButton('googleBtn'), 200);
+      return;
+    }
+
+    // Show profile
+    content.innerHTML = `
+      <div class="profile-header">
+        <img src="${user.picture}" referrerpolicy="no-referrer" alt="">
+        <div>
+          <div class="name">${user.name}</div>
+          <div class="email">${user.email}</div>
+        </div>
+      </div>
+      <div class="stats-row" id="statsRow" style="display:none;"></div>
+      <div class="card" id="resultsCard">
+        <h3>Історія проходжень</h3>
+        <div id="resultsList"><p style="color:#888;">Завантаження...</p></div>
+      </div>`;
+
+    // Load results
+    const results = await API.getResultsByEmail(user.email);
+
+    if (results.length === 0) {
+      document.getElementById('resultsList').innerHTML =
+        '<div class="empty"><h3>Поки немає результатів</h3><p>Пройди квіз і результати з\'являться тут!</p></div>';
+      return;
+    }
+
+    // Stats
+    const avg = Math.round(results.reduce((s, r) => s + r.percentage, 0) / results.length);
+    const best = Math.max(...results.map(r => r.percentage));
+    const uniqueQuizzes = new Set(results.map(r => r.quizId)).size;
+
+    const statsRow = document.getElementById('statsRow');
+    statsRow.style.display = 'grid';
+    statsRow.innerHTML = `
+      <div class="stat-box"><div class="value">${results.length}</div><div class="label">Проходжень</div></div>
+      <div class="stat-box"><div class="value">${avg}%</div><div class="label">Середній бал</div></div>
+      <div class="stat-box"><div class="value">${uniqueQuizzes}</div><div class="label">Різних квізів</div></div>`;
+
+    // Results list (newest first)
+    const sorted = [...results].sort((a, b) => new Date(b.date) - new Date(a.date));
+    document.getElementById('resultsList').innerHTML = sorted.map(r => {
+      const date = new Date(r.date);
+      const dateStr = date.toLocaleDateString('uk-UA') + ' ' + date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+      const min = Math.floor(r.timeSpent / 60);
+      const sec = r.timeSpent % 60;
+      return `
+        <div class="result-item">
+          <div>
+            <div class="quiz-name">${r.quizTitle || r.quizId}</div>
+            <div class="quiz-date">${dateStr} · ${min}:${sec.toString().padStart(2,'0')}</div>
+          </div>
+          <div>
+            <span class="badge ${getBadgeClass(r.percentage)}">${r.score}/${r.total} (${r.percentage}%)</span>
+          </div>
+        </div>`;
+    }).join('');
+  });
+  </script>
+</body>
+</html>

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -525,6 +526,23 @@
       font-size: 0.85em;
     }
 
+    /* Auth styles */
+    .user-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 30px; padding: 6px 16px 6px 6px;
+    }
+    .user-avatar { width: 32px; height: 32px; border-radius: 50%; }
+    .user-name { color: #e0e0e0; font-size: 0.95em; }
+    .btn-signout { background:none; border:none; color:#888; cursor:pointer; font-size:1em; padding:2px 6px; }
+    .btn-signout:hover { color: #f87171; }
+    .login-prompt { color: #a0a0c0; margin-bottom: 15px; font-size: 0.95em; }
+    .user-info-row {
+      display: inline-flex; align-items: center; gap: 12px; margin-bottom: 15px;
+    }
+    .user-info-row img { width: 44px; height: 44px; border-radius: 50%; }
+    .user-info-row span { color: #fff; font-size: 1.15em; font-weight: 600; }
+
     /* KaTeX overrides for dark theme */
     .katex { color: #e0e0e0; }
     .option .katex { font-size: 1em; }
@@ -556,10 +574,8 @@
       </div>
       <div id="theoryToggleWrap"></div>
       <div class="theory-block" id="theoryBlock"></div>
-      <div style="margin-bottom: 20px;">
-        <input type="text" id="studentName" placeholder="Введи своє ім'я та прізвище" autocomplete="off">
-      </div>
-      <button class="btn btn-primary" onclick="startQuiz()" id="startBtn" disabled>Почати квіз</button>
+      <div id="loginArea" style="margin-bottom: 20px;"></div>
+      <button class="btn btn-primary" onclick="startQuiz()" id="startBtn" style="display:none;">Почати квіз</button>
     </div>
 
     <!-- Quiz Screen -->
@@ -586,6 +602,7 @@
   <script src="js/quizzes.js"></script>
   <script src="js/quizzes-extra.js"></script>
   <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
   <script>
 // Cat messages
 const correctCatMessages = [
@@ -779,19 +796,7 @@ let answers = [];
 let startTime;
 let timerInterval;
 let studentName = '';
-
-// Input handlers
-const nameInput = document.getElementById('studentName');
-const startBtn = document.getElementById('startBtn');
-
-if (nameInput) {
-  nameInput.addEventListener('input', () => {
-    startBtn.disabled = nameInput.value.trim().length < 2;
-  });
-  nameInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !startBtn.disabled) startQuiz();
-  });
-}
+let studentUser = null;
 
 // Show theory block if available for this quiz
 if (quizData && THEORY[quizData.id]) {
@@ -802,9 +807,30 @@ if (quizData && THEORY[quizData.id]) {
     `<h4>${t.title}</h4><ul>${t.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
 }
 
-// Wait for KaTeX to load, then render welcome page
+// Wait for KaTeX and Google to load
 window.addEventListener('load', () => {
   setTimeout(() => renderMath(), 100);
+
+  if (!quizData) return;
+
+  const user = Auth.getUser();
+  const loginArea = document.getElementById('loginArea');
+  const startBtn = document.getElementById('startBtn');
+
+  if (user) {
+    studentName = user.name;
+    studentUser = user;
+    loginArea.innerHTML = `
+      <div class="user-info-row">
+        <img src="${user.picture}" referrerpolicy="no-referrer" alt="">
+        <span>${user.name}</span>
+      </div>`;
+    startBtn.style.display = 'inline-block';
+  } else {
+    loginArea.innerHTML = '<p class="login-prompt">Увійди через Google, щоб почати квіз</p><div id="googleBtn"></div>';
+    Auth.init(() => location.reload());
+    setTimeout(() => { Auth.renderButton('googleBtn'); Auth.prompt(); }, 200);
+  }
 });
 
 function startQuiz() {
@@ -1036,8 +1062,11 @@ async function showResults() {
   setTimeout(() => renderMath(resultsDiv), 10);
 
   // Save to cloud storage
+  const user = Auth.getUser();
   API.saveResult({
     name: studentName,
+    email: user ? user.email : '',
+    picture: user ? user.picture : '',
     quizId: quizData.id,
     quizTitle: quizData.title,
     score, total, answers, timeSpent
