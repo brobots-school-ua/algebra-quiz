@@ -4,32 +4,85 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Рейтинг — Алгебра</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      min-height: 100vh;
-      color: #e0e0e0;
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: rgba(24, 24, 27, 0.6);
+      --accent-purple: #8b5cf6;
+      --accent-pink: #ec4899;
+      --accent-gold: #f59e0b;
+      --accent-silver: #94a3b8;
+      --accent-bronze: #b45309;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --border-color: rgba(255, 255, 255, 0.08);
     }
-    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
-    .header { text-align: center; padding: 30px 0 20px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.1) 0%, transparent 35%),
+        radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.08) 0%, transparent 35%);
+      min-height: 100vh;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 0 20px;
+    }
+
     .header h1 {
-      font-size: 2em;
-      background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-size: 2.5em;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, #a1a1aa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 8px;
     }
-    .header p { color: #a0a0c0; }
 
-    .back-link { color: #818cf8; text-decoration: none; font-size: 0.95em; }
-    .back-link:hover { text-decoration: underline; }
+    .header p {
+      color: var(--text-muted);
+      font-size: 1.1em;
+      font-weight: 500;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--accent-purple); }
 
     .card {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px; padding: 25px; margin-bottom: 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 32px;
+      padding: 30px;
+      margin-bottom: 24px;
     }
 
     /* Podium */
@@ -37,113 +90,123 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      gap: 12px;
-      margin: 30px 0;
-      min-height: 200px;
+      gap: 16px;
+      margin: 40px 0;
+      min-height: 240px;
     }
 
     .podium-place {
       text-align: center;
-      border-radius: 14px 14px 0 0;
-      padding: 20px 15px 15px;
-      min-width: 120px;
+      border-radius: 24px 24px 16px 16px;
+      padding: 24px 16px 20px;
+      min-width: 140px;
       position: relative;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      transition: transform 0.3s;
     }
 
+    .podium-place:hover { transform: translateY(-5px); }
+
     .podium-place.first {
-      background: linear-gradient(180deg, rgba(251,191,36,0.2), rgba(251,191,36,0.05));
-      border: 1px solid rgba(251,191,36,0.3);
-      min-height: 180px;
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.02));
+      border-color: rgba(245, 158, 11, 0.3);
+      min-height: 220px;
       order: 2;
+      z-index: 2;
     }
     .podium-place.second {
-      background: linear-gradient(180deg, rgba(192,192,192,0.15), rgba(192,192,192,0.03));
-      border: 1px solid rgba(192,192,192,0.2);
-      min-height: 140px;
+      background: linear-gradient(180deg, rgba(148, 163, 184, 0.1), rgba(148, 163, 184, 0.02));
+      border-color: rgba(148, 163, 184, 0.2);
+      min-height: 180px;
       order: 1;
     }
     .podium-place.third {
-      background: linear-gradient(180deg, rgba(205,127,50,0.15), rgba(205,127,50,0.03));
-      border: 1px solid rgba(205,127,50,0.2);
-      min-height: 110px;
+      background: linear-gradient(180deg, rgba(180, 83, 9, 0.1), rgba(180, 83, 9, 0.02));
+      border-color: rgba(180, 83, 9, 0.2);
+      min-height: 150px;
       order: 3;
     }
 
-    .podium-medal { font-size: 2em; margin-bottom: 8px; }
+    .podium-medal { font-size: 2.5em; margin-bottom: 12px; display: block; }
     .podium-avatar {
-      width: 48px; height: 48px; border-radius: 50%;
-      margin: 0 auto 8px; display: block;
-      border: 2px solid rgba(255,255,255,0.2);
+      width: 64px; height: 64px; border-radius: 50%;
+      margin: 0 auto 12px; display: block;
+      border: 3px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     }
-    .podium-name { color: #fff; font-weight: 700; font-size: 0.95em; }
-    .podium-score { color: #a0a0c0; font-size: 0.85em; margin-top: 4px; }
+    .podium-name { color: #fff; font-weight: 700; font-size: 1em; margin-bottom: 4px; }
+    .podium-score { color: var(--text-muted); font-size: 0.85em; font-weight: 600; }
 
     /* Table */
     .leader-row {
-      display: flex; align-items: center; gap: 15px;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; gap: 20px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.2s;
     }
     .leader-row:last-child { border-bottom: none; }
 
     .leader-rank {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 0.9em; color: #888;
+      font-weight: 800; font-size: 0.9em; color: var(--text-muted);
       flex-shrink: 0;
     }
-    .leader-rank.top1 { background: rgba(251,191,36,0.2); color: #fbbf24; }
-    .leader-rank.top2 { background: rgba(192,192,192,0.15); color: #c0c0c0; }
-    .leader-rank.top3 { background: rgba(205,127,50,0.15); color: #cd7f32; }
+    .leader-rank.top1 { background: rgba(245, 158, 11, 0.1); color: var(--accent-gold); }
+    .leader-rank.top2 { background: rgba(148, 163, 184, 0.1); color: var(--accent-silver); }
+    .leader-rank.top3 { background: rgba(180, 83, 9, 0.1); color: var(--accent-bronze); }
 
     .leader-avatar {
-      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+      width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+      border: 2px solid var(--border-color);
     }
     .leader-info { flex: 1; }
-    .leader-name { color: #fff; font-weight: 600; font-size: 0.95em; }
-    .leader-meta { color: #888; font-size: 0.8em; margin-top: 2px; }
+    .leader-name { color: #fff; font-weight: 700; font-size: 1em; }
+    .leader-meta { color: var(--text-muted); font-size: 0.85em; margin-top: 2px; }
 
-    .leader-score {
-      text-align: right;
-    }
-    .leader-avg {
-      font-size: 1.3em; font-weight: 700; color: #fff;
-    }
-    .leader-label { font-size: 0.75em; color: #888; }
+    .leader-score { text-align: right; }
+    .leader-avg { font-size: 1.4em; font-weight: 800; color: #fff; line-height: 1; }
+    .leader-label { font-size: 0.75em; color: var(--text-muted); font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 
     .leader-highlight {
-      background: rgba(129,140,248,0.08);
-      border-radius: 10px;
-      padding: 14px 12px;
-      margin: 0 -12px;
+      background: rgba(139, 92, 246, 0.05);
+      border-radius: 20px;
+      padding: 16px 16px;
+      margin: 0 -16px;
+      border: 1px solid rgba(139, 92, 246, 0.2);
     }
 
-    .empty { text-align: center; padding: 40px; color: #888; }
+    .empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
 
     @media (max-width: 600px) {
-      .podium-place { min-width: 90px; padding: 15px 10px; }
-      .podium-place.first { min-height: 140px; }
-      .podium-place.second { min-height: 110px; }
-      .podium-place.third { min-height: 90px; }
+      .podium { min-height: 200px; gap: 8px; margin: 20px 0; }
+      .podium-place { min-width: 100px; padding: 16px 8px; }
+      .podium-medal { font-size: 1.8em; }
+      .podium-avatar { width: 48px; height: 48px; }
+      .leader-row { gap: 12px; }
+      .leader-avg { font-size: 1.2em; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="./" class="back-link">← Всі квізи</a>
+    <a href="./" class="back-link"><i data-lucide="arrow-left" size="18"></i> Всі квізи</a>
     <div class="header">
-      <h1>Рейтинг учнів</h1>
-      <p>Хто найкращий у математиці?</p>
+      <h1>Зал слави</h1>
+      <p>Найкращі математики нашого класу</p>
     </div>
-    <div id="content"><p style="text-align:center; color:#888;">Завантаження...</p></div>
+    <div id="content"><p style="text-align:center; color: var(--text-muted); padding: 40px;">Завантаження рейтингу...</p></div>
   </div>
 
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/achievements.js"></script>
   <script>
+  lucide.createIcons();
+
   window.addEventListener('load', async () => {
     const content = document.getElementById('content');
     const currentUser = Auth.getUser();
@@ -152,38 +215,37 @@
     const leaderboard = buildLeaderboard(allResults);
 
     if (leaderboard.length === 0) {
-      content.innerHTML = '<div class="empty"><h3>Поки немає результатів</h3><p>Рейтинг з\'явиться після проходження квізів</p></div>';
+      content.innerHTML = '<div class="empty"><i data-lucide="award" size="48" style="margin-bottom:16px;opacity:0.5;"></i><h3>Поки що тут порожньо</h3><p>Стань першим, хто пройде квіз!</p></div>';
+      lucide.createIcons();
       return;
     }
 
     let html = '';
 
-    // Podium for top 3
+    // Podium
     if (leaderboard.length >= 1) {
       const medals = ['🥇', '🥈', '🥉'];
       const classes = ['first', 'second', 'third'];
       const top3 = leaderboard.slice(0, 3);
 
       html += '<div class="podium">';
-      // Show in order: 2nd, 1st, 3rd
       const podiumOrder = top3.length >= 3 ? [1, 0, 2] : top3.length >= 2 ? [1, 0] : [0];
       podiumOrder.forEach(i => {
         if (top3[i]) {
           const s = top3[i];
           html += `
             <div class="podium-place ${classes[i]}">
-              <div class="podium-medal">${medals[i]}</div>
-              ${s.picture ? `<img src="${s.picture}" class="podium-avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}
+              <span class="podium-medal">${medals[i]}</span>
+              ${s.picture ? `<img src="${s.picture}" class="podium-avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : `<div class="podium-avatar" style="background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text-muted);font-weight:800;">${s.name[0]}</div>`}
               <div class="podium-name">${s.name}</div>
-              <div class="podium-score">${s.avgScore}% середній</div>
-              <div class="podium-score">${s.quizCount} квізів</div>
+              <div class="podium-score">${s.avgScore}%</div>
             </div>`;
         }
       });
       html += '</div>';
     }
 
-    // Full list
+    // List
     html += '<div class="card">';
     leaderboard.forEach((s, i) => {
       const rankClass = i === 0 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : '';
@@ -192,20 +254,21 @@
       html += `
         <div class="leader-row ${isMe ? 'leader-highlight' : ''}">
           <div class="leader-rank ${rankClass}">${i + 1}</div>
-          ${s.picture ? `<img src="${s.picture}" class="leader-avatar" referrerpolicy="no-referrer" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23334%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2225%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2216%22>${s.name[0]}</text></svg>'">` : `<div class="leader-avatar" style="background:#334;display:flex;align-items:center;justify-content:center;color:#888;font-weight:700;">${s.name[0]}</div>`}
+          ${s.picture ? `<img src="${s.picture}" class="leader-avatar" referrerpolicy="no-referrer" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23334%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2225%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2216%22>${s.name[0]}</text></svg>'">` : `<div class="leader-avatar" style="background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-weight:700;">${s.name[0]}</div>`}
           <div class="leader-info">
-            <div class="leader-name">${s.name}${isMe ? ' (ти)' : ''}</div>
-            <div class="leader-meta">${s.quizCount} квізів · ${s.totalAttempts} спроб · найкращий ${s.bestScore}%</div>
+            <div class="leader-name">${s.name}${isMe ? ' <span style="font-weight:500;opacity:0.7;">(це ти)</span>' : ''}</div>
+            <div class="leader-meta">${s.quizCount} квізів · ${s.totalAttempts} спроб</div>
           </div>
           <div class="leader-score">
             <div class="leader-avg">${s.avgScore}%</div>
-            <div class="leader-label">середній</div>
+            <div class="leader-label">Середній</div>
           </div>
         </div>`;
     });
     html += '</div>';
 
     content.innerHTML = html;
+    lucide.createIcons();
   });
   </script>
 </body>

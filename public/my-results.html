@@ -4,210 +4,223 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Мої результати — Алгебра</title>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: rgba(24, 24, 27, 0.6);
+      --accent-purple: #8b5cf6;
+      --accent-blue: #3b82f6;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --success: #10b981;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.1) 0%, transparent 35%),
+        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 35%);
       min-height: 100vh;
-      color: #e0e0e0;
+      color: var(--text-main);
+      line-height: 1.6;
     }
-    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
-    .profile-header {
-      display: flex; align-items: center; gap: 20px;
-      padding: 25px; margin-bottom: 20px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
     }
-    .profile-header img { width: 64px; height: 64px; border-radius: 50%; }
-    .profile-header .name { font-size: 1.4em; font-weight: 700; color: #fff; }
-    .profile-header .email { color: #a0a0c0; font-size: 0.9em; }
 
-    .stats-row {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 12px; margin-bottom: 25px;
+    .header {
+      text-align: center;
+      padding: 40px 0 20px;
     }
-    .stat-box {
-      background: rgba(255,255,255,0.05);
-      border-radius: 12px; padding: 18px; text-align: center;
+
+    .header h1 {
+      font-size: 2.5em;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(to right, #fff, #a1a1aa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
     }
-    .stat-box .value { font-size: 2em; font-weight: 700; color: #fff; }
-    .stat-box .label { font-size: 0.85em; color: #a0a0c0; margin-top: 4px; }
 
-    .card {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px; padding: 25px; margin-bottom: 20px;
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9em;
+      font-weight: 600;
+      margin-bottom: 20px;
+      transition: color 0.2s;
     }
-    .card h3 { color: #818cf8; margin-bottom: 15px; }
 
-    .result-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    .back-link:hover { color: var(--accent-purple); }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-color);
+      border-radius: 32px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
     }
-    .result-item:last-child { border-bottom: none; }
-    .result-item .quiz-name { color: #fff; font-weight: 600; }
-    .result-item .quiz-date { color: #888; font-size: 0.85em; }
 
-    .badge {
-      display: inline-block; padding: 4px 12px;
-      border-radius: 20px; font-size: 0.85em; font-weight: 600;
+    .user-info img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 3px solid var(--border-color);
     }
-    .badge-excellent { background: rgba(52,211,153,0.15); color: #34d399; }
-    .badge-good { background: rgba(96,165,250,0.15); color: #60a5fa; }
-    .badge-ok { background: rgba(251,191,36,0.15); color: #fbbf24; }
-    .badge-bad { background: rgba(248,113,113,0.15); color: #f87171; }
 
-    .back-link { color: #818cf8; text-decoration: none; font-size: 0.95em; }
-    .back-link:hover { text-decoration: underline; }
+    .user-details h2 { font-size: 1.5em; font-weight: 800; }
+    .user-details p { color: var(--text-muted); font-size: 0.95em; }
 
-    .login-card {
-      text-align: center; padding: 60px 20px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-    }
-    .login-card h2 { color: #fff; margin-bottom: 15px; }
-    .login-card p { color: #a0a0c0; margin-bottom: 20px; }
-
-    .empty { text-align: center; padding: 40px; color: #888; }
-    .empty h3 { color: #a0a0c0; margin-bottom: 10px; }
-
-    /* Achievements */
-    .achievements-grid {
+    .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
     }
-    .achievement {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 16px; border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.2s;
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 24px;
+      text-align: center;
     }
-    .achievement.earned {
-      background: rgba(52,211,153,0.08);
-      border-color: rgba(52,211,153,0.2);
+
+    .stat-card .value { font-size: 2em; font-weight: 800; color: var(--accent-purple); display: block; }
+    .stat-card .label { font-size: 0.85em; color: var(--text-muted); font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .results-table {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 32px;
+      overflow: hidden;
     }
-    .achievement.locked {
-      background: rgba(255,255,255,0.02);
-      opacity: 0.5;
+
+    .result-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 20px;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.2s;
     }
-    .achievement-icon { font-size: 1.8em; flex-shrink: 0; }
-    .achievement-title { color: #fff; font-weight: 600; font-size: 0.95em; }
-    .achievement-desc { color: #888; font-size: 0.8em; margin-top: 2px; }
+
+    .result-row:last-child { border-bottom: none; }
+    .result-row:hover { background: rgba(255,255,255,0.02); }
+
+    .res-title { font-weight: 700; color: #fff; }
+    .res-meta { font-size: 0.85em; color: var(--text-muted); margin-top: 2px; }
+    .res-score {
+      font-size: 1.25em;
+      font-weight: 800;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 6px 16px;
+      border-radius: 12px;
+    }
+    .res-mode { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--text-muted); }
+
+    .empty { text-align: center; padding: 80px 20px; color: var(--text-muted); }
 
     @media (max-width: 600px) {
-      .stats-row { grid-template-columns: 1fr; }
-      .achievements-grid { grid-template-columns: 1fr; }
-      .profile-header { flex-direction: column; text-align: center; }
+      .user-info { flex-direction: column; text-align: center; padding: 32px 20px; }
+      .result-row { grid-template-columns: 1fr auto; padding: 20px; }
+      .res-mode { grid-column: 1 / span 2; margin-top: 8px; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <a href="./" class="back-link">← Всі квізи</a>
-    <div id="content" style="margin-top: 15px;"></div>
+    <a href="./" class="back-link"><i data-lucide="arrow-left" size="18"></i> До каталогу</a>
+    
+    <div id="userInfoArea"></div>
+    
+    <div id="statsArea" class="stats-grid"></div>
+
+    <h2 style="margin-bottom: 20px; font-weight: 800;">Історія проходження</h2>
+    <div id="historyArea" class="results-table">
+      <p style="text-align:center; color: var(--text-muted); padding: 40px;">Завантаження історії...</p>
+    </div>
   </div>
 
-  <script src="js/quizzes.js"></script>
-  <script src="js/quizzes-extra.js"></script>
-  <script src="js/quizzes-interactive.js"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
-  <script src="js/achievements.js"></script>
   <script>
-  function getBadgeClass(pct) {
-    if (pct >= 90) return 'badge-excellent';
-    if (pct >= 75) return 'badge-good';
-    if (pct >= 50) return 'badge-ok';
-    return 'badge-bad';
-  }
+    lucide.createIcons();
 
-  window.addEventListener('load', async () => {
-    const content = document.getElementById('content');
-    const user = Auth.getUser();
+    window.addEventListener('load', async () => {
+      const user = Auth.getUser();
+      if (!user) {
+        window.location.href = './';
+        return;
+      }
 
-    if (!user) {
-      content.innerHTML = `
-        <div class="login-card">
-          <h2>Мої результати</h2>
-          <p>Увійди через Google, щоб побачити свою історію</p>
-          <div id="googleBtn" style="display:inline-block;"></div>
-        </div>`;
-      Auth.init(() => location.reload());
-      setTimeout(() => Auth.renderButton('googleBtn'), 200);
-      return;
-    }
-
-    // Show profile
-    content.innerHTML = `
-      <div class="profile-header">
-        <img src="${user.picture}" referrerpolicy="no-referrer" alt="">
-        <div>
-          <div class="name">${user.name}</div>
-          <div class="email">${user.email}</div>
+      document.getElementById('userInfoArea').innerHTML = `
+        <div class="user-info">
+          <img src="${user.picture}" referrerpolicy="no-referrer">
+          <div class="user-details">
+            <h2>Привіт, ${user.name}!</h2>
+            <p>${user.email}</p>
+          </div>
         </div>
-      </div>
-      <div class="stats-row" id="statsRow" style="display:none;"></div>
-      <div class="card" id="achievementsCard">
-        <h3>Досягнення</h3>
-        <div id="achievementsList"></div>
-      </div>
-      <div class="card" id="resultsCard">
-        <h3>Історія проходжень</h3>
-        <div id="resultsList"><p style="color:#888;">Завантаження...</p></div>
-      </div>`;
+      `;
 
-    // Load results
-    const results = await API.getResultsByEmail(user.email);
+      const results = await API.getResultsByEmail(user.email);
+      
+      if (results.length === 0) {
+        document.getElementById('historyArea').innerHTML = '<div class="empty"><i data-lucide="line-chart" size="48" style="margin-bottom:16px;opacity:0.5;"></i><h3>Історія порожня</h3><p>Пройди свій перший квіз!</p></div>';
+        lucide.createIcons();
+        return;
+      }
 
-    // Render achievements
-    document.getElementById('achievementsList').innerHTML = renderAchievementsHTML(results, QUIZZES);
+      // Calc stats
+      const totalQuizzes = new Set(results.map(r => r.quizId)).size;
+      const avgScore = Math.round(results.reduce((acc, r) => acc + (r.percentage || 0), 0) / results.length);
+      const totalAttempts = results.length;
 
-    if (results.length === 0) {
-      document.getElementById('resultsList').innerHTML =
-        '<div class="empty"><h3>Поки немає результатів</h3><p>Пройди квіз і результати з\'являться тут!</p></div>';
-      return;
-    }
+      document.getElementById('statsArea').innerHTML = `
+        <div class="stat-card"><span class="value">${totalQuizzes}</span><span class="label">Теми</span></div>
+        <div class="stat-card"><span class="value">${avgScore}%</span><span class="label">Середній бал</span></div>
+        <div class="stat-card"><span class="value">${totalAttempts}</span><span class="label">Спроб</span></div>
+      `;
 
-    // Stats
-    const avg = Math.round(results.reduce((s, r) => s + r.percentage, 0) / results.length);
-    const best = Math.max(...results.map(r => r.percentage));
-    const uniqueQuizzes = new Set(results.map(r => r.quizId)).size;
-
-    const statsRow = document.getElementById('statsRow');
-    statsRow.style.display = 'grid';
-    statsRow.innerHTML = `
-      <div class="stat-box"><div class="value">${results.length}</div><div class="label">Проходжень</div></div>
-      <div class="stat-box"><div class="value">${avg}%</div><div class="label">Середній бал</div></div>
-      <div class="stat-box"><div class="value">${uniqueQuizzes}</div><div class="label">Різних квізів</div></div>`;
-
-    // Results list (newest first)
-    const sorted = [...results].sort((a, b) => new Date(b.date) - new Date(a.date));
-    document.getElementById('resultsList').innerHTML = sorted.map(r => {
-      const date = new Date(r.date);
-      const dateStr = date.toLocaleDateString('uk-UA') + ' ' + date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
-      const min = Math.floor(r.timeSpent / 60);
-      const sec = r.timeSpent % 60;
-      return `
-        <div class="result-item">
-          <div>
-            <div class="quiz-name">${r.quizTitle || r.quizId}</div>
-            <div class="quiz-date">${dateStr} · ${min}:${sec.toString().padStart(2,'0')}</div>
+      // Render history
+      document.getElementById('historyArea').innerHTML = results.reverse().map(r => {
+        const date = new Date(r.timestamp).toLocaleDateString('uk-UA');
+        return `
+          <div class="result-row">
+            <div>
+              <div class="res-title">${r.quizTitle}</div>
+              <div class="res-meta">${date} · ${r.score}/${r.total} вірно</div>
+            </div>
+            <div class="res-score">${r.percentage}%</div>
+            <div class="res-mode">${r.mode === 'blitz' ? '⚡ Бліц' : r.mode === 'exam' ? '📝 Контрольна' : '📚 Тренування'}</div>
           </div>
-          <div>
-            <span class="badge ${getBadgeClass(r.percentage)}">${r.score}/${r.total} (${r.percentage}%)</span>
-          </div>
-        </div>`;
-    }).join('');
-  });
+        `;
+      }).join('');
+      
+      lucide.createIcons();
+    });
   </script>
 </body>
 </html>
