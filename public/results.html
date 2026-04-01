@@ -302,7 +302,7 @@
 
       <div class="card">
         <div class="toolbar">
-          <a href="/" class="btn btn-secondary">← Назад до квізу</a>
+          <a href="./" class="btn btn-secondary">← Назад до квізу</a>
           <div>
             <button class="btn btn-primary" onclick="loadResults()" style="margin-right: 8px;">Оновити</button>
             <button class="btn btn-danger" onclick="clearResults()">Очистити все</button>
@@ -314,15 +314,14 @@
     </div>
   </div>
 
+<script src="js/api.js"></script>
 <script>
 let allResults = [];
 let sortKey = 'date';
 let sortAsc = false;
-let teacherPassword = '';
 
 // Check if already logged in this session
 if (sessionStorage.getItem('teacherAuth')) {
-  teacherPassword = sessionStorage.getItem('teacherAuth');
   showDashboard();
 }
 
@@ -330,28 +329,17 @@ document.getElementById('passwordInput').addEventListener('keypress', (e) => {
   if (e.key === 'Enter') login();
 });
 
-async function login() {
+function login() {
   const pwd = document.getElementById('passwordInput').value;
   if (!pwd) return;
 
-  try {
-    const res = await fetch('/api/auth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: pwd })
-    });
-
-    if (res.ok) {
-      teacherPassword = pwd;
-      sessionStorage.setItem('teacherAuth', pwd);
-      showDashboard();
-    } else {
-      document.getElementById('loginError').style.display = 'block';
-      document.getElementById('passwordInput').value = '';
-      document.getElementById('passwordInput').focus();
-    }
-  } catch (e) {
-    alert('Помилка підключення до сервера');
+  if (API.checkPassword(pwd)) {
+    sessionStorage.setItem('teacherAuth', 'yes');
+    showDashboard();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('passwordInput').focus();
   }
 }
 
@@ -363,17 +351,7 @@ function showDashboard() {
 
 async function loadResults() {
   try {
-    const res = await fetch('/api/results', {
-      headers: { 'X-Teacher-Password': teacherPassword }
-    });
-
-    if (res.status === 401) {
-      sessionStorage.removeItem('teacherAuth');
-      location.reload();
-      return;
-    }
-
-    allResults = await res.json();
+    allResults = await API.getResults();
     renderStats();
     renderTable();
   } catch (e) {
@@ -495,15 +473,8 @@ function escapeHtml(str) {
 
 async function clearResults() {
   if (!confirm('Ви впевнені? Всі результати буде видалено назавжди.')) return;
-  try {
-    await fetch('/api/results', {
-      method: 'DELETE',
-      headers: { 'X-Teacher-Password': teacherPassword }
-    });
-    loadResults();
-  } catch (e) {
-    alert('Помилка видалення');
-  }
+  await API.clearResults();
+  loadResults();
 }
 </script>
 </body>

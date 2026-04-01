@@ -159,7 +159,7 @@
     <div id="catalog"></div>
   </div>
 
-  <script src="/js/quizzes.js"></script>
+  <script src="js/quizzes.js"></script>
   <script>
     // Group quizzes by section
     const sections = {};
@@ -185,7 +185,7 @@
       sec.quizzes.forEach(quiz => {
         const card = document.createElement('a');
         card.className = 'quiz-card';
-        card.href = `/quiz.html?id=${quiz.id}`;
+        card.href = `quiz.html?id=${quiz.id}`;
         card.innerHTML = `
           <span class="quiz-icon">${quiz.icon}</span>
           <h3>${quiz.title}</h3>

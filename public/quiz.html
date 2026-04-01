@@ -369,7 +369,7 @@
 </head>
 <body>
   <div class="container">
-    <a href="/" class="back-link">← Всі квізи</a>
+    <a href="./" class="back-link">← Всі квізи</a>
 
     <div class="header">
       <h1 id="quizTitle">Квіз</h1>
@@ -410,7 +410,8 @@
     <div id="results" class="card" style="display:none;"></div>
   </div>
 
-  <script src="/js/quizzes.js"></script>
+  <script src="js/quizzes.js"></script>
+  <script src="js/api.js"></script>
   <script>
 // Cat messages
 const correctCatMessages = [
@@ -473,7 +474,7 @@ if (!quizData) {
     <div style="text-align:center; padding: 60px 20px;">
       <h2 style="color:#fff; margin-bottom:15px;">Квіз не знайдено</h2>
       <p style="color:#a0a0c0; margin-bottom:20px;">Можливо, він ще не створений.</p>
-      <a href="/" class="btn btn-primary" style="display:inline-block; padding:14px 36px; border-radius:12px; text-decoration:none; color:#fff; background:linear-gradient(135deg,#667eea,#764ba2);">← До каталогу</a>
+      <a href="./" class="btn btn-primary" style="display:inline-block; padding:14px 36px; border-radius:12px; text-decoration:none; color:#fff; background:linear-gradient(135deg,#667eea,#764ba2);">← До каталогу</a>
     </div>`;
 } else {
   // Set up page
@@ -664,27 +665,19 @@ async function showResults() {
     </div>
     <div class="results-buttons">
       <button class="btn btn-primary" onclick="location.reload()">Пройти ще раз</button>
-      <a href="/" class="btn btn-secondary" style="text-decoration:none;">Інші квізи</a>
+      <a href="./" class="btn btn-secondary" style="text-decoration:none;">Інші квізи</a>
     </div>
   `;
   resultsDiv.style.display = 'block';
   setTimeout(() => renderMath(resultsDiv), 10);
 
-  // Save to server
-  try {
-    await fetch('/api/results', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: studentName,
-        quizId: quizData.id,
-        quizTitle: quizData.title,
-        score, total, answers, timeSpent
-      })
-    });
-  } catch (e) {
-    console.error('Failed to save results:', e);
-  }
+  // Save to cloud storage
+  API.saveResult({
+    name: studentName,
+    quizId: quizData.id,
+    quizTitle: quizData.title,
+    score, total, answers, timeSpent
+  });
 }
 </script>
 </body>
