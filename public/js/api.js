@@ -18,20 +18,36 @@ const API = {
     };
   },
 
+  // UTF-8 safe base64 decode
+  _b64decode(str) {
+    const binary = atob(str.replace(/\n/g, ''));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  },
+
+  // UTF-8 safe base64 encode
+  _b64encode(str) {
+    const bytes = new TextEncoder().encode(str);
+    let binary = '';
+    bytes.forEach(b => binary += String.fromCharCode(b));
+    return btoa(binary);
+  },
+
   // Get file content and SHA (needed for updates)
   async _getFile() {
     const url = `https://api.github.com/repos/${this.REPO}/contents/${this.FILE}?ref=${this.BRANCH}`;
     const res = await fetch(url, { headers: this._headers() });
     if (!res.ok) return { content: [], sha: null };
     const data = await res.json();
-    const decoded = atob(data.content.replace(/\n/g, ''));
+    const decoded = this._b64decode(data.content);
     return { content: JSON.parse(decoded), sha: data.sha };
   },
 
   // Save (update) file
   async _putFile(content, sha) {
     const url = `https://api.github.com/repos/${this.REPO}/contents/${this.FILE}`;
-    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
+    const encoded = this._b64encode(JSON.stringify(content, null, 2));
     const body = {
       message: `Quiz result: ${new Date().toISOString()}`,
       content: encoded,
@@ -51,6 +67,8 @@ const API = {
     const result = {
       id: Date.now(),
       name: data.name,
+      email: data.email || '',
+      picture: data.picture || '',
       score: data.score,
       total: data.total,
       percentage: Math.round((data.score / data.total) * 100),
@@ -107,6 +125,12 @@ const API = {
     } catch (e) {
       return { error: e.message };
     }
+  },
+
+  // Get results for a specific student by email
+  async getResultsByEmail(email) {
+    const all = await this.getResults();
+    return all.filter(r => r.email && r.email.toLowerCase() === email.toLowerCase());
   },
 
   // Check teacher password

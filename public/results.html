@@ -376,7 +376,7 @@ function renderStats() {
   const best = Math.max(...allResults.map(r => r.percentage));
   document.getElementById('bestScore').textContent = best + '%';
 
-  const unique = new Set(allResults.map(r => r.name.toLowerCase())).size;
+  const unique = new Set(allResults.map(r => (r.email || r.name).toLowerCase())).size;
   document.getElementById('uniqueStudents').textContent = unique;
 }
 
@@ -420,7 +420,11 @@ function renderTable() {
 
     html += `
       <tr>
-        <td><strong>${escapeHtml(r.name)}</strong></td>
+        <td>
+          ${r.picture ? `<img src="${r.picture}" style="width:24px;height:24px;border-radius:50%;vertical-align:middle;margin-right:6px;" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}
+          <strong>${escapeHtml(r.name)}</strong>
+          ${r.email ? `<br><span style="font-size:0.75em;color:#888;">${escapeHtml(r.email)}</span>` : ''}
+        </td>
         <td style="font-size:0.85em; color:#a0a0c0;">${escapeHtml(r.quizTitle || 'Квіз')}</td>
         <td><span class="badge ${badge.cls}">${r.percentage}%</span></td>
         <td>${r.score} / ${r.total}</td>
