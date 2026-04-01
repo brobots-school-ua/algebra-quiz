@@ -1122,7 +1122,7 @@ let startTime;
 let timerInterval;
 let studentName = '';
 let studentUser = null;
-let hintUsed = false;
+let hintUsed = false;   // false = no hint; 0.5 = partial hint (-50%); 0 = full hint (-100%)
 let quizMode = 'training';
 let blitzInterval = null;
 let blitzTimeLeft = 30;
@@ -1367,13 +1367,14 @@ function showQuestion() {
   document.getElementById('explanationBox').innerHTML = '';
   document.getElementById('nextBtnWrap').style.display = 'none';
 
-  // Show hint button only in training mode
+  // Show hint button in training mode for ALL questions
   const hintArea = document.getElementById('hintArea');
   if (hintArea) hintArea.remove();
-  if (q.hint && quizMode === 'training') {
+  if (quizMode === 'training') {
     const hintDiv = document.createElement('div');
     hintDiv.id = 'hintArea';
-    hintDiv.innerHTML = `<button class="hint-btn" onclick="showHint()">💡 Підказка (-50% балів)</button>`;
+    const penaltyLabel = q.hint ? '-50% балів' : '-100% (відповідь = 0)';
+    hintDiv.innerHTML = `<button class="hint-btn" onclick="showHint()">💡 Підказка (${penaltyLabel})</button>`;
     document.getElementById('options').before(hintDiv);
   }
   hintUsed = false;
@@ -1428,15 +1429,29 @@ function showConfetti() {
 
 function showHint() {
   const q = preparedQuestions[currentQuestion];
-  if (!q.hint || hintUsed) return;
-  hintUsed = true;
+  if (hintUsed !== false) return;
+
   const hintArea = document.getElementById('hintArea');
-  if (hintArea) {
-    hintArea.innerHTML = `
-      <div class="hint-box">💡 ${q.hint}
-        <div class="hint-penalty">⚠️ За цю відповідь буде нараховано 50% балів</div>
-      </div>`;
-    setTimeout(() => renderMath(hintArea), 10);
+  if (q.hint) {
+    // Specific hint: -50%
+    hintUsed = 0.5;
+    if (hintArea) {
+      hintArea.innerHTML = `
+        <div class="hint-box">💡 ${q.hint}
+          <div class="hint-penalty">⚠️ За цю відповідь буде нараховано 50% балів</div>
+        </div>`;
+      setTimeout(() => renderMath(hintArea), 10);
+    }
+  } else {
+    // No specific hint — show full explanation as hint: -100% (answer = 0 points)
+    hintUsed = 0;
+    if (hintArea) {
+      hintArea.innerHTML = `
+        <div class="hint-box">📖 ${q.explanation || 'Перечитай теорію перед відповіддю'}
+          <div class="hint-penalty">⚠️ Ця відповідь рахується як 0 балів</div>
+        </div>`;
+      setTimeout(() => renderMath(hintArea), 10);
+    }
   }
   Sound.click();
 }
@@ -1450,7 +1465,7 @@ function selectAnswer(index) {
 
   if (isCorrect) {
     document.getElementById(`opt${index}`).classList.add('correct');
-    score += hintUsed ? 0.5 : 1;
+    score += hintUsed === false ? 1 : hintUsed;
   } else {
     document.getElementById(`opt${index}`).classList.add('wrong');
     document.getElementById(`opt${q.correct}`).classList.add('show-correct');
@@ -1486,7 +1501,7 @@ function checkTextAnswer() {
 
   if (isCorrect) {
     input.classList.add('input-correct');
-    score += hintUsed ? 0.5 : 1;
+    score += hintUsed === false ? 1 : hintUsed;
   } else {
     input.classList.add('input-wrong');
     const correctDisplay = Array.isArray(q.correct) ? q.correct[0] : q.correct;
@@ -1573,7 +1588,7 @@ function checkMatching() {
   });
 
   const allCorrect = correctCount === pairs.length;
-  if (allCorrect) score += hintUsed ? 0.5 : 1;
+  if (allCorrect) score += hintUsed === false ? 1 : hintUsed;
 
   answers.push({
     question: q.question,
@@ -1672,7 +1687,7 @@ function checkFillBlanks() {
   });
 
   const allCorrect = correctCount === q.blanks.length;
-  if (allCorrect) score += hintUsed ? 0.5 : 1;
+  if (allCorrect) score += hintUsed === false ? 1 : hintUsed;
 
   answers.push({
     question: q.question,
@@ -1783,7 +1798,7 @@ function checkOrdering() {
   });
 
   const allCorrect = correctCount === orderState.correct.length;
-  if (allCorrect) score += hintUsed ? 0.5 : 1;
+  if (allCorrect) score += hintUsed === false ? 1 : hintUsed;
 
   answers.push({
     question: q.question,
@@ -1859,9 +1874,6 @@ async function showResults() {
     localStorage.removeItem(`mistakes_${quizData.id}`);
   }
 
-  // Store for sharing
-  lastResult = { scoreDisplay, total, percentage, gradeText };
-
   // Update streak
   const streak = updateStreak();
 
@@ -1875,6 +1887,9 @@ async function showResults() {
   else if (percentage >= 75) { gradeText = 'Добре!'; gradeColor = '#60a5fa'; gradeKey = 'good'; }
   else if (percentage >= 50) { gradeText = 'Задовільно'; gradeColor = '#fbbf24'; gradeKey = 'ok'; }
   else { gradeText = 'Потрібно повторити'; gradeColor = '#f87171'; gradeKey = 'bad'; }
+
+  // Store for sharing (after gradeText is assigned)
+  lastResult = { scoreDisplay, total, percentage, gradeText };
 
   const resultCatMsg = rand(resultCatMessages[gradeKey]);
   const deg = (percentage / 100) * 360;
