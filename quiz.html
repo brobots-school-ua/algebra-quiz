@@ -914,6 +914,7 @@
         <div class="blitz-progress-bar"><div class="blitz-progress-fill" id="blitzFill" style="width:100%"></div></div>
       </div>
       <div class="question-text" id="questionText"></div>
+      <div id="hintArea"></div>
       <div class="options" id="options"></div>
       <div id="explanationBox"></div>
       <div class="next-btn-wrap" id="nextBtnWrap" style="display:none;">
@@ -1368,15 +1369,10 @@ function showQuestion() {
   document.getElementById('nextBtnWrap').style.display = 'none';
 
   // Show hint button in training mode for ALL questions
-  const hintArea = document.getElementById('hintArea');
-  if (hintArea) hintArea.remove();
-  if (quizMode === 'training') {
-    const hintDiv = document.createElement('div');
-    hintDiv.id = 'hintArea';
-    const penaltyLabel = q.hint ? '-50% балів' : '-100% (відповідь = 0)';
-    hintDiv.innerHTML = `<button class="hint-btn" onclick="showHint()">💡 Підказка (${penaltyLabel})</button>`;
-    document.getElementById('options').before(hintDiv);
-  }
+  const penaltyLabel = q.hint ? '-50% балів' : '-100% (відповідь = 0)';
+  document.getElementById('hintArea').innerHTML = quizMode === 'training'
+    ? `<button class="hint-btn" onclick="showHint()">💡 Підказка (${penaltyLabel})</button>`
+    : '';
   hintUsed = false;
 
   // Blitz mode: start per-question countdown
@@ -1433,26 +1429,19 @@ function showHint() {
 
   const hintArea = document.getElementById('hintArea');
   if (q.hint) {
-    // Specific hint: -50%
     hintUsed = 0.5;
-    if (hintArea) {
-      hintArea.innerHTML = `
-        <div class="hint-box">💡 ${q.hint}
-          <div class="hint-penalty">⚠️ За цю відповідь буде нараховано 50% балів</div>
-        </div>`;
-      setTimeout(() => renderMath(hintArea), 10);
-    }
+    hintArea.innerHTML = `
+      <div class="hint-box">💡 ${q.hint}
+        <div class="hint-penalty">⚠️ За цю відповідь буде нараховано 50% балів</div>
+      </div>`;
   } else {
-    // No specific hint — show full explanation as hint: -100% (answer = 0 points)
     hintUsed = 0;
-    if (hintArea) {
-      hintArea.innerHTML = `
-        <div class="hint-box">📖 ${q.explanation || 'Перечитай теорію перед відповіддю'}
-          <div class="hint-penalty">⚠️ Ця відповідь рахується як 0 балів</div>
-        </div>`;
-      setTimeout(() => renderMath(hintArea), 10);
-    }
+    hintArea.innerHTML = `
+      <div class="hint-box">📖 ${q.explanation || 'Перечитай теорію перед відповіддю'}
+        <div class="hint-penalty">⚠️ Ця відповідь рахується як 0 балів</div>
+      </div>`;
   }
+  setTimeout(() => renderMath(hintArea), 10);
   Sound.click();
 }
 
