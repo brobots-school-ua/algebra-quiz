@@ -459,6 +459,72 @@
       color: #60a5fa;
     }
 
+    /* Theory block */
+    .theory-toggle {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 24px;
+      border: 1px solid rgba(129, 140, 248, 0.3);
+      border-radius: 10px;
+      background: rgba(129, 140, 248, 0.1);
+      color: #818cf8;
+      cursor: pointer;
+      font-size: 0.95em;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .theory-toggle:hover {
+      background: rgba(129, 140, 248, 0.2);
+      border-color: rgba(129, 140, 248, 0.5);
+    }
+
+    .theory-block {
+      display: none;
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 14px;
+      padding: 20px 24px;
+      margin-bottom: 25px;
+      text-align: left;
+      line-height: 1.8;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .theory-block.open { display: block; }
+
+    .theory-block h4 {
+      color: #818cf8;
+      margin-bottom: 12px;
+      font-size: 1.05em;
+    }
+
+    .theory-block ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .theory-block li {
+      padding: 5px 0;
+      color: #c0c0e0;
+      font-size: 0.95em;
+    }
+
+    .theory-block li .katex { font-size: 1em; }
+
+    .theory-block .formula-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+    }
+
+    .theory-block .formula-label {
+      color: #a0a0c0;
+      min-width: 80px;
+      font-size: 0.85em;
+    }
+
     /* KaTeX overrides for dark theme */
     .katex { color: #e0e0e0; }
     .option .katex { font-size: 1em; }
@@ -488,6 +554,8 @@
         <h3 id="quizInfoTitle">Тема:</h3>
         <p id="quizInfoDesc" style="color: #c0c0e0; margin: 0;"></p>
       </div>
+      <div id="theoryToggleWrap"></div>
+      <div class="theory-block" id="theoryBlock"></div>
       <div style="margin-bottom: 20px;">
         <input type="text" id="studentName" placeholder="Введи своє ім'я та прізвище" autocomplete="off">
       </div>
@@ -570,6 +638,96 @@ function renderMath(el) {
   }
 }
 
+// Theory content for quizzes (key = quiz id)
+const THEORY = {
+  '3-7-addition': {
+    title: 'Формули додавання та пониження степеня',
+    items: [
+      '$\\sin(\\alpha + \\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$',
+      '$\\sin(\\alpha - \\beta) = \\sin\\alpha\\cos\\beta - \\cos\\alpha\\sin\\beta$',
+      '$\\cos(\\alpha + \\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$',
+      '$\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$',
+      '$\\operatorname{tg}(\\alpha + \\beta) = \\dfrac{\\operatorname{tg}\\alpha + \\operatorname{tg}\\beta}{1 - \\operatorname{tg}\\alpha \\cdot \\operatorname{tg}\\beta}$',
+      '$\\sin^2\\alpha = \\dfrac{1 - \\cos 2\\alpha}{2}$, $\\;\\cos^2\\alpha = \\dfrac{1 + \\cos 2\\alpha}{2}$'
+    ]
+  },
+  '3-8-double-angle': {
+    title: 'Формули подвійного аргументу',
+    items: [
+      '$\\sin 2\\alpha = 2\\sin\\alpha\\cos\\alpha$',
+      '$\\cos 2\\alpha = \\cos^2\\alpha - \\sin^2\\alpha = 2\\cos^2\\alpha - 1 = 1 - 2\\sin^2\\alpha$',
+      '$\\operatorname{tg} 2\\alpha = \\dfrac{2\\operatorname{tg}\\alpha}{1 - \\operatorname{tg}^2\\alpha}$'
+    ]
+  },
+  '3-5-identities': {
+    title: 'Основні тригонометричні тотожності',
+    items: [
+      '$\\sin^2\\alpha + \\cos^2\\alpha = 1$',
+      '$\\operatorname{tg}\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha}$, $\\;\\operatorname{ctg}\\alpha = \\dfrac{\\cos\\alpha}{\\sin\\alpha}$',
+      '$\\operatorname{tg}\\alpha \\cdot \\operatorname{ctg}\\alpha = 1$',
+      '$1 + \\operatorname{tg}^2\\alpha = \\dfrac{1}{\\cos^2\\alpha}$, $\\;1 + \\operatorname{ctg}^2\\alpha = \\dfrac{1}{\\sin^2\\alpha}$'
+    ]
+  },
+  '3-6-reduction': {
+    title: 'Формули зведення — правила',
+    items: [
+      'Якщо аргумент $\\dfrac{\\pi}{2} \\pm \\alpha$ або $\\dfrac{3\\pi}{2} \\pm \\alpha$ — функція ЗМІНЮЄТЬСЯ (sin↔cos, tg↔ctg)',
+      'Якщо аргумент $\\pi \\pm \\alpha$ або $2\\pi \\pm \\alpha$ — функція НЕ змінюється',
+      'Знак визначається за чвертю, в яку потрапляє аргумент (вважаємо $\\alpha$ гострим)'
+    ]
+  },
+  '3-1-radians': {
+    title: 'Радіанна міра кута',
+    items: [
+      '$180° = \\pi$ рад, $\\;360° = 2\\pi$ рад',
+      '$\\alpha_{рад} = \\dfrac{\\alpha° \\cdot \\pi}{180}$, $\\;\\alpha° = \\dfrac{\\alpha_{рад} \\cdot 180}{\\pi}$',
+      'Основні значення: $30° = \\dfrac{\\pi}{6}$, $45° = \\dfrac{\\pi}{4}$, $60° = \\dfrac{\\pi}{3}$, $90° = \\dfrac{\\pi}{2}$'
+    ]
+  },
+  '3-2-trig-circle': {
+    title: 'Табличні значення',
+    items: [
+      '$\\sin 0° = 0$, $\\sin 30° = \\dfrac{1}{2}$, $\\sin 45° = \\dfrac{\\sqrt{2}}{2}$, $\\sin 60° = \\dfrac{\\sqrt{3}}{2}$, $\\sin 90° = 1$',
+      '$\\cos 0° = 1$, $\\cos 30° = \\dfrac{\\sqrt{3}}{2}$, $\\cos 45° = \\dfrac{\\sqrt{2}}{2}$, $\\cos 60° = \\dfrac{1}{2}$, $\\cos 90° = 0$',
+      '$\\operatorname{tg} 0° = 0$, $\\operatorname{tg} 30° = \\dfrac{1}{\\sqrt{3}}$, $\\operatorname{tg} 45° = 1$, $\\operatorname{tg} 60° = \\sqrt{3}$'
+    ]
+  },
+  '5-3-derivative-concept': {
+    title: 'Основні похідні',
+    items: [
+      "$(C)' = 0$, $(x)' = 1$, $(x^n)' = nx^{n-1}$",
+      "$(\\sin x)' = \\cos x$, $(\\cos x)' = -\\sin x$",
+      "$(e^x)' = e^x$, $(\\ln x)' = \\dfrac{1}{x}$",
+      "$(f + g)' = f' + g'$, $(C \\cdot f)' = C \\cdot f'$"
+    ]
+  },
+  '5-4-derivative-rules': {
+    title: 'Правила диференціювання',
+    items: [
+      "$(f \\cdot g)' = f'g + fg'$ — правило добутку",
+      "$\\left(\\dfrac{f}{g}\\right)' = \\dfrac{f'g - fg'}{g^2}$ — правило частки",
+      "$(f(g(x)))' = f'(g(x)) \\cdot g'(x)$ — похідна складеної функції"
+    ]
+  },
+  '4-2-simple-equations': {
+    title: 'Формули розв\'язків тригонометричних рівнянь',
+    items: [
+      '$\\sin x = a \\Rightarrow x = (-1)^n \\arcsin a + \\pi n$',
+      '$\\cos x = a \\Rightarrow x = \\pm \\arccos a + 2\\pi n$',
+      '$\\operatorname{tg} x = a \\Rightarrow x = \\operatorname{arctg} a + \\pi n$',
+      'де $n \\in \\mathbb{Z}$'
+    ]
+  },
+  '2-1-powers': {
+    title: 'Властивості степенів',
+    items: [
+      '$a^m \\cdot a^n = a^{m+n}$, $\\;\\dfrac{a^m}{a^n} = a^{m-n}$',
+      '$(a^m)^n = a^{mn}$, $\\;(ab)^n = a^n b^n$',
+      '$a^0 = 1$, $\\;a^{-n} = \\dfrac{1}{a^n}$'
+    ]
+  }
+};
+
 // Get quiz ID from URL
 const params = new URLSearchParams(window.location.search);
 const quizId = params.get('id');
@@ -633,6 +791,15 @@ if (nameInput) {
   nameInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && !startBtn.disabled) startQuiz();
   });
+}
+
+// Show theory block if available for this quiz
+if (quizData && THEORY[quizData.id]) {
+  const t = THEORY[quizData.id];
+  document.getElementById('theoryToggleWrap').innerHTML =
+    `<div class="theory-toggle" onclick="document.getElementById('theoryBlock').classList.toggle('open'); this.textContent = this.textContent.includes('Переглянути') ? '▲ Сховати теорію' : '📖 Переглянути теорію'">📖 Переглянути теорію</div>`;
+  document.getElementById('theoryBlock').innerHTML =
+    `<h4>${t.title}</h4><ul>${t.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
 }
 
 // Wait for KaTeX to load, then render welcome page
