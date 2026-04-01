@@ -609,5 +609,6 @@ const QUIZZES_EXTRA = [
   }
 ];
 
-// Merge extra quizzes into main array
-QUIZZES.push(...QUIZZES_EXTRA);
+// Merge extra quizzes into main array (skip duplicates by id)
+const existingIds = new Set(QUIZZES.map(q => q.id));
+QUIZZES.push(...QUIZZES_EXTRA.filter(q => !existingIds.has(q.id)));
