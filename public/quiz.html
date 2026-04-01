@@ -719,6 +719,81 @@
     .new-ach-item .ach-title { color: #fff; font-weight: 600; }
     .new-ach-item .ach-desc { color: #a0a0c0; font-size: 0.85em; }
 
+    /* Hint system */
+    .hint-btn {
+      display: inline-block;
+      padding: 8px 18px;
+      border: 1px solid rgba(251,191,36,0.3);
+      border-radius: 10px;
+      background: rgba(251,191,36,0.08);
+      color: #fbbf24;
+      cursor: pointer;
+      font-size: 0.85em;
+      margin-bottom: 15px;
+      transition: all 0.2s;
+    }
+    .hint-btn:hover { background: rgba(251,191,36,0.15); }
+    .hint-btn:disabled { opacity: 0.3; cursor: default; }
+
+    .hint-box {
+      padding: 12px 16px;
+      background: rgba(251,191,36,0.08);
+      border: 1px solid rgba(251,191,36,0.2);
+      border-radius: 10px;
+      color: #fcd34d;
+      font-size: 0.9em;
+      margin-bottom: 15px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .hint-penalty {
+      font-size: 0.8em;
+      color: #a0a0c0;
+      margin-top: 4px;
+    }
+
+    /* Sound toggle */
+    .sound-toggle {
+      position: fixed; top: 15px; right: 15px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50%; width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.2em; z-index: 100;
+      transition: all 0.2s;
+    }
+    .sound-toggle:hover { background: rgba(255,255,255,0.12); }
+
+    /* Animations */
+    @keyframes bounceIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      50% { transform: scale(1.1); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes shakeX {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    @keyframes confetti {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+    }
+    .anim-bounce { animation: bounceIn 0.5s ease; }
+    .anim-shake { animation: shakeX 0.5s ease; }
+    .anim-correct { animation: bounceIn 0.4s ease; }
+
+    .confetti-container {
+      position: fixed; top: 50%; left: 50%;
+      pointer-events: none; z-index: 1000;
+    }
+    .confetti-piece {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      animation: confetti 1.5s ease-out forwards;
+    }
+
     /* KaTeX overrides for dark theme */
     .katex { color: #e0e0e0; }
     .option .katex { font-size: 1em; }
@@ -734,6 +809,7 @@
 </head>
 <body>
   <div class="container">
+    <div class="sound-toggle" onclick="this.textContent = Sound.toggle() ? '🔊' : '🔇'" title="Звук">🔊</div>
     <a href="./" class="back-link">← Всі квізи</a>
 
     <div class="header">
@@ -781,6 +857,7 @@
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/achievements.js"></script>
+  <script src="js/sounds.js"></script>
   <script>
 // Cat messages
 const correctCatMessages = [
@@ -970,6 +1047,7 @@ let startTime;
 let timerInterval;
 let studentName = '';
 let studentUser = null;
+let hintUsed = false;
 
 // Show theory block if available for this quiz
 if (quizData && THEORY[quizData.id]) {
@@ -1007,8 +1085,7 @@ window.addEventListener('load', () => {
 });
 
 function startQuiz() {
-  studentName = nameInput.value.trim();
-  if (studentName.length < 2) return;
+  if (!studentName || studentName.length < 2) return;
 
   document.getElementById('welcome').style.display = 'none';
   document.getElementById('quiz').style.display = 'block';
@@ -1081,18 +1158,33 @@ function showQuestion() {
   document.getElementById('explanationBox').innerHTML = '';
   document.getElementById('nextBtnWrap').style.display = 'none';
 
+  // Show hint button if question has a hint
+  const hintArea = document.getElementById('hintArea');
+  if (hintArea) hintArea.remove();
+  if (q.hint) {
+    const hintDiv = document.createElement('div');
+    hintDiv.id = 'hintArea';
+    hintDiv.innerHTML = `<button class="hint-btn" onclick="showHint()">💡 Підказка (-50% балів)</button>`;
+    document.getElementById('options').before(hintDiv);
+  }
+  hintUsed = false;
+
   // Render math in question and options
   setTimeout(() => renderMath(document.getElementById('quiz')), 10);
 }
 
 function showFeedback(isCorrect, explanation) {
+  // Play sound
+  if (isCorrect) { Sound.correct(); } else { Sound.wrong(); }
+
   const expClass = isCorrect ? 'correct-exp' : 'wrong-exp';
+  const animClass = isCorrect ? 'anim-correct' : 'anim-shake';
   const prefix = isCorrect ? '✓ Правильно!' : '✗ Неправильно.';
   const catMsg = isCorrect ? rand(correctCatMessages) : rand(wrongCatMessages);
   const catClass = isCorrect ? 'correct-cat' : 'wrong-cat';
 
   document.getElementById('explanationBox').innerHTML =
-    `<div class="explanation ${expClass}"><strong>${prefix}</strong> ${explanation}</div>
+    `<div class="explanation ${expClass} ${animClass}"><strong>${prefix}</strong> ${explanation}</div>
      <div class="cat-meme">
        <img src="${getCatUrl()}" alt="Cat" onerror="this.src='https://placekitten.com/200/200'">
        <div class="cat-caption ${catClass}">${catMsg}</div>
@@ -1100,6 +1192,40 @@ function showFeedback(isCorrect, explanation) {
 
   document.getElementById('nextBtnWrap').style.display = 'block';
   setTimeout(() => renderMath(document.getElementById('explanationBox')), 10);
+}
+
+// Confetti effect for good results
+function showConfetti() {
+  const colors = ['#f093fb', '#f5576c', '#fda085', '#667eea', '#34d399', '#fbbf24'];
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  for (let i = 0; i < 30; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.left = (Math.random() * 200 - 100) + 'px';
+    piece.style.top = (Math.random() * 50) + 'px';
+    piece.style.animationDelay = (Math.random() * 0.5) + 's';
+    piece.style.animationDuration = (1 + Math.random()) + 's';
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 2500);
+}
+
+function showHint() {
+  const q = preparedQuestions[currentQuestion];
+  if (!q.hint || hintUsed) return;
+  hintUsed = true;
+  const hintArea = document.getElementById('hintArea');
+  if (hintArea) {
+    hintArea.innerHTML = `
+      <div class="hint-box">💡 ${q.hint}
+        <div class="hint-penalty">⚠️ За цю відповідь буде нараховано 50% балів</div>
+      </div>`;
+    setTimeout(() => renderMath(hintArea), 10);
+  }
+  Sound.click();
 }
 
 function selectAnswer(index) {
@@ -1110,7 +1236,7 @@ function selectAnswer(index) {
 
   if (isCorrect) {
     document.getElementById(`opt${index}`).classList.add('correct');
-    score++;
+    score += hintUsed ? 0.5 : 1;
   } else {
     document.getElementById(`opt${index}`).classList.add('wrong');
     document.getElementById(`opt${q.correct}`).classList.add('show-correct');
@@ -1145,7 +1271,7 @@ function checkTextAnswer() {
 
   if (isCorrect) {
     input.classList.add('input-correct');
-    score++;
+    score += hintUsed ? 0.5 : 1;
   } else {
     input.classList.add('input-wrong');
     const correctDisplay = Array.isArray(q.correct) ? q.correct[0] : q.correct;
@@ -1231,7 +1357,7 @@ function checkMatching() {
   });
 
   const allCorrect = correctCount === pairs.length;
-  if (allCorrect) score++;
+  if (allCorrect) score += hintUsed ? 0.5 : 1;
 
   answers.push({
     question: q.question,
@@ -1329,7 +1455,7 @@ function checkFillBlanks() {
   });
 
   const allCorrect = correctCount === q.blanks.length;
-  if (allCorrect) score++;
+  if (allCorrect) score += hintUsed ? 0.5 : 1;
 
   answers.push({
     question: q.question,
@@ -1439,7 +1565,7 @@ function checkOrdering() {
   });
 
   const allCorrect = correctCount === orderState.correct.length;
-  if (allCorrect) score++;
+  if (allCorrect) score += hintUsed ? 0.5 : 1;
 
   answers.push({
     question: q.question,
@@ -1466,13 +1592,36 @@ function nextQuestion() {
   }
 }
 
+// Streak tracking — call on quiz completion
+function updateStreak() {
+  const today = new Date().toDateString();
+  const d = JSON.parse(localStorage.getItem('quiz_streak') || '{"lastDate":"","streak":0,"longest":0}');
+  if (d.lastDate === today) return d; // already played today
+  const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+  d.streak = (d.lastDate === yesterday.toDateString()) ? d.streak + 1 : 1;
+  if (d.streak > d.longest) d.longest = d.streak;
+  d.lastDate = today;
+  localStorage.setItem('quiz_streak', JSON.stringify(d));
+  return d;
+}
+
 async function showResults() {
   clearInterval(timerInterval);
   const total = preparedQuestions.length;
   const timeSpent = Math.floor((Date.now() - startTime) / 1000);
   const percentage = Math.round((score / total) * 100);
+  const scoreDisplay = Number.isInteger(score) ? score : score.toFixed(1);
+
+  // Save topic progress locally
+  localStorage.setItem(`progress_${quizData.id}`, JSON.stringify({ percentage, date: new Date().toISOString() }));
+
+  // Update streak
+  const streak = updateStreak();
 
   document.getElementById('quiz').style.display = 'none';
+
+  // Play completion sound
+  Sound.complete();
 
   let gradeText, gradeColor, gradeKey;
   if (percentage >= 90) { gradeText = 'Відмінно!'; gradeColor = '#34d399'; gradeKey = 'excellent'; }
@@ -1488,7 +1637,7 @@ async function showResults() {
   const resultsDiv = document.getElementById('results');
   resultsDiv.innerHTML = `
     <div class="score-circle" style="--score-color: ${gradeColor}; --score-deg: ${deg}deg;">
-      <span class="score-num">${score}/${total}</span>
+      <span class="score-num">${scoreDisplay}/${total}</span>
       <span class="score-label">${percentage}%</span>
     </div>
     <div class="grade-text" style="color: ${gradeColor}">${gradeText}</div>
@@ -1498,7 +1647,7 @@ async function showResults() {
     </div>
     <div class="results-details">
       <div class="detail-box">
-        <div class="value" style="color: #34d399">${score}</div>
+        <div class="value" style="color: #34d399">${scoreDisplay}</div>
         <div class="label">Правильних</div>
       </div>
       <div class="detail-box">
@@ -1510,6 +1659,7 @@ async function showResults() {
         <div class="label">Час</div>
       </div>
     </div>
+    ${streak.streak >= 2 ? `<div style="text-align:center;margin:10px 0 5px;font-size:1em;color:#fbbf24;">🔥 Серія: <strong>${streak.streak} дні поспіль</strong>${streak.streak >= 7 ? ' — Тижнева серія! 🏆' : ''}</div>` : ''}
     <div class="review-section">
       <h3>Детальний розбір</h3>
       ${answers.map((a, i) => `
@@ -1529,6 +1679,9 @@ async function showResults() {
   `;
   resultsDiv.style.display = 'block';
   setTimeout(() => renderMath(resultsDiv), 10);
+
+  // Confetti for good results
+  if (percentage >= 75) setTimeout(() => showConfetti(), 300);
 
   // Save to cloud storage and check achievements
   const user = Auth.getUser();
@@ -1555,11 +1708,12 @@ async function showResults() {
     const newAchievements = getEarnedAchievements(newResults, QUIZZES).filter(a => !oldAchievements.includes(a.id));
 
     if (newAchievements.length > 0) {
+      Sound.achievement();
       const achHtml = newAchievements.map(a =>
         `<div class="new-ach-item"><span class="ach-icon">${a.icon}</span><div><div class="ach-title">${a.title}</div><div class="ach-desc">${a.description}</div></div></div>`
       ).join('');
       const achBlock = document.createElement('div');
-      achBlock.className = 'new-achievements';
+      achBlock.className = 'new-achievements anim-bounce';
       achBlock.innerHTML = `<h4>Нове досягнення!</h4>${achHtml}`;
       resultsDiv.querySelector('.results-buttons').before(achBlock);
     }

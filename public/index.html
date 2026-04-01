@@ -85,6 +85,24 @@
       box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
     }
 
+    .quiz-card.done {
+      border-color: rgba(52, 211, 153, 0.3);
+    }
+
+    .done-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(52,211,153,0.12); color: #34d399;
+      border-radius: 8px; padding: 3px 10px;
+      font-size: 0.78em; font-weight: 600;
+    }
+
+    .streak-bar {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.25);
+      border-radius: 20px; padding: 6px 16px; margin-top: 8px;
+      font-size: 0.9em; color: #fbbf24;
+    }
+
     .quiz-icon {
       font-size: 2em;
       margin-bottom: 10px;
@@ -194,12 +212,20 @@
     window.addEventListener('load', () => {
       const user = Auth.getUser();
       const authArea = document.getElementById('authArea');
+
+      // Show streak if active
+      const streakData = JSON.parse(localStorage.getItem('quiz_streak') || '{"streak":0}');
+      const streakHtml = streakData.streak >= 2
+        ? `<div><span class="streak-bar">🔥 Серія: <strong>${streakData.streak} дні поспіль</strong></span></div>`
+        : '';
+
       if (user) {
         authArea.innerHTML = Auth.profileBadgeHTML(user) +
           '<br><a href="my-results.html" class="my-results-link">📊 Мої результати</a>' +
-          ' · <a href="leaderboard.html" class="my-results-link">🏆 Рейтинг</a>';
+          ' · <a href="leaderboard.html" class="my-results-link">🏆 Рейтинг</a>' +
+          streakHtml;
       } else {
-        authArea.innerHTML = '<div id="googleBtn"></div>';
+        authArea.innerHTML = '<div id="googleBtn"></div>' + streakHtml;
         Auth.init(() => location.reload());
         setTimeout(() => { Auth.renderButton('googleBtn'); Auth.prompt(); }, 100);
       }
@@ -228,15 +254,20 @@
       grid.className = 'quiz-grid';
 
       sec.quizzes.forEach(quiz => {
+        const progress = JSON.parse(localStorage.getItem(`progress_${quiz.id}`) || 'null');
         const card = document.createElement('a');
-        card.className = 'quiz-card';
+        card.className = 'quiz-card' + (progress ? ' done' : '');
         card.href = `quiz.html?id=${quiz.id}`;
+        const doneBadge = progress
+          ? `<span class="done-badge">✓ ${progress.percentage}%</span>`
+          : '';
         card.innerHTML = `
           <span class="quiz-icon">${quiz.icon}</span>
           <h3>${quiz.title}</h3>
           <p>${quiz.description}</p>
           <div class="quiz-meta">
             <span>📝 ${quiz.questions.length} питань</span>
+            ${doneBadge}
           </div>
         `;
         grid.appendChild(card);

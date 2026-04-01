@@ -496,7 +496,8 @@ const QUIZZES = [
           '$\\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$'
         ],
         correct: 0,
-        explanation: '$\\sin(\\alpha + \\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$ — базова формула додавання.'
+        explanation: '$\\sin(\\alpha + \\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$ — базова формула додавання.',
+        hint: 'Перший доданок: sin від першого × cos від другого. Другий: cos від першого × sin від другого. Знак між ними такий самий, як у дужках.'
       },
       {
         question: 'Яка формула $\\cos(\\alpha - \\beta)$?',
@@ -507,7 +508,8 @@ const QUIZZES = [
           '$\\sin\\alpha\\sin\\beta + \\cos\\alpha\\cos\\beta$'
         ],
         correct: 1,
-        explanation: '$\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$. При відніманні — знак плюс!'
+        explanation: '$\\cos(\\alpha - \\beta) = \\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$. При відніманні — знак плюс!',
+        hint: 'Для $\\cos$ обох кутів — знак ПРОТИЛЕЖНИЙ знаку у дужках. $\\cos(\\alpha - \\beta)$ дає знак плюс!'
       },
       {
         question: 'Яка формула $\\sin(\\alpha - \\beta)$?',
@@ -540,7 +542,8 @@ const QUIZZES = [
           '$\\dfrac{\\operatorname{tg}\\alpha \\cdot \\operatorname{tg}\\beta}{1 + \\operatorname{tg}\\alpha + \\operatorname{tg}\\beta}$'
         ],
         correct: 2,
-        explanation: '$\\operatorname{tg}(\\alpha + \\beta) = \\dfrac{\\operatorname{tg}\\alpha + \\operatorname{tg}\\beta}{1 - \\operatorname{tg}\\alpha \\cdot \\operatorname{tg}\\beta}$.'
+        explanation: '$\\operatorname{tg}(\\alpha + \\beta) = \\dfrac{\\operatorname{tg}\\alpha + \\operatorname{tg}\\beta}{1 - \\operatorname{tg}\\alpha \\cdot \\operatorname{tg}\\beta}$.',
+        hint: 'Чисельник: сума тангенсів. Знаменник: 1 мінус добуток тангенсів (знак у знаменнику ПРОТИЛЕЖНИЙ до знаку в дужках).'
       },
       {
         question: 'Яка формула $\\operatorname{tg}(\\alpha - \\beta)$?',
