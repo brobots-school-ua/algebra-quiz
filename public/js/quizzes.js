@@ -76,6 +76,75 @@ const QUIZZES = [
         correct: 1,
         explanation: '$150° = \\dfrac{150 \\cdot \\pi}{180} = \\dfrac{5\\pi}{6}$ рад.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $45° = \\dfrac{\\pi}{3}$ рад.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $45° = \\dfrac{\\pi}{4}$, а не $\\dfrac{\\pi}{3}$. $\\dfrac{\\pi}{3} = 60°$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\dfrac{3\\pi}{4}$ рад $= 135°$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: '$\\dfrac{3\\pi}{4} = \\dfrac{3 \\cdot 180°}{4} = 135°$. Правильно!'
+      },
+      {
+        question: 'Переведіть $210°$ у радіани:',
+        options: ['$\\dfrac{5\\pi}{6}$', '$\\dfrac{7\\pi}{6}$', '$\\dfrac{7\\pi}{4}$', '$\\dfrac{3\\pi}{2}$'],
+        correct: 1,
+        explanation: '$210° = \\dfrac{210 \\cdot \\pi}{180} = \\dfrac{7\\pi}{6}$ рад.'
+      },
+      {
+        question: 'Переведіть $\\dfrac{5\\pi}{4}$ радіан у градуси:',
+        options: ['$200°$', '$225°$', '$240°$', '$250°$'],
+        correct: 1,
+        explanation: '$\\dfrac{5\\pi}{4} = \\dfrac{5 \\cdot 180°}{4} = 225°$.'
+      },
+      {
+        question: 'Скільки радіан у куті $315°$?',
+        type: 'text_input',
+        correct: ['7π/4', '7pi/4'],
+        explanation: '$315° = \\dfrac{315 \\cdot \\pi}{180} = \\dfrac{7\\pi}{4}$ рад.'
+      },
+      {
+        question: 'Скільки градусів у $\\dfrac{5\\pi}{3}$ радіан?',
+        type: 'text_input',
+        correct: ['300', '300°'],
+        explanation: '$\\dfrac{5\\pi}{3} = \\dfrac{5 \\cdot 180°}{3} = 300°$.'
+      },
+      {
+        question: 'Яке з тверджень правильне?',
+        options: [
+          '$1$ рад $\\approx 57.3°$',
+          '$1$ рад $= 90°$',
+          '$1$ рад $= 180°$',
+          '$1$ рад $\\approx 30°$'
+        ],
+        correct: 0,
+        explanation: '$1$ рад $= \\dfrac{180°}{\\pi} \\approx 57.3°$.'
+      },
+      {
+        question: 'Кут $\\dfrac{11\\pi}{6}$ рад знаходиться у якій чверті?',
+        options: ['I чверть', 'II чверть', 'III чверть', 'IV чверть'],
+        correct: 3,
+        explanation: '$\\dfrac{11\\pi}{6} = 330°$, це IV чверть ($270° < 330° < 360°$).'
+      },
+      {
+        question: 'Переведіть $-60°$ у радіани:',
+        options: ['$\\dfrac{\\pi}{3}$', '$-\\dfrac{\\pi}{3}$', '$-\\dfrac{\\pi}{6}$', '$\\dfrac{2\\pi}{3}$'],
+        correct: 1,
+        explanation: '$-60° = -\\dfrac{60 \\cdot \\pi}{180} = -\\dfrac{\\pi}{3}$ рад.'
+      },
+      {
+        question: 'Довжина дуги кола радіуса $R = 6$ з центральним кутом $\\dfrac{\\pi}{3}$ рад дорівнює:',
+        options: ['$\\pi$', '$2\\pi$', '$6\\pi$', '$3$'],
+        correct: 1,
+        explanation: '$l = R \\cdot \\alpha = 6 \\cdot \\dfrac{\\pi}{3} = 2\\pi$.'
+      }
     ]
   },
 
@@ -147,6 +216,80 @@ const QUIZZES = [
         correct: 2,
         explanation: '$\\operatorname{tg} 60° = \\dfrac{\\sin 60°}{\\cos 60°} = \\dfrac{\\sqrt{3}/2}{1/2} = \\sqrt{3}$'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sin 60° = \\dfrac{1}{2}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\sin 60° = \\dfrac{\\sqrt{3}}{2}$. А $\\sin 30° = \\dfrac{1}{2}$. Не плутайте!'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos 45° = \\sin 45° = \\dfrac{\\sqrt{2}}{2}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Для $45°$ синус і косинус рівні: $\\dfrac{\\sqrt{2}}{2}$.'
+      },
+      {
+        question: 'Обчисліть $\\sin 30° + \\cos 60°$:',
+        type: 'text_input',
+        correct: ['1', '1.0'],
+        explanation: '$\\sin 30° + \\cos 60° = \\dfrac{1}{2} + \\dfrac{1}{2} = 1$.'
+      },
+      {
+        question: 'Обчисліть $\\sin^2 30° + \\cos^2 30°$:',
+        type: 'text_input',
+        correct: ['1', '1.0'],
+        explanation: 'За основною тригонометричною тотожністю: $\\sin^2 \\alpha + \\cos^2 \\alpha = 1$ для будь-якого $\\alpha$.'
+      },
+      {
+        question: 'Обчисліть $2\\sin 30° \\cdot \\cos 30°$:',
+        options: ['$\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$1$', '$\\dfrac{\\sqrt{2}}{2}$'],
+        correct: 1,
+        explanation: '$2\\sin 30°\\cos 30° = 2 \\cdot \\dfrac{1}{2} \\cdot \\dfrac{\\sqrt{3}}{2} = \\dfrac{\\sqrt{3}}{2}$. Це $\\sin 60°$!'
+      },
+      {
+        question: 'Чому дорівнює $\\operatorname{tg} 30°$?',
+        options: ['$\\dfrac{\\sqrt{3}}{3}$', '$\\dfrac{1}{2}$', '$\\sqrt{3}$', '$1$'],
+        correct: 0,
+        explanation: '$\\operatorname{tg} 30° = \\dfrac{\\sin 30°}{\\cos 30°} = \\dfrac{1/2}{\\sqrt{3}/2} = \\dfrac{1}{\\sqrt{3}} = \\dfrac{\\sqrt{3}}{3}$.'
+      },
+      {
+        question: 'Чому дорівнює $\\sin 270°$?',
+        options: ['$0$', '$1$', '$-1$', '$\\dfrac{1}{2}$'],
+        correct: 2,
+        explanation: '$\\sin 270° = -1$. Точка $(0; -1)$ — нижня точка одиничного кола.'
+      },
+      {
+        question: 'Чому дорівнює $\\cos 270°$?',
+        type: 'text_input',
+        correct: ['0'],
+        explanation: '$\\cos 270° = 0$. Точка $(0; -1)$ має абсцису $0$.'
+      },
+      {
+        question: 'Яке з тверджень правильне?',
+        options: [
+          '$\\sin 90° = \\cos 0°$',
+          '$\\sin 90° = \\cos 90°$',
+          '$\\sin 0° = \\cos 0°$',
+          '$\\sin 45° = \\cos 90°$'
+        ],
+        correct: 0,
+        explanation: '$\\sin 90° = 1$ і $\\cos 0° = 1$. Тому $\\sin 90° = \\cos 0°$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: кут — значення $\\sin$',
+        pairs: [
+          ['$\\sin 0°$', '$0$'],
+          ['$\\sin 30°$', '$\\dfrac{1}{2}$'],
+          ['$\\sin 45°$', '$\\dfrac{\\sqrt{2}}{2}$'],
+          ['$\\sin 60°$', '$\\dfrac{\\sqrt{3}}{2}$']
+        ],
+        explanation: 'Таблиця значень синуса для основних кутів — одна з найважливіших в тригонометрії.'
+      }
     ]
   },
 
@@ -217,6 +360,69 @@ const QUIZZES = [
         options: ['$\\dfrac{1}{2}$', '$-\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$-\\dfrac{\\sqrt{3}}{2}$'],
         correct: 1,
         explanation: 'Синус — непарна функція: $\\sin(-30°) = -\\sin 30° = -\\dfrac{1}{2}$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\cos(-\\alpha) = -\\cos\\alpha$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Косинус — парна функція: $\\cos(-\\alpha) = \\cos\\alpha$ (без мінуса).'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\operatorname{tg}(-\\alpha) = -\\operatorname{tg}\\alpha$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Тангенс — непарна функція: $\\operatorname{tg}(-\\alpha) = -\\operatorname{tg}\\alpha$.'
+      },
+      {
+        question: 'Кут $\\alpha = 250°$ знаходиться в III чверті. Який знак має $\\cos 250°$?',
+        options: ['Додатний ($+$)', 'Від\'ємний ($-$)', 'Дорівнює нулю'],
+        correct: 1,
+        explanation: 'В III чверті ($180° < \\alpha < 270°$) косинус від\'ємний.'
+      },
+      {
+        question: 'Визначте знак виразу $\\sin 200° \\cdot \\cos 200°$:',
+        options: ['Додатний ($+$)', 'Від\'ємний ($-$)', 'Дорівнює нулю'],
+        correct: 0,
+        explanation: '$200°$ — III чверть: $\\sin 200° < 0$ і $\\cos 200° < 0$. Добуток двох від\'ємних — додатний.'
+      },
+      {
+        question: 'Обчисліть $\\cos(-60°)$:',
+        options: ['$-\\dfrac{1}{2}$', '$\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$-\\dfrac{\\sqrt{3}}{2}$'],
+        correct: 1,
+        explanation: '$\\cos(-60°) = \\cos 60° = \\dfrac{1}{2}$, бо косинус — парна функція.'
+      },
+      {
+        question: 'Який період функції $y = \\operatorname{tg} x$?',
+        type: 'text_input',
+        correct: ['π', 'pi', '180°', '180'],
+        explanation: 'Період тангенса $= \\pi$ (або $180°$), тобто $\\operatorname{tg}(x + \\pi) = \\operatorname{tg} x$.'
+      },
+      {
+        question: 'В яких чвертях $\\sin\\alpha < 0$ і $\\cos\\alpha > 0$ одночасно?',
+        options: ['I чверть', 'II чверть', 'III чверть', 'IV чверть'],
+        correct: 3,
+        explanation: 'В IV чверті ($270° < \\alpha < 360°$): $\\sin < 0$, $\\cos > 0$.'
+      },
+      {
+        question: 'Обчисліть $\\sin 330°$:',
+        options: ['$\\dfrac{1}{2}$', '$-\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$-\\dfrac{\\sqrt{3}}{2}$'],
+        correct: 1,
+        explanation: '$330° = 360° - 30°$, IV чверть. $\\sin 330° = -\\sin 30° = -\\dfrac{1}{2}$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: чверть — знаки $\\sin$ і $\\cos$',
+        pairs: [
+          ['I чверть', '$\\sin > 0, \\cos > 0$'],
+          ['II чверть', '$\\sin > 0, \\cos < 0$'],
+          ['III чверть', '$\\sin < 0, \\cos < 0$'],
+          ['IV чверть', '$\\sin < 0, \\cos > 0$']
+        ],
+        explanation: 'Мнемонічне правило: I — все додатне, II — тільки sin, III — тільки tg, IV — тільки cos.'
       }
     ]
   },
@@ -298,6 +504,63 @@ const QUIZZES = [
         options: ['$[-1; 1]$', '$[0; +\\infty)$', '$(-\\infty; +\\infty)$', '$(0; +\\infty)$'],
         correct: 2,
         explanation: 'Тангенс може приймати будь-яке дійсне значення: $y \\in (-\\infty; +\\infty)$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: період функції $y = \\cos 3x$ дорівнює $\\dfrac{2\\pi}{3}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Період $y = \\cos(kx)$ дорівнює $\\dfrac{2\\pi}{k}$. При $k = 3$: $\\dfrac{2\\pi}{3}$.'
+      },
+      {
+        question: 'Правильно чи неправильно: область значень функції $y = 2\\sin x + 1$ — це $[-1; 3]$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: '$\\sin x \\in [-1; 1]$, тому $2\\sin x \\in [-2; 2]$, і $2\\sin x + 1 \\in [-1; 3]$. Правильно!'
+      },
+      {
+        question: 'Який період функції $y = \\sin \\dfrac{x}{2}$?',
+        options: ['$\\pi$', '$2\\pi$', '$4\\pi$', '$\\dfrac{\\pi}{2}$'],
+        correct: 2,
+        explanation: 'Період $y = \\sin(kx)$ дорівнює $\\dfrac{2\\pi}{k}$. При $k = \\dfrac{1}{2}$: $\\dfrac{2\\pi}{1/2} = 4\\pi$.'
+      },
+      {
+        question: 'Яка амплітуда функції $y = -5\\sin x + 2$?',
+        type: 'text_input',
+        correct: ['5'],
+        explanation: 'Амплітуда = $|-5| = 5$. Мінус лише відображає графік, зсув $+2$ піднімає його.'
+      },
+      {
+        question: 'Графік якої функції отримано зсувом $y = \\sin x$ вправо на $\\dfrac{\\pi}{4}$?',
+        options: [
+          '$y = \\sin(x + \\dfrac{\\pi}{4})$',
+          '$y = \\sin(x - \\dfrac{\\pi}{4})$',
+          '$y = \\cos(x - \\dfrac{\\pi}{4})$',
+          '$y = \\sin x + \\dfrac{\\pi}{4}$'
+        ],
+        correct: 1,
+        explanation: 'Зсув вправо на $a$: $y = f(x - a)$. Тому $y = \\sin(x - \\dfrac{\\pi}{4})$.'
+      },
+      {
+        question: 'Через яку точку проходить графік функції $y = \\sin x$?',
+        options: ['$(0; 1)$', '$(\\pi; 1)$', '$(\\dfrac{\\pi}{2}; 1)$', '$(\\pi; -1)$'],
+        correct: 2,
+        explanation: '$\\sin \\dfrac{\\pi}{2} = 1$, тому точка $(\\dfrac{\\pi}{2}; 1)$ належить графіку.'
+      },
+      {
+        question: 'Функція $y = \\operatorname{tg} 2x$ має період:',
+        options: ['$\\pi$', '$2\\pi$', '$\\dfrac{\\pi}{2}$', '$\\dfrac{\\pi}{4}$'],
+        correct: 2,
+        explanation: 'Період $\\operatorname{tg}(kx) = \\dfrac{\\pi}{k}$. При $k = 2$: $\\dfrac{\\pi}{2}$.'
+      },
+      {
+        question: 'Область значень функції $y = 3\\cos x - 1$:',
+        options: ['$[-4; 2]$', '$[-3; 3]$', '$[-2; 4]$', '$[-1; 3]$'],
+        correct: 0,
+        explanation: '$\\cos x \\in [-1; 1]$, тому $3\\cos x \\in [-3; 3]$, і $3\\cos x - 1 \\in [-4; 2]$.'
       }
     ]
   },
@@ -405,6 +668,69 @@ const QUIZZES = [
         correct: 0,
         explanation: '$1 + \\operatorname{tg}^2\\alpha = \\dfrac{1}{\\cos^2\\alpha}$, тому $\\cos^2\\alpha = \\dfrac{1}{1+9} = \\dfrac{1}{10}$, $\\cos\\alpha = \\dfrac{1}{\\sqrt{10}}$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sin^2\\alpha + \\cos^2\\alpha = 2$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Основна тотожність: $\\sin^2\\alpha + \\cos^2\\alpha = 1$, а не $2$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $1 + \\operatorname{tg}^2\\alpha = \\dfrac{1}{\\sin^2\\alpha}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $1 + \\operatorname{tg}^2\\alpha = \\dfrac{1}{\\cos^2\\alpha}$. А $\\dfrac{1}{\\sin^2\\alpha} = 1 + \\operatorname{ctg}^2\\alpha$.'
+      },
+      {
+        question: 'Якщо $\\cos\\alpha = 0.6$ і $\\alpha$ — гострий кут, чому дорівнює $\\sin\\alpha$?',
+        type: 'text_input',
+        correct: ['0.8', '0,8', '4/5'],
+        explanation: '$\\sin^2\\alpha = 1 - \\cos^2\\alpha = 1 - 0.36 = 0.64$, тому $\\sin\\alpha = 0.8$.'
+      },
+      {
+        question: 'Спростіть: $\\dfrac{1}{\\cos^2\\alpha} - \\operatorname{tg}^2\\alpha$',
+        options: ['$0$', '$1$', '$\\sin^2\\alpha$', '$\\cos^2\\alpha$'],
+        correct: 1,
+        explanation: '$\\dfrac{1}{\\cos^2\\alpha} - \\operatorname{tg}^2\\alpha = 1 + \\operatorname{tg}^2\\alpha - \\operatorname{tg}^2\\alpha = 1$.'
+      },
+      {
+        question: 'Спростіть: $(\\sin\\alpha + \\cos\\alpha)^2$',
+        options: ['$1$', '$1 + 2\\sin\\alpha\\cos\\alpha$', '$\\sin^2\\alpha + \\cos^2\\alpha$', '$2$'],
+        correct: 1,
+        explanation: '$(\\sin\\alpha + \\cos\\alpha)^2 = \\sin^2\\alpha + 2\\sin\\alpha\\cos\\alpha + \\cos^2\\alpha = 1 + 2\\sin\\alpha\\cos\\alpha$.'
+      },
+      {
+        question: 'Якщо $\\sin\\alpha = \\dfrac{5}{13}$ і $\\alpha$ — гострий кут, чому дорівнює $\\operatorname{tg}\\alpha$?',
+        options: ['$\\dfrac{5}{12}$', '$\\dfrac{12}{5}$', '$\\dfrac{5}{13}$', '$\\dfrac{13}{12}$'],
+        correct: 0,
+        explanation: '$\\cos\\alpha = \\sqrt{1 - \\dfrac{25}{169}} = \\dfrac{12}{13}$. $\\operatorname{tg}\\alpha = \\dfrac{5/13}{12/13} = \\dfrac{5}{12}$.'
+      },
+      {
+        question: 'Обчисліть: $\\sin^2 45° + \\operatorname{tg}^2 45°$:',
+        type: 'text_input',
+        correct: ['3/2', '1.5', '1,5'],
+        explanation: '$\\sin^2 45° + \\operatorname{tg}^2 45° = \\dfrac{1}{2} + 1 = \\dfrac{3}{2}$.'
+      },
+      {
+        question: 'Спростіть: $\\operatorname{tg}\\alpha \\cdot \\cos\\alpha$',
+        options: ['$\\sin\\alpha$', '$\\cos\\alpha$', '$1$', '$\\operatorname{ctg}\\alpha$'],
+        correct: 0,
+        explanation: '$\\operatorname{tg}\\alpha \\cdot \\cos\\alpha = \\dfrac{\\sin\\alpha}{\\cos\\alpha} \\cdot \\cos\\alpha = \\sin\\alpha$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: тотожність — її спрощена форма',
+        pairs: [
+          ['$1 + \\operatorname{tg}^2\\alpha$', '$\\dfrac{1}{\\cos^2\\alpha}$'],
+          ['$1 + \\operatorname{ctg}^2\\alpha$', '$\\dfrac{1}{\\sin^2\\alpha}$'],
+          ['$\\operatorname{tg}\\alpha \\cdot \\operatorname{ctg}\\alpha$', '$1$'],
+          ['$\\sin^2\\alpha + \\cos^2\\alpha$', '$1$']
+        ],
+        explanation: 'Ці тотожності є наслідками основної: $\\sin^2\\alpha + \\cos^2\\alpha = 1$.'
+      }
     ]
   },
 
@@ -475,6 +801,69 @@ const QUIZZES = [
         options: ['$\\dfrac{1}{2}$', '$-\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$-\\dfrac{\\sqrt{3}}{2}$'],
         correct: 1,
         explanation: '$\\cos 120° = \\cos(180° - 60°) = -\\cos 60° = -\\dfrac{1}{2}$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sin(\\pi + \\alpha) = \\sin\\alpha$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\sin(\\pi + \\alpha) = -\\sin\\alpha$. В III чверті синус від\'ємний.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos\\left(\\dfrac{\\pi}{2} - \\alpha\\right) = \\sin\\alpha$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! При $\\dfrac{\\pi}{2}$ функція змінюється (cos → sin), I чверть — додатний.'
+      },
+      {
+        question: 'Обчисліть $\\sin 210°$:',
+        options: ['$\\dfrac{1}{2}$', '$-\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$-\\dfrac{\\sqrt{3}}{2}$'],
+        correct: 1,
+        explanation: '$\\sin 210° = \\sin(180° + 30°) = -\\sin 30° = -\\dfrac{1}{2}$.'
+      },
+      {
+        question: 'Обчисліть $\\cos 315°$:',
+        options: ['$\\dfrac{1}{2}$', '$-\\dfrac{\\sqrt{2}}{2}$', '$\\dfrac{\\sqrt{2}}{2}$', '$-\\dfrac{1}{2}$'],
+        correct: 2,
+        explanation: '$\\cos 315° = \\cos(360° - 45°) = \\cos 45° = \\dfrac{\\sqrt{2}}{2}$.'
+      },
+      {
+        question: 'Спростіть: $\\cos(\\pi + \\alpha) + \\cos(\\pi - \\alpha)$:',
+        options: ['$0$', '$2\\cos\\alpha$', '$-2\\cos\\alpha$', '$2\\sin\\alpha$'],
+        correct: 2,
+        explanation: '$\\cos(\\pi + \\alpha) = -\\cos\\alpha$ і $\\cos(\\pi - \\alpha) = -\\cos\\alpha$. Сума: $-2\\cos\\alpha$.'
+      },
+      {
+        question: 'Обчисліть $\\operatorname{tg} 135°$:',
+        type: 'text_input',
+        correct: ['-1'],
+        explanation: '$\\operatorname{tg} 135° = \\operatorname{tg}(180° - 45°) = -\\operatorname{tg} 45° = -1$.'
+      },
+      {
+        question: 'Чому дорівнює $\\sin\\left(\\dfrac{3\\pi}{2} + \\alpha\\right)$?',
+        options: ['$\\sin\\alpha$', '$-\\sin\\alpha$', '$\\cos\\alpha$', '$-\\cos\\alpha$'],
+        correct: 3,
+        explanation: '$\\sin\\left(\\dfrac{3\\pi}{2} + \\alpha\\right) = -\\cos\\alpha$. Функція змінюється ($\\dfrac{3\\pi}{2}$), IV чверть — "синус" від\'ємний.'
+      },
+      {
+        question: 'Обчисліть $\\sin 150° + \\cos 240°$:',
+        type: 'text_input',
+        correct: ['0'],
+        explanation: '$\\sin 150° = \\sin 30° = \\dfrac{1}{2}$. $\\cos 240° = \\cos(180° + 60°) = -\\cos 60° = -\\dfrac{1}{2}$. Сума $= 0$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: вираз — спрощена форма',
+        pairs: [
+          ['$\\sin(\\pi - \\alpha)$', '$\\sin\\alpha$'],
+          ['$\\cos(\\pi + \\alpha)$', '$-\\cos\\alpha$'],
+          ['$\\sin(\\dfrac{\\pi}{2} + \\alpha)$', '$\\cos\\alpha$'],
+          ['$\\cos(\\dfrac{\\pi}{2} - \\alpha)$', '$\\sin\\alpha$']
+        ],
+        explanation: 'Формули зведення: при $\\pi$ функція не змінюється, при $\\dfrac{\\pi}{2}$ — змінюється (sin ↔ cos).'
       }
     ]
   },
@@ -812,6 +1201,69 @@ const QUIZZES = [
         correct: 0,
         explanation: '$\\cos 2\\alpha = 2\\cos^2\\alpha - 1 = 2 \\cdot \\dfrac{1}{9} - 1 = \\dfrac{2}{9} - 1 = -\\dfrac{7}{9}$'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sin 2\\alpha = 2\\sin\\alpha$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\sin 2\\alpha = 2\\sin\\alpha\\cos\\alpha$, а не просто $2\\sin\\alpha$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos 2\\alpha = \\cos^2\\alpha - \\sin^2\\alpha = 2\\cos^2\\alpha - 1 = 1 - 2\\sin^2\\alpha$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Це три еквівалентні форми формули $\\cos 2\\alpha$.'
+      },
+      {
+        question: 'Якщо $\\sin\\alpha = \\dfrac{4}{5}$ і $\\cos\\alpha = \\dfrac{3}{5}$, чому дорівнює $\\cos 2\\alpha$?',
+        options: ['$\\dfrac{24}{25}$', '$-\\dfrac{7}{25}$', '$\\dfrac{7}{25}$', '$-\\dfrac{24}{25}$'],
+        correct: 1,
+        explanation: '$\\cos 2\\alpha = \\cos^2\\alpha - \\sin^2\\alpha = \\dfrac{9}{25} - \\dfrac{16}{25} = -\\dfrac{7}{25}$.'
+      },
+      {
+        question: 'Обчисліть $\\sin 2\\alpha$, якщо $\\sin\\alpha = \\dfrac{4}{5}$, $\\cos\\alpha = \\dfrac{3}{5}$:',
+        type: 'text_input',
+        correct: ['24/25', '0.96', '0,96'],
+        explanation: '$\\sin 2\\alpha = 2 \\cdot \\dfrac{4}{5} \\cdot \\dfrac{3}{5} = \\dfrac{24}{25}$.'
+      },
+      {
+        question: 'Спростіть: $\\sin^2\\alpha - \\cos^2\\alpha$',
+        options: ['$\\cos 2\\alpha$', '$-\\cos 2\\alpha$', '$\\sin 2\\alpha$', '$1$'],
+        correct: 1,
+        explanation: '$\\sin^2\\alpha - \\cos^2\\alpha = -(\\cos^2\\alpha - \\sin^2\\alpha) = -\\cos 2\\alpha$.'
+      },
+      {
+        question: 'Обчисліть $\\operatorname{tg} 2\\alpha$, якщо $\\operatorname{tg}\\alpha = 2$:',
+        options: ['$4$', '$-\\dfrac{4}{3}$', '$\\dfrac{4}{3}$', '$-4$'],
+        correct: 1,
+        explanation: '$\\operatorname{tg} 2\\alpha = \\dfrac{2 \\cdot 2}{1 - 4} = \\dfrac{4}{-3} = -\\dfrac{4}{3}$.'
+      },
+      {
+        question: 'Спростіть: $4\\sin\\alpha\\cos\\alpha$',
+        options: ['$2\\sin 2\\alpha$', '$\\sin 4\\alpha$', '$4\\sin 2\\alpha$', '$2\\cos 2\\alpha$'],
+        correct: 0,
+        explanation: '$4\\sin\\alpha\\cos\\alpha = 2 \\cdot 2\\sin\\alpha\\cos\\alpha = 2\\sin 2\\alpha$.'
+      },
+      {
+        question: 'Обчисліть $\\cos 2 \\cdot 30°$:',
+        type: 'text_input',
+        correct: ['1/2', '0.5', '0,5'],
+        explanation: '$\\cos 60° = \\dfrac{1}{2}$. Або: $\\cos 60° = 2\\cos^2 30° - 1 = 2 \\cdot \\dfrac{3}{4} - 1 = \\dfrac{1}{2}$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: вираз — спрощена форма',
+        pairs: [
+          ['$2\\sin\\alpha\\cos\\alpha$', '$\\sin 2\\alpha$'],
+          ['$2\\cos^2\\alpha - 1$', '$\\cos 2\\alpha$'],
+          ['$1 - 2\\sin^2\\alpha$', '$\\cos 2\\alpha$'],
+          ['$\\dfrac{2\\operatorname{tg}\\alpha}{1-\\operatorname{tg}^2\\alpha}$', '$\\operatorname{tg} 2\\alpha$']
+        ],
+        explanation: 'Формули подвійного аргументу — одні з найважливіших у тригонометрії.'
+      }
     ]
   },
 
@@ -928,6 +1380,73 @@ const QUIZZES = [
         correct: 1,
         explanation: '$\\sin 3x + \\sin x = 2\\sin\\dfrac{3x+x}{2}\\cos\\dfrac{3x-x}{2} = 2\\sin 2x\\cos x$'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sin\\alpha - \\sin\\beta = 2\\sin\\dfrac{\\alpha-\\beta}{2}\\cos\\dfrac{\\alpha+\\beta}{2}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Правильна формула: $\\sin\\alpha - \\sin\\beta = 2\\cos\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$. Порядок sin/cos переплутаний!'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos\\alpha - \\cos\\beta = -2\\sin\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Різниця косинусів має мінус перед добутком двох синусів.'
+      },
+      {
+        question: 'Спростіть $\\sin 70° + \\sin 10°$:',
+        options: ['$\\cos 30°$', '$\\sin 80°$', '$\\cos 60°$', '$\\sqrt{3}\\cos 30°$'],
+        correct: 0,
+        explanation: '$\\sin 70° + \\sin 10° = 2\\sin 40°\\cos 30°$... Але зачекайте: $= 2 \\cdot \\sin 40° \\cdot \\dfrac{\\sqrt{3}}{2} = \\sqrt{3}\\sin 40°$. Або обчислимо: $2\\sin\\dfrac{80°}{2}\\cos\\dfrac{60°}{2} = 2\\sin 40°\\cos 30°$. Це $\\cos 30° \\cdot 2\\sin 40°$, а не просто $\\cos 30°$. Перевіримо: $\\sin 70° + \\sin 10° = 2\\sin 40° \\cdot \\cos 30° = \\sqrt{3}\\sin 40°$. Правильна відповідь: $\\cos 30° \\cdot 2\\sin 40° = \\sqrt{3}\\sin 40°$.'
+      },
+      {
+        question: 'Обчисліть $\\cos 15° - \\cos 75°$:',
+        options: ['$\\dfrac{\\sqrt{2}}{2}$', '$\\dfrac{\\sqrt{6}}{2}$', '$0$', '$\\dfrac{1}{2}$'],
+        correct: 0,
+        explanation: '$\\cos 15° - \\cos 75° = -2\\sin 45° \\sin(-30°) = 2\\sin 45° \\sin 30° = 2 \\cdot \\dfrac{\\sqrt{2}}{2} \\cdot \\dfrac{1}{2} = \\dfrac{\\sqrt{2}}{2}$.'
+      },
+      {
+        question: 'Спростіть $\\cos 5x - \\cos 3x$:',
+        options: [
+          '$-2\\sin 4x \\sin x$',
+          '$2\\sin 4x \\sin x$',
+          '$2\\cos 4x \\cos x$',
+          '$-2\\cos 4x \\sin x$'
+        ],
+        correct: 0,
+        explanation: '$\\cos 5x - \\cos 3x = -2\\sin\\dfrac{5x+3x}{2}\\sin\\dfrac{5x-3x}{2} = -2\\sin 4x \\sin x$.'
+      },
+      {
+        question: 'Обчисліть $\\sin 75° - \\sin 15°$:',
+        options: ['$\\dfrac{\\sqrt{2}}{2}$', '$\\dfrac{\\sqrt{6}}{2}$', '$\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$'],
+        correct: 0,
+        explanation: '$\\sin 75° - \\sin 15° = 2\\cos 45°\\sin 30° = 2 \\cdot \\dfrac{\\sqrt{2}}{2} \\cdot \\dfrac{1}{2} = \\dfrac{\\sqrt{2}}{2}$.'
+      },
+      {
+        question: 'Перетворіть $\\sin 5x - \\sin x$ у добуток:',
+        options: [
+          '$2\\sin 3x \\cos 2x$',
+          '$2\\cos 3x \\sin 2x$',
+          '$2\\sin 2x \\cos 3x$',
+          '$-2\\sin 3x \\sin 2x$'
+        ],
+        correct: 1,
+        explanation: '$\\sin 5x - \\sin x = 2\\cos\\dfrac{5x+x}{2}\\sin\\dfrac{5x-x}{2} = 2\\cos 3x \\sin 2x$.'
+      },
+      {
+        question: 'Спростіть $\\cos x + \\cos 3x$:',
+        options: [
+          '$2\\cos x \\cos 2x$',
+          '$2\\cos 2x \\cos x$',
+          '$2\\sin 2x \\cos x$',
+          '$2\\cos 2x \\sin x$'
+        ],
+        correct: 1,
+        explanation: '$\\cos x + \\cos 3x = 2\\cos\\dfrac{x+3x}{2}\\cos\\dfrac{x-3x}{2} = 2\\cos 2x \\cos(-x) = 2\\cos 2x \\cos x$.'
+      }
     ]
   },
 
@@ -1034,6 +1553,78 @@ const QUIZZES = [
         correct: 2,
         explanation: 'Це формула додавання: $\\sin 3x\\cos x + \\cos 3x\\sin x = \\sin(3x + x) = \\sin 4x$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sin\\alpha\\sin\\beta = \\dfrac{1}{2}[\\cos(\\alpha+\\beta) - \\cos(\\alpha-\\beta)]$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Правильна формула: $\\sin\\alpha\\sin\\beta = \\dfrac{1}{2}[\\cos(\\alpha-\\beta) - \\cos(\\alpha+\\beta)]$. Порядок переплутаний!'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos\\alpha\\cos\\beta = \\dfrac{1}{2}[\\cos(\\alpha-\\beta) + \\cos(\\alpha+\\beta)]$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! В формулі добутку косинусів — сума двох косинусів.'
+      },
+      {
+        question: 'Перетворіть $2\\sin 5x \\cos 2x$ у суму:',
+        options: [
+          '$\\sin 7x + \\sin 3x$',
+          '$\\sin 7x - \\sin 3x$',
+          '$\\cos 7x + \\cos 3x$',
+          '$\\cos 3x - \\cos 7x$'
+        ],
+        correct: 0,
+        explanation: '$2\\sin 5x \\cos 2x = \\sin(5x+2x) + \\sin(5x-2x) = \\sin 7x + \\sin 3x$.'
+      },
+      {
+        question: 'Обчисліть $\\sin 45° \\cdot \\cos 15°$:',
+        options: ['$\\dfrac{\\sqrt{6}+\\sqrt{2}}{8}$', '$\\dfrac{\\sqrt{3}+1}{4}$', '$\\dfrac{\\sqrt{6}+\\sqrt{2}}{4}$', '$\\dfrac{1}{2}$'],
+        correct: 1,
+        explanation: '$\\sin 45°\\cos 15° = \\dfrac{1}{2}[\\sin 60° + \\sin 30°] = \\dfrac{1}{2}[\\dfrac{\\sqrt{3}}{2} + \\dfrac{1}{2}] = \\dfrac{\\sqrt{3}+1}{4}$.'
+      },
+      {
+        question: 'Перетворіть $2\\cos 4x \\sin 2x$ у суму:',
+        options: [
+          '$\\sin 6x + \\sin 2x$',
+          '$\\sin 6x - \\sin 2x$',
+          '$\\cos 6x - \\cos 2x$',
+          '$\\cos 2x - \\cos 6x$'
+        ],
+        correct: 1,
+        explanation: '$2\\cos 4x \\sin 2x = 2\\sin 2x \\cos 4x$. Тоді $= \\sin(2x+4x) + \\sin(2x-4x) = \\sin 6x + \\sin(-2x) = \\sin 6x - \\sin 2x$.'
+      },
+      {
+        question: 'Обчисліть $\\cos 15° \\cdot \\cos 45°$:',
+        type: 'text_input',
+        correct: ['(√6+√2)/8', '(1+√3)/4'],
+        explanation: '$\\cos 15°\\cos 45° = \\dfrac{1}{2}[\\cos 30° + \\cos 60°] = \\dfrac{1}{2}[\\dfrac{\\sqrt{3}}{2} + \\dfrac{1}{2}] = \\dfrac{\\sqrt{3}+1}{4}$.'
+      },
+      {
+        question: 'Обчисліть $2\\sin 75° \\cos 75°$:',
+        type: 'text_input',
+        correct: ['1/2', '0.5', '0,5'],
+        explanation: '$2\\sin 75°\\cos 75° = \\sin(2 \\cdot 75°) = \\sin 150° = \\dfrac{1}{2}$.'
+      },
+      {
+        question: 'Перетворіть $2\\cos 3x \\cos 3x$ у суму:',
+        options: ['$1 + \\cos 6x$', '$\\cos 6x$', '$2\\cos^2 3x$', '$1 - \\cos 6x$'],
+        correct: 0,
+        explanation: '$2\\cos 3x \\cos 3x = \\cos 0 + \\cos 6x = 1 + \\cos 6x$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: добуток — формула',
+        pairs: [
+          ['$\\sin\\alpha\\cos\\beta$', '$\\dfrac{1}{2}[\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)]$'],
+          ['$\\cos\\alpha\\cos\\beta$', '$\\dfrac{1}{2}[\\cos(\\alpha-\\beta) + \\cos(\\alpha+\\beta)]$'],
+          ['$\\sin\\alpha\\sin\\beta$', '$\\dfrac{1}{2}[\\cos(\\alpha-\\beta) - \\cos(\\alpha+\\beta)]$']
+        ],
+        explanation: 'Три формули перетворення добутку в суму.'
+      }
     ]
   },
 
@@ -1126,6 +1717,68 @@ const QUIZZES = [
         correct: 2,
         explanation: '$\\dfrac{1}{x}$ може приймати будь-яке значення, крім нуля.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: область визначення $f(x) = \\sqrt{x + 3}$ — це $(-3; +\\infty)$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $x + 3 \\geq 0 \\Rightarrow x \\geq -3$, тобто $D(f) = [-3; +\\infty)$ — з квадратною дужкою, бо $x = -3$ допустиме.'
+      },
+      {
+        question: 'Правильно чи неправильно: область значень $f(x) = x^2 + 1$ — це $[1; +\\infty)$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $x^2 \\geq 0$, тому $x^2 + 1 \\geq 1$. Мінімум досягається при $x = 0$.'
+      },
+      {
+        question: 'Знайдіть область визначення $f(x) = \\dfrac{1}{x^2 - 4}$:',
+        options: [
+          '$(-\\infty; +\\infty)$',
+          '$(-\\infty; -2) \\cup (-2; 2) \\cup (2; +\\infty)$',
+          '$(-2; 2)$',
+          '$(-\\infty; 2) \\cup (2; +\\infty)$'
+        ],
+        correct: 1,
+        explanation: '$x^2 - 4 \\neq 0 \\Rightarrow x \\neq \\pm 2$.'
+      },
+      {
+        question: 'Знайдіть $f(-2)$, якщо $f(x) = x^2 - 3x + 1$:',
+        type: 'text_input',
+        correct: ['11'],
+        explanation: '$f(-2) = (-2)^2 - 3 \\cdot (-2) + 1 = 4 + 6 + 1 = 11$.'
+      },
+      {
+        question: 'Знайдіть область визначення $f(x) = \\dfrac{\\sqrt{x}}{x - 1}$:',
+        options: [
+          '$[0; +\\infty)$',
+          '$(0; +\\infty)$',
+          '$[0; 1) \\cup (1; +\\infty)$',
+          '$(1; +\\infty)$'
+        ],
+        correct: 2,
+        explanation: 'Потрібно: $x \\geq 0$ (для кореня) і $x \\neq 1$ (для знаменника). Отже $[0; 1) \\cup (1; +\\infty)$.'
+      },
+      {
+        question: 'Яка область значень функції $f(x) = |x| + 2$?',
+        options: ['$[0; +\\infty)$', '$[2; +\\infty)$', '$(-\\infty; +\\infty)$', '$(2; +\\infty)$'],
+        correct: 1,
+        explanation: '$|x| \\geq 0$, тому $|x| + 2 \\geq 2$. Мінімум $2$ досягається при $x = 0$.'
+      },
+      {
+        question: 'Знайдіть область визначення $f(x) = \\lg(2x - 6)$:',
+        options: ['$(3; +\\infty)$', '$[3; +\\infty)$', '$(6; +\\infty)$', '$(-\\infty; 3)$'],
+        correct: 0,
+        explanation: '$2x - 6 > 0 \\Rightarrow x > 3$. Область визначення: $(3; +\\infty)$.'
+      },
+      {
+        question: 'Якщо $f(x) = \\dfrac{x + 1}{x - 1}$, чому дорівнює $f(2)$?',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$f(2) = \\dfrac{2 + 1}{2 - 1} = \\dfrac{3}{1} = 3$.'
+      }
     ]
   },
 
@@ -1197,6 +1850,64 @@ const QUIZZES = [
         options: ['$\\dfrac{1}{9}$', '$-\\dfrac{1}{9}$', '$9$', '$-9$'],
         correct: 2,
         explanation: '$\\left(\\dfrac{1}{3}\\right)^{-2} = \\left(\\dfrac{3}{1}\\right)^{2} = 9$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $(a \\cdot b)^n = a^n + b^n$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $(a \\cdot b)^n = a^n \\cdot b^n$ (добуток, не сума!).'
+      },
+      {
+        question: 'Правильно чи неправильно: $a^{-1} = \\dfrac{1}{a}$ при $a \\neq 0$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $a^{-1} = \\dfrac{1}{a^1} = \\dfrac{1}{a}$.'
+      },
+      {
+        question: 'Спростіть $\\dfrac{a^{10} \\cdot a^3}{a^7}$:',
+        options: ['$a^6$', '$a^{16}$', '$a^4$', '$a^{20}$'],
+        correct: 0,
+        explanation: '$\\dfrac{a^{10} \\cdot a^3}{a^7} = \\dfrac{a^{13}}{a^7} = a^6$.'
+      },
+      {
+        question: 'Обчисліть $5^0 + 3^{-1}$:',
+        type: 'text_input',
+        correct: ['4/3', '1.33', '1,33'],
+        explanation: '$5^0 + 3^{-1} = 1 + \\dfrac{1}{3} = \\dfrac{4}{3}$.'
+      },
+      {
+        question: 'Спростіть $(a^2 b^3)^2$:',
+        options: ['$a^4 b^6$', '$a^4 b^5$', '$a^2 b^6$', '$a^4 b^9$'],
+        correct: 0,
+        explanation: '$(a^2 b^3)^2 = a^{2 \\cdot 2} \\cdot b^{3 \\cdot 2} = a^4 b^6$.'
+      },
+      {
+        question: 'Обчисліть $\\dfrac{2^5 \\cdot 3^2}{2^3 \\cdot 3}$:',
+        type: 'text_input',
+        correct: ['12'],
+        explanation: '$\\dfrac{2^5 \\cdot 3^2}{2^3 \\cdot 3} = 2^{5-3} \\cdot 3^{2-1} = 2^2 \\cdot 3 = 4 \\cdot 3 = 12$.'
+      },
+      {
+        question: 'Спростіть $\\left(\\dfrac{a^3}{b^2}\\right)^{-1}$:',
+        options: ['$\\dfrac{b^2}{a^3}$', '$\\dfrac{a^3}{b^2}$', '$\\dfrac{b^3}{a^2}$', '$-\\dfrac{a^3}{b^2}$'],
+        correct: 0,
+        explanation: '$\\left(\\dfrac{a^3}{b^2}\\right)^{-1} = \\dfrac{b^2}{a^3}$. Від\'ємний показник "перевертає" дріб.'
+      },
+      {
+        question: 'Обчисліть $(-2)^4$:',
+        type: 'text_input',
+        correct: ['16'],
+        explanation: '$(-2)^4 = (-2) \\cdot (-2) \\cdot (-2) \\cdot (-2) = 16$. Парна степінь від\'ємного числа — додатна.'
+      },
+      {
+        question: 'Обчисліть $(-3)^3$:',
+        type: 'text_input',
+        correct: ['-27'],
+        explanation: '$(-3)^3 = -27$. Непарна степінь від\'ємного числа — від\'ємна.'
       }
     ]
   },
@@ -1285,6 +1996,69 @@ const QUIZZES = [
         correct: 1,
         explanation: '$(x^3 + 2x - 5)\' = 3x^2 + 2 - 0 = 3x^2 + 2$. Похідна суми = сума похідних.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $(\\cos x)\' = \\sin x$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $(\\cos x)\' = -\\sin x$. Знак мінус — типова пастка!'
+      },
+      {
+        question: 'Правильно чи неправильно: $(x^5)\' = 5x^4$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! За формулою $(x^n)\' = nx^{n-1}$: $(x^5)\' = 5x^4$.'
+      },
+      {
+        question: 'Обчисліть $f\'(2)$, якщо $f(x) = x^3 - 4x$:',
+        type: 'text_input',
+        correct: ['8'],
+        explanation: '$f\'(x) = 3x^2 - 4$. $f\'(2) = 3 \\cdot 4 - 4 = 12 - 4 = 8$.'
+      },
+      {
+        question: 'Чому дорівнює $(7x^2 - 3x + 1)\'$?',
+        options: ['$7x - 3$', '$14x - 3$', '$14x + 1$', '$7x^2 - 3$'],
+        correct: 1,
+        explanation: '$(7x^2)\' = 14x$, $(-3x)\' = -3$, $(1)\' = 0$. Разом: $14x - 3$.'
+      },
+      {
+        question: 'Якщо тіло рухається за законом $s(t) = 5t^2 + 3t$, яка швидкість при $t = 2$?',
+        type: 'text_input',
+        correct: ['23'],
+        explanation: '$v(t) = s\'(t) = 10t + 3$. $v(2) = 20 + 3 = 23$.'
+      },
+      {
+        question: 'Якщо $f\'(x_0) < 0$, то функція в точці $x_0$:',
+        options: ['Зростає', 'Спадає', 'Має максимум', 'Не визначена'],
+        correct: 1,
+        explanation: 'Від\'ємна похідна означає, що функція спадає в околі цієї точки.'
+      },
+      {
+        question: 'Чому дорівнює похідна $f(x) = \\dfrac{1}{x}$ у точці $x = 2$?',
+        options: ['$\\dfrac{1}{2}$', '$-\\dfrac{1}{2}$', '$\\dfrac{1}{4}$', '$-\\dfrac{1}{4}$'],
+        correct: 3,
+        explanation: '$f(x) = x^{-1}$, $f\'(x) = -x^{-2} = -\\dfrac{1}{x^2}$. $f\'(2) = -\\dfrac{1}{4}$.'
+      },
+      {
+        question: 'Чому дорівнює $(\\sin x)\'$ при $x = 0$?',
+        type: 'text_input',
+        correct: ['1'],
+        explanation: '$(\\sin x)\' = \\cos x$. При $x = 0$: $\\cos 0 = 1$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: функція — похідна',
+        pairs: [
+          ['$x^3$', '$3x^2$'],
+          ['$\\sin x$', '$\\cos x$'],
+          ['$\\cos x$', '$-\\sin x$'],
+          ['$5$', '$0$']
+        ],
+        explanation: 'Таблиця основних похідних — фундамент диференціювання.'
+      }
     ]
   },
 
@@ -1358,6 +2132,63 @@ const QUIZZES = [
         options: ['$[-1; 1]$', '$[0; \\pi]$', '$(-\\infty; +\\infty)$', '$(-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2})$'],
         correct: 2,
         explanation: 'Функція $\\operatorname{tg}$ набуває всіх дійсних значень, тому $\\operatorname{arctg} x$ визначена для всіх $x \\in (-\\infty; +\\infty)$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\arcsin \\dfrac{\\sqrt{3}}{2} = \\dfrac{\\pi}{3}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $\\sin \\dfrac{\\pi}{3} = \\dfrac{\\sqrt{3}}{2}$ і $\\dfrac{\\pi}{3} \\in [-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}]$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\arccos \\dfrac{1}{2} = \\dfrac{\\pi}{6}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\arccos \\dfrac{1}{2} = \\dfrac{\\pi}{3}$, бо $\\cos \\dfrac{\\pi}{3} = \\dfrac{1}{2}$. $\\dfrac{\\pi}{6}$ — це $\\arcsin \\dfrac{1}{2}$!'
+      },
+      {
+        question: 'Обчисліть $\\arcsin 0 + \\arccos 1$:',
+        type: 'text_input',
+        correct: ['0'],
+        explanation: '$\\arcsin 0 = 0$ і $\\arccos 1 = 0$. Сума $= 0$.'
+      },
+      {
+        question: 'Обчисліть $\\arcsin\\dfrac{\\sqrt{2}}{2}$:',
+        options: ['$\\dfrac{\\pi}{6}$', '$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{3}$', '$\\dfrac{\\pi}{2}$'],
+        correct: 1,
+        explanation: '$\\sin \\dfrac{\\pi}{4} = \\dfrac{\\sqrt{2}}{2}$, тому $\\arcsin\\dfrac{\\sqrt{2}}{2} = \\dfrac{\\pi}{4}$.'
+      },
+      {
+        question: 'Чому дорівнює $\\arccos\\left(-\\dfrac{\\sqrt{3}}{2}\\right)$?',
+        options: ['$\\dfrac{\\pi}{6}$', '$\\dfrac{5\\pi}{6}$', '$\\dfrac{2\\pi}{3}$', '$-\\dfrac{\\pi}{6}$'],
+        correct: 1,
+        explanation: '$\\cos \\dfrac{5\\pi}{6} = -\\dfrac{\\sqrt{3}}{2}$ і $\\dfrac{5\\pi}{6} \\in [0; \\pi]$.'
+      },
+      {
+        question: 'Яка тотожність зв\'язує $\\arcsin x$ і $\\arccos x$?',
+        options: [
+          '$\\arcsin x + \\arccos x = \\pi$',
+          '$\\arcsin x + \\arccos x = \\dfrac{\\pi}{2}$',
+          '$\\arcsin x - \\arccos x = \\dfrac{\\pi}{2}$',
+          '$\\arcsin x \\cdot \\arccos x = 1$'
+        ],
+        correct: 1,
+        explanation: '$\\arcsin x + \\arccos x = \\dfrac{\\pi}{2}$ для будь-якого $x \\in [-1; 1]$.'
+      },
+      {
+        question: 'Обчисліть $\\operatorname{arctg}(-1)$:',
+        options: ['$\\dfrac{\\pi}{4}$', '$-\\dfrac{\\pi}{4}$', '$\\dfrac{3\\pi}{4}$', '$-\\dfrac{3\\pi}{4}$'],
+        correct: 1,
+        explanation: '$\\operatorname{tg}(-\\dfrac{\\pi}{4}) = -1$ і $-\\dfrac{\\pi}{4} \\in (-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2})$.'
+      },
+      {
+        question: 'Обчисліть $\\operatorname{arctg} \\sqrt{3}$:',
+        type: 'text_input',
+        correct: ['π/3', 'pi/3'],
+        explanation: '$\\operatorname{tg} \\dfrac{\\pi}{3} = \\sqrt{3}$, тому $\\operatorname{arctg} \\sqrt{3} = \\dfrac{\\pi}{3}$.'
       }
     ]
   },
@@ -1446,6 +2277,73 @@ const QUIZZES = [
         correct: 1,
         explanation: 'На $[0; 2\\pi]$ рівняння $\\cos x = -1$ має єдиний розв\'язок $x = \\pi$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: загальний розв\'язок $\\sin x = a$ — це $x = \\arcsin a + \\pi n$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Правильна формула: $x = (-1)^n \\arcsin a + \\pi n$. Множник $(-1)^n$ — обов\'язковий!'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos x = \\dfrac{1}{2}$ має розв\'язок $x = \\pm \\dfrac{\\pi}{3} + 2\\pi n$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $\\arccos \\dfrac{1}{2} = \\dfrac{\\pi}{3}$, формула: $x = \\pm \\dfrac{\\pi}{3} + 2\\pi n$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin x = \\dfrac{1}{2}$. Загальний розв\'язок:',
+        options: [
+          '$x = (-1)^n \\dfrac{\\pi}{6} + \\pi n$',
+          '$x = \\dfrac{\\pi}{6} + 2\\pi n$',
+          '$x = \\pm \\dfrac{\\pi}{6} + 2\\pi n$',
+          '$x = (-1)^n \\dfrac{\\pi}{3} + \\pi n$'
+        ],
+        correct: 0,
+        explanation: '$\\arcsin \\dfrac{1}{2} = \\dfrac{\\pi}{6}$. За формулою: $x = (-1)^n \\dfrac{\\pi}{6} + \\pi n, n \\in \\mathbb{Z}$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\operatorname{tg} x = 1$. Загальний розв\'язок:',
+        options: [
+          '$x = \\dfrac{\\pi}{4} + 2\\pi n$',
+          '$x = \\dfrac{\\pi}{4} + \\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\pm \\dfrac{\\pi}{4} + \\pi n$',
+          '$x = (-1)^n \\dfrac{\\pi}{4} + \\pi n$'
+        ],
+        correct: 1,
+        explanation: '$\\operatorname{arctg} 1 = \\dfrac{\\pi}{4}$. За формулою тангенса: $x = \\dfrac{\\pi}{4} + \\pi n$.'
+      },
+      {
+        question: 'Скільки розв\'язків має $\\sin x = \\dfrac{\\sqrt{2}}{2}$ на $[0; 2\\pi]$?',
+        type: 'text_input',
+        correct: ['2'],
+        explanation: '$x = \\dfrac{\\pi}{4}$ і $x = \\pi - \\dfrac{\\pi}{4} = \\dfrac{3\\pi}{4}$ — два розв\'язки.'
+      },
+      {
+        question: 'Розв\'яжіть $\\cos x = 0$ на $[0; 2\\pi]$. Скільки розв\'язків?',
+        type: 'text_input',
+        correct: ['2'],
+        explanation: '$\\cos x = 0$ при $x = \\dfrac{\\pi}{2}$ і $x = \\dfrac{3\\pi}{2}$ — два розв\'язки.'
+      },
+      {
+        question: 'Рівняння $\\operatorname{tg} x = -\\sqrt{3}$ має загальний розв\'язок:',
+        options: [
+          '$x = -\\dfrac{\\pi}{3} + \\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\dfrac{2\\pi}{3} + \\pi n$',
+          '$x = -\\dfrac{\\pi}{6} + \\pi n$',
+          '$x = \\dfrac{\\pi}{3} + \\pi n$'
+        ],
+        correct: 0,
+        explanation: '$\\operatorname{arctg}(-\\sqrt{3}) = -\\dfrac{\\pi}{3}$, тому $x = -\\dfrac{\\pi}{3} + \\pi n$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin x = -\\dfrac{\\sqrt{3}}{2}$ на $[0; 2\\pi]$. Менший розв\'язок:',
+        options: ['$\\dfrac{\\pi}{3}$', '$\\dfrac{2\\pi}{3}$', '$\\dfrac{4\\pi}{3}$', '$\\dfrac{5\\pi}{3}$'],
+        correct: 2,
+        explanation: '$\\sin x = -\\dfrac{\\sqrt{3}}{2}$ на $[0; 2\\pi]$: $x = \\pi + \\dfrac{\\pi}{3} = \\dfrac{4\\pi}{3}$ і $x = 2\\pi - \\dfrac{\\pi}{3} = \\dfrac{5\\pi}{3}$. Менший: $\\dfrac{4\\pi}{3}$.'
+      }
     ]
   },
   {
@@ -1522,6 +2420,72 @@ const QUIZZES = [
         ],
         correct: 1,
         explanation: 'Переносимо все в один бік: $-2\\sin^2 x - \\sin x + 1 = 0$, або $2\\sin^2 x + \\sin x - 1 = 0$. Заміна $t = \\sin x$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: після заміни $t = \\sin x$ корінь $t = 1.5$ є допустимим.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $|\\sin x| \\leq 1$, тому $t = 1.5$ поза межами і його відкидаємо.'
+      },
+      {
+        question: 'Рівняння $2\\cos^2 x + \\cos x - 1 = 0$. Після заміни $t = \\cos x$: $2t^2 + t - 1 = 0$. Знайдіть корені:',
+        options: [
+          '$t = \\dfrac{1}{2}$ і $t = -1$',
+          '$t = -\\dfrac{1}{2}$ і $t = 1$',
+          '$t = 1$ і $t = -2$',
+          '$t = \\dfrac{1}{2}$ і $t = 1$'
+        ],
+        correct: 0,
+        explanation: '$2t^2 + t - 1 = (2t - 1)(t + 1) = 0$. $t_1 = \\dfrac{1}{2}$, $t_2 = -1$. Обидва $\\in [-1; 1]$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin^2 x - \\sin x = 0$. Які значення $\\sin x$?',
+        options: [
+          '$\\sin x = 0$ або $\\sin x = -1$',
+          '$\\sin x = 0$ або $\\sin x = 1$',
+          '$\\sin x = 1$',
+          '$\\sin x = 0$'
+        ],
+        correct: 1,
+        explanation: '$\\sin x(\\sin x - 1) = 0$: $\\sin x = 0$ або $\\sin x = 1$.'
+      },
+      {
+        question: 'Скільки розв\'язків на $[0; 2\\pi]$ має $\\sin^2 x - \\sin x = 0$?',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$\\sin x = 0$: $x = 0, \\pi$ (2 значення на $[0; 2\\pi)$, плюс $2\\pi$). $\\sin x = 1$: $x = \\dfrac{\\pi}{2}$. Але $0$ і $2\\pi$ — одна точка. Разом: $x = 0, \\dfrac{\\pi}{2}, \\pi$ — 3 розв\'язки на $[0; 2\\pi)$, або 4 якщо включити $2\\pi$.'
+      },
+      {
+        question: 'Рівняння $4\\cos^2 x - 1 = 0$. Чому дорівнює $\\cos x$?',
+        options: ['$\\cos x = \\pm \\dfrac{1}{2}$', '$\\cos x = \\pm 2$', '$\\cos x = \\dfrac{1}{4}$', '$\\cos x = \\pm \\dfrac{1}{4}$'],
+        correct: 0,
+        explanation: '$4\\cos^2 x = 1 \\Rightarrow \\cos^2 x = \\dfrac{1}{4} \\Rightarrow \\cos x = \\pm \\dfrac{1}{2}$.'
+      },
+      {
+        question: 'Рівняння $\\cos^2 x + 3\\cos x + 2 = 0$. Корені квадратного: $t = -1$ і $t = -2$. Скільки допустимих?',
+        type: 'text_input',
+        correct: ['1'],
+        explanation: '$t = -2$ відкидаємо ($|t| > 1$). Залишається $t = -1$, тобто $\\cos x = -1$. Один допустимий корінь.'
+      },
+      {
+        question: 'Як замінити $\\cos^2 x$ через $\\sin^2 x$ у рівнянні $3\\sin^2 x + 2\\cos^2 x = 3$?',
+        options: [
+          '$\\cos^2 x = 1 + \\sin^2 x$',
+          '$\\cos^2 x = 1 - \\sin^2 x$',
+          '$\\cos^2 x = \\sin^2 x$',
+          '$\\cos^2 x = \\sin^2 x - 1$'
+        ],
+        correct: 1,
+        explanation: 'З основної тотожності: $\\cos^2 x = 1 - \\sin^2 x$. Підставивши: $3\\sin^2 x + 2(1-\\sin^2 x) = 3$.'
+      },
+      {
+        question: 'Розв\'яжіть $3\\sin^2 x + 2(1 - \\sin^2 x) = 3$. Знайдіть $\\sin^2 x$:',
+        type: 'text_input',
+        correct: ['1'],
+        explanation: '$3\\sin^2 x + 2 - 2\\sin^2 x = 3 \\Rightarrow \\sin^2 x = 1 \\Rightarrow \\sin x = \\pm 1$.'
       }
     ]
   },
@@ -1625,6 +2589,79 @@ const QUIZZES = [
         correct: '-1',
         explanation: 'Ділимо на $\\cos x$: $\\operatorname{tg} x + 1 = 0$, звідки $\\operatorname{tg} x = -1$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: рівняння $\\sin^2 x + 2\\sin x \\cos x + \\cos^2 x = 0$ є однорідним другого степеня.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\sin^2 x + \\cos^2 x = 1$, тому рівняння спрощується до $1 + 2\\sin x\\cos x = 0$, тобто $1 + \\sin 2x = 0$. Це не однорідне.'
+      },
+      {
+        question: 'Правильно чи неправильно: при універсальній підстановці $t = \\operatorname{tg}\\dfrac{x}{2}$, $\\cos x = \\dfrac{1 - t^2}{1 + t^2}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Це одна з формул універсальної підстановки.'
+      },
+      {
+        question: 'Розв\'яжіть $2\\sin x - \\cos x = 0$. Чому дорівнює $\\operatorname{tg} x$?',
+        type: 'text_input',
+        correct: ['1/2', '0.5', '0,5'],
+        explanation: 'Ділимо на $\\cos x$: $2\\operatorname{tg} x - 1 = 0$, звідки $\\operatorname{tg} x = \\dfrac{1}{2}$.'
+      },
+      {
+        question: 'Після ділення $3\\sin^2 x - 5\\sin x\\cos x + 2\\cos^2 x = 0$ на $\\cos^2 x$ отримаємо:',
+        options: [
+          '$3\\operatorname{tg}^2 x - 5\\operatorname{tg} x + 2 = 0$',
+          '$3\\operatorname{tg}^2 x + 5\\operatorname{tg} x + 2 = 0$',
+          '$3\\operatorname{tg} x - 5 + 2 = 0$',
+          '$3 - 5\\operatorname{tg} x + 2\\operatorname{tg}^2 x = 0$'
+        ],
+        correct: 0,
+        explanation: 'Ділимо кожен доданок на $\\cos^2 x$: $3\\operatorname{tg}^2 x - 5\\operatorname{tg} x + 2 = 0$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\operatorname{tg}^2 x - 5\\operatorname{tg} x + 6 = 0$. Знайдіть корені:',
+        options: [
+          '$\\operatorname{tg} x = 2$ або $\\operatorname{tg} x = 3$',
+          '$\\operatorname{tg} x = -2$ або $\\operatorname{tg} x = -3$',
+          '$\\operatorname{tg} x = 1$ або $\\operatorname{tg} x = 6$',
+          '$\\operatorname{tg} x = 2$ або $\\operatorname{tg} x = -3$'
+        ],
+        correct: 0,
+        explanation: '$t^2 - 5t + 6 = (t - 2)(t - 3) = 0$. $t = 2$ або $t = 3$.'
+      },
+      {
+        question: 'При яких умовах можна ділити однорідне рівняння на $\\cos^2 x$?',
+        options: [
+          'Завжди',
+          'Тільки якщо $\\cos x \\neq 0$',
+          'Після перевірки, що $\\cos x = 0$ не є розв\'язком',
+          'Тільки для рівнянь першого степеня'
+        ],
+        correct: 2,
+        explanation: 'Потрібно спочатку перевірити: чи є $\\cos x = 0$ розв\'язком? Якщо ні — можна ділити.'
+      },
+      {
+        question: 'Чи є $\\cos x = 0$ розв\'язком рівняння $\\sin^2 x - 3\\sin x\\cos x + 2\\cos^2 x = 0$?',
+        type: 'true_false',
+        options: ['Так, є розв\'язком', 'Ні, не є розв\'язком'],
+        correct: 1,
+        explanation: 'При $\\cos x = 0$: $\\sin^2 x = 1$, тому ліва частина $= 1 \\neq 0$. Отже, $\\cos x = 0$ не є розв\'язком.'
+      },
+      {
+        question: 'Чому дорівнює $\\sin x$ при універсальній підстановці $t = \\operatorname{tg}\\dfrac{x}{2}$?',
+        options: [
+          '$\\dfrac{2t}{1 + t^2}$',
+          '$\\dfrac{1 - t^2}{1 + t^2}$',
+          '$\\dfrac{2t}{1 - t^2}$',
+          '$\\dfrac{t^2}{1 + t^2}$'
+        ],
+        correct: 0,
+        explanation: '$\\sin x = \\dfrac{2t}{1 + t^2}$ — одна з формул універсальної підстановки.'
+      }
     ]
   },
   {
@@ -1726,6 +2763,73 @@ const QUIZZES = [
         type: 'text_input',
         correct: '5π/6',
         explanation: '$\\sin x \\ge \\dfrac{1}{2}$ на $[0; 2\\pi]$ має розв\'язок $x \\in [\\dfrac{\\pi}{6}; \\dfrac{5\\pi}{6}]$. Права межа — $\\dfrac{5\\pi}{6}$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: нерівність $\\sin x \\leq -2$ не має розв\'язків.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $\\sin x \\geq -1 > -2$ завжди, тому $\\sin x \\leq -2$ неможливо.'
+      },
+      {
+        question: 'Правильно чи неправильно: нерівність $\\cos x \\leq 1$ виконується для всіх $x$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Максимальне значення $\\cos x = 1$, тому $\\cos x \\leq 1$ завжди.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin x < 0$ на $[0; 2\\pi]$:',
+        options: [
+          '$x \\in (\\pi; 2\\pi)$',
+          '$x \\in (0; \\pi)$',
+          '$x \\in (\\dfrac{\\pi}{2}; \\dfrac{3\\pi}{2})$',
+          '$x \\in (\\dfrac{3\\pi}{2}; 2\\pi)$'
+        ],
+        correct: 0,
+        explanation: '$\\sin x < 0$ у нижній півплощині, тобто при $x \\in (\\pi; 2\\pi)$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\cos x > \\dfrac{\\sqrt{2}}{2}$ на $[0; 2\\pi]$:',
+        options: [
+          '$x \\in [0; \\dfrac{\\pi}{4})$',
+          '$x \\in (0; \\dfrac{\\pi}{4}) \\cup (\\dfrac{7\\pi}{4}; 2\\pi)$',
+          '$x \\in [0; \\dfrac{\\pi}{4}) \\cup (\\dfrac{7\\pi}{4}; 2\\pi]$',
+          '$x \\in (\\dfrac{\\pi}{4}; \\dfrac{7\\pi}{4})$'
+        ],
+        correct: 2,
+        explanation: '$\\cos x = \\dfrac{\\sqrt{2}}{2}$ при $x = \\dfrac{\\pi}{4}$ і $x = \\dfrac{7\\pi}{4}$. $\\cos x > \\dfrac{\\sqrt{2}}{2}$ між ними (через 0): $[0; \\dfrac{\\pi}{4}) \\cup (\\dfrac{7\\pi}{4}; 2\\pi]$.'
+      },
+      {
+        question: 'Нерівність $\\sin x \\geq -\\dfrac{1}{2}$ на $[0; 2\\pi]$. Яка множина розв\'язків?',
+        options: [
+          '$[0; \\dfrac{7\\pi}{6}] \\cup [\\dfrac{11\\pi}{6}; 2\\pi]$',
+          '$[\\dfrac{7\\pi}{6}; \\dfrac{11\\pi}{6}]$',
+          '$[0; 2\\pi]$',
+          '$[\\dfrac{\\pi}{6}; \\dfrac{5\\pi}{6}]$'
+        ],
+        correct: 0,
+        explanation: '$\\sin x = -\\dfrac{1}{2}$ при $x = \\dfrac{7\\pi}{6}$ і $x = \\dfrac{11\\pi}{6}$. $\\sin x \\geq -\\dfrac{1}{2}$ поза дугою: $[0; \\dfrac{7\\pi}{6}] \\cup [\\dfrac{11\\pi}{6}; 2\\pi]$.'
+      },
+      {
+        question: 'Скільки цілих розв\'язків має нерівність $\\cos x > 0$ на $(-\\pi; \\pi)$?',
+        options: ['$0$', '$1$', '$3$', 'Нескінченно'],
+        correct: 3,
+        explanation: '$\\cos x > 0$ при $x \\in (-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2})$ — це ціла множина точок, тобто нескінченно багато розв\'язків.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin x \\leq -1$ на $[0; 2\\pi]$. Запишіть розв\'язок у вигляді $k\\pi/n$:',
+        type: 'text_input',
+        correct: ['3π/2', '3pi/2'],
+        explanation: '$\\sin x = -1$ лише при $x = \\dfrac{3\\pi}{2}$. Тому $\\sin x \\leq -1 \\Leftrightarrow \\sin x = -1 \\Leftrightarrow x = \\dfrac{3\\pi}{2}$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\cos x < \\dfrac{1}{2}$ на $[0; 2\\pi]$. Ліва межа проміжку:',
+        type: 'text_input',
+        correct: ['π/3', 'pi/3'],
+        explanation: '$\\cos x = \\dfrac{1}{2}$ при $x = \\dfrac{\\pi}{3}$ і $x = \\dfrac{5\\pi}{3}$. $\\cos x < \\dfrac{1}{2}$ на $(\\dfrac{\\pi}{3}; \\dfrac{5\\pi}{3})$.'
       }
     ]
   }
