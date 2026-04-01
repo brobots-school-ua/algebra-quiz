@@ -98,6 +98,68 @@ const QUIZZES_EXTRA = [
         correct: 0,
         explanation: '$\\{1, 2\\}$ є підмножиною $\\{1, 2, 3\\}$, бо обидва елементи ($1$ і $2$) входять до більшої множини.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\{0\\} = \\emptyset$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\{0\\}$ — множина з одним елементом (нуль), а $\\emptyset$ — порожня множина (без елементів).'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\emptyset \\subset A$ для будь-якої множини $A$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Порожня множина є підмножиною будь-якої множини.'
+      },
+      {
+        question: 'Якщо $A = \\{1, 3, 5, 7\\}$ і $B = \\{2, 3, 5, 8\\}$, чому дорівнює $A \\cap B$?',
+        options: ['$\\{1, 2, 3, 5, 7, 8\\}$', '$\\{3, 5\\}$', '$\\{1, 7\\}$', '$\\{2, 8\\}$'],
+        correct: 1,
+        explanation: '$A \\cap B$ — спільні елементи: $\\{3, 5\\}$.'
+      },
+      {
+        question: 'Якщо $A = \\{1, 2, 3, 4\\}$ і $B = \\{3, 4, 5\\}$, знайдіть $A \\setminus B$:',
+        options: ['$\\{3, 4\\}$', '$\\{5\\}$', '$\\{1, 2\\}$', '$\\{1, 2, 5\\}$'],
+        correct: 2,
+        explanation: '$A \\setminus B$ — елементи $A$, які не входять до $B$: $\\{1, 2\\}$.'
+      },
+      {
+        question: 'Скільки елементів у множині $A \\cup B$, якщо $|A| = 5$, $|B| = 4$, $|A \\cap B| = 2$?',
+        type: 'text_input',
+        correct: ['7'],
+        explanation: '$|A \\cup B| = |A| + |B| - |A \\cap B| = 5 + 4 - 2 = 7$.'
+      },
+      {
+        question: 'Яке з тверджень хибне?',
+        options: [
+          '$3 \\in \\{1, 2, 3\\}$',
+          '$\\{1\\} \\subset \\{1, 2\\}$',
+          '$\\{1, 2\\} \\in \\{1, 2, 3\\}$',
+          '$\\emptyset \\subset \\{1\\}$'
+        ],
+        correct: 2,
+        explanation: '$\\{1, 2\\} \\in \\{1, 2, 3\\}$ — хибне! Множина $\\{1, 2\\}$ не є елементом множини $\\{1, 2, 3\\}$. Вона є підмножиною ($\\subset$), а не елементом ($\\in$).'
+      },
+      {
+        question: 'Якщо $A = \\{a, b, c\\}$, скільки підмножин має $A$?',
+        type: 'text_input',
+        correct: ['8'],
+        explanation: 'Множина з $n$ елементів має $2^n$ підмножин. $2^3 = 8$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: символ — операція',
+        pairs: [
+          ['$\\cup$', 'Об\'єднання'],
+          ['$\\cap$', 'Переріз'],
+          ['$\\setminus$', 'Різниця'],
+          ['$\\subset$', 'Підмножина']
+        ],
+        explanation: 'Основні операції та відношення між множинами.'
+      }
     ]
   },
 
@@ -185,6 +247,58 @@ const QUIZZES_EXTRA = [
         correct: 2,
         explanation: 'Лінійна функція $f(x) = 2x + 1$ з додатним коефіцієнтом зростає на $(-\\infty; +\\infty)$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: функція $f(x) = x^3$ є парною.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $f(-x) = (-x)^3 = -x^3 = -f(x)$ — це непарна функція.'
+      },
+      {
+        question: 'Правильно чи неправильно: графік непарної функції симетричний відносно осі $Oy$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Графік непарної функції симетричний відносно початку координат. Відносно осі $Oy$ — це парна.'
+      },
+      {
+        question: 'Функція $f(x) = x^2 - 2x$ спадає на проміжку:',
+        options: ['$(1; +\\infty)$', '$(-\\infty; 1)$', '$(-\\infty; 0)$', '$(0; 2)$'],
+        correct: 1,
+        explanation: 'Вершина параболи при $x = 1$. Для $x < 1$ функція спадає, для $x > 1$ — зростає.'
+      },
+      {
+        question: 'Знайдіть нулі функції $f(x) = x^2 - 5x + 6$:',
+        options: ['$x = 1$ і $x = 6$', '$x = 2$ і $x = 3$', '$x = -2$ і $x = -3$', '$x = -1$ і $x = 6$'],
+        correct: 1,
+        explanation: '$x^2 - 5x + 6 = (x-2)(x-3) = 0$. Нулі: $x = 2$ і $x = 3$.'
+      },
+      {
+        question: 'Функція $f(x) = x^4 + 1$ є:',
+        options: ['Парною', 'Непарною', 'Ні парною, ні непарною', 'Зростаючою'],
+        correct: 0,
+        explanation: '$f(-x) = (-x)^4 + 1 = x^4 + 1 = f(x)$ — парна функція.'
+      },
+      {
+        question: 'Функція $f(x) = 2x + 1$ є парною чи непарною?',
+        options: ['Парною', 'Непарною', 'Ні парною, ні непарною'],
+        correct: 2,
+        explanation: '$f(-x) = -2x + 1$. Це не дорівнює ні $f(x) = 2x+1$, ні $-f(x) = -2x-1$. Ні парна, ні непарна.'
+      },
+      {
+        question: 'На якому проміжку функція $f(x) = -x^2 + 6x$ зростає?',
+        options: ['$(3; +\\infty)$', '$(-\\infty; 3)$', '$(-\\infty; +\\infty)$', '$(0; 6)$'],
+        correct: 1,
+        explanation: 'Вершина параболи при $x = 3$ (від\'ємний старший коефіцієнт). Зростає при $x < 3$.'
+      },
+      {
+        question: 'Скільки нулів має функція $f(x) = x^3 - x$?',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$x^3 - x = x(x^2 - 1) = x(x-1)(x+1) = 0$. Нулі: $x = 0, 1, -1$ — три нулі.'
+      }
     ]
   },
 
@@ -263,6 +377,69 @@ const QUIZZES_EXTRA = [
         correct: 0,
         explanation: '$\\sqrt[6]{64} = 2$, бо $2^6 = 64$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sqrt[4]{-16} = -2$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Корінь парного степеня з від\'ємного числа не існує в дійсних числах.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\sqrt{a + b} = \\sqrt{a} + \\sqrt{b}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Корінь суми НЕ дорівнює сумі коренів. Наприклад: $\\sqrt{9+16} = 5$, але $\\sqrt{9}+\\sqrt{16} = 7$.'
+      },
+      {
+        question: 'Обчисліть $\\sqrt[3]{-125}$:',
+        type: 'text_input',
+        correct: ['-5'],
+        explanation: '$\\sqrt[3]{-125} = -5$, бо $(-5)^3 = -125$.'
+      },
+      {
+        question: 'Спростіть $\\sqrt{18}$:',
+        options: ['$3\\sqrt{2}$', '$2\\sqrt{3}$', '$6\\sqrt{3}$', '$9\\sqrt{2}$'],
+        correct: 0,
+        explanation: '$\\sqrt{18} = \\sqrt{9 \\cdot 2} = 3\\sqrt{2}$.'
+      },
+      {
+        question: 'Обчисліть $\\dfrac{\\sqrt{72}}{\\sqrt{8}}$:',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$\\dfrac{\\sqrt{72}}{\\sqrt{8}} = \\sqrt{\\dfrac{72}{8}} = \\sqrt{9} = 3$.'
+      },
+      {
+        question: 'Спростіть $\\sqrt{a^2}$ при довільному $a$:',
+        options: ['$a$', '$-a$', '$|a|$', '$a^2$'],
+        correct: 2,
+        explanation: '$\\sqrt{a^2} = |a|$. Корінь завжди невід\'ємний, тому потрібен модуль.'
+      },
+      {
+        question: 'Обчисліть $\\sqrt[3]{8} \\cdot \\sqrt[3]{27}$:',
+        type: 'text_input',
+        correct: ['6'],
+        explanation: '$\\sqrt[3]{8} \\cdot \\sqrt[3]{27} = 2 \\cdot 3 = 6$. Або $\\sqrt[3]{8 \\cdot 27} = \\sqrt[3]{216} = 6$.'
+      },
+      {
+        question: 'Обчисліть $\\sqrt[4]{81}$:',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$\\sqrt[4]{81} = 3$, бо $3^4 = 81$.'
+      },
+      {
+        question: 'Яке з тверджень правильне?',
+        options: [
+          '$\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} + \\sqrt[n]{b}$',
+          '$\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b}$',
+          '$\\sqrt[n]{a + b} = \\sqrt[n]{a} + \\sqrt[n]{b}$',
+          '$\\sqrt[n]{a - b} = \\sqrt[n]{a} - \\sqrt[n]{b}$'
+        ],
+        correct: 1,
+        explanation: 'Корінь добутку = добуток коренів: $\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b}$.'
+      }
     ]
   },
 
@@ -335,6 +512,58 @@ const QUIZZES_EXTRA = [
         type: 'text_input',
         correct: ['π/2', 'pi/2'],
         explanation: '$\\arcsin 0 = 0$, $\\arccos 0 = \\dfrac{\\pi}{2}$, тому сума $= \\dfrac{\\pi}{2}$. Взагалі $\\arcsin x + \\arccos x = \\dfrac{\\pi}{2}$ завжди.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\arccos(-\\dfrac{1}{2}) = -\\dfrac{\\pi}{3}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\arccos$ повертає значення з $[0; \\pi]$: $\\arccos(-\\dfrac{1}{2}) = \\dfrac{2\\pi}{3}$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\arcsin(-\\dfrac{\\sqrt{2}}{2}) = -\\dfrac{\\pi}{4}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $\\arcsin$ — непарна: $\\arcsin(-x) = -\\arcsin x$. $\\arcsin(-\\dfrac{\\sqrt{2}}{2}) = -\\dfrac{\\pi}{4}$.'
+      },
+      {
+        question: 'Обчисліть $\\arccos(\\dfrac{\\sqrt{3}}{2})$:',
+        options: ['$\\dfrac{\\pi}{6}$', '$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{3}$', '$\\dfrac{\\pi}{2}$'],
+        correct: 0,
+        explanation: '$\\cos \\dfrac{\\pi}{6} = \\dfrac{\\sqrt{3}}{2}$, тому $\\arccos(\\dfrac{\\sqrt{3}}{2}) = \\dfrac{\\pi}{6}$.'
+      },
+      {
+        question: 'Обчисліть $\\sin(\\arcsin \\dfrac{1}{2})$:',
+        type: 'text_input',
+        correct: ['1/2', '0.5', '0,5'],
+        explanation: '$\\sin(\\arcsin x) = x$ для $x \\in [-1; 1]$. Тому $\\sin(\\arcsin \\dfrac{1}{2}) = \\dfrac{1}{2}$.'
+      },
+      {
+        question: 'Чому дорівнює $\\arccos(-\\dfrac{\\sqrt{2}}{2})$?',
+        options: ['$\\dfrac{\\pi}{4}$', '$\\dfrac{3\\pi}{4}$', '$-\\dfrac{\\pi}{4}$', '$\\dfrac{5\\pi}{4}$'],
+        correct: 1,
+        explanation: '$\\cos \\dfrac{3\\pi}{4} = -\\dfrac{\\sqrt{2}}{2}$ і $\\dfrac{3\\pi}{4} \\in [0; \\pi]$.'
+      },
+      {
+        question: 'Обчисліть $\\arcsin 1 + \\arccos 1$:',
+        type: 'text_input',
+        correct: ['π/2', 'pi/2'],
+        explanation: '$\\arcsin 1 = \\dfrac{\\pi}{2}$, $\\arccos 1 = 0$. Сума $= \\dfrac{\\pi}{2}$. Підтверджує тотожність $\\arcsin x + \\arccos x = \\dfrac{\\pi}{2}$.'
+      },
+      {
+        question: 'Яка область значень $\\operatorname{arctg} x$?',
+        options: ['$[0; \\pi]$', '$[-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}]$', '$(-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2})$', '$(-\\infty; +\\infty)$'],
+        correct: 2,
+        explanation: 'Область значень $\\operatorname{arctg} x = (-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2})$ — відкритий інтервал.'
+      },
+      {
+        question: 'Обчисліть $\\operatorname{arctg} 0$:',
+        type: 'text_input',
+        correct: ['0'],
+        explanation: '$\\operatorname{tg} 0 = 0$, тому $\\operatorname{arctg} 0 = 0$.'
       }
     ]
   },
@@ -444,6 +673,72 @@ const QUIZZES_EXTRA = [
         correct: 0,
         explanation: '$\\arccos\\left(-\\dfrac{\\sqrt{3}}{2}\\right) = \\dfrac{5\\pi}{6}$, тому $x = \\pm \\dfrac{5\\pi}{6} + 2\\pi n$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\cos x = a$ має розв\'язок $x = (-1)^n \\arccos a + \\pi n$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Формула $(-1)^n$ — для синуса. Для косинуса: $x = \\pm \\arccos a + 2\\pi n$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin x = \\dfrac{\\sqrt{2}}{2}$. Загальний розв\'язок:',
+        options: [
+          '$x = (-1)^n \\dfrac{\\pi}{4} + \\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\dfrac{\\pi}{4} + 2\\pi n$',
+          '$x = \\pm \\dfrac{\\pi}{4} + 2\\pi n$',
+          '$x = \\dfrac{\\pi}{4} + \\pi n$'
+        ],
+        correct: 0,
+        explanation: '$\\arcsin \\dfrac{\\sqrt{2}}{2} = \\dfrac{\\pi}{4}$. За формулою синуса: $x = (-1)^n \\dfrac{\\pi}{4} + \\pi n$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\cos x = -\\dfrac{1}{2}$. Загальний розв\'язок:',
+        options: [
+          '$x = \\pm \\dfrac{\\pi}{3} + 2\\pi n$',
+          '$x = \\pm \\dfrac{2\\pi}{3} + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\dfrac{2\\pi}{3} + \\pi n$',
+          '$x = (-1)^n \\dfrac{2\\pi}{3} + \\pi n$'
+        ],
+        correct: 1,
+        explanation: '$\\arccos(-\\dfrac{1}{2}) = \\dfrac{2\\pi}{3}$. За формулою косинуса: $x = \\pm \\dfrac{2\\pi}{3} + 2\\pi n$.'
+      },
+      {
+        question: 'Скільки розв\'язків має $\\operatorname{tg} x = \\sqrt{3}$ на $[0; 2\\pi]$?',
+        type: 'text_input',
+        correct: ['2'],
+        explanation: '$x = \\dfrac{\\pi}{3} + \\pi n$. На $[0; 2\\pi]$: $x = \\dfrac{\\pi}{3}$ і $x = \\dfrac{4\\pi}{3}$ — два розв\'язки.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin x = -\\dfrac{1}{2}$ на $[0; 2\\pi]$. Більший розв\'язок:',
+        options: ['$\\dfrac{7\\pi}{6}$', '$\\dfrac{11\\pi}{6}$', '$\\dfrac{5\\pi}{6}$', '$\\dfrac{\\pi}{6}$'],
+        correct: 1,
+        explanation: '$\\sin x = -\\dfrac{1}{2}$: $x = \\pi + \\dfrac{\\pi}{6} = \\dfrac{7\\pi}{6}$ і $x = 2\\pi - \\dfrac{\\pi}{6} = \\dfrac{11\\pi}{6}$. Більший: $\\dfrac{11\\pi}{6}$.'
+      },
+      {
+        question: 'Рівняння $\\operatorname{tg} x = -1$ має загальний розв\'язок:',
+        options: [
+          '$x = -\\dfrac{\\pi}{4} + \\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\dfrac{3\\pi}{4} + 2\\pi n$',
+          '$x = \\pm \\dfrac{\\pi}{4} + \\pi n$',
+          '$x = \\dfrac{\\pi}{4} + \\pi n$'
+        ],
+        correct: 0,
+        explanation: '$\\operatorname{arctg}(-1) = -\\dfrac{\\pi}{4}$. Тому $x = -\\dfrac{\\pi}{4} + \\pi n$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\cos x = \\dfrac{\\sqrt{3}}{2}$. Найменший додатний розв\'язок:',
+        type: 'text_input',
+        correct: ['π/6', 'pi/6'],
+        explanation: '$\\arccos \\dfrac{\\sqrt{3}}{2} = \\dfrac{\\pi}{6}$ — це і є найменший додатний розв\'язок.'
+      },
+      {
+        question: 'Рівняння $\\sin x = -1$ на $[0; 2\\pi]$ має розв\'язок $x = $:',
+        type: 'text_input',
+        correct: ['3π/2', '3pi/2'],
+        explanation: '$\\sin x = -1$ при $x = \\dfrac{3\\pi}{2}$ на $[0; 2\\pi]$.'
+      }
     ]
   },
 
@@ -527,6 +822,79 @@ const QUIZZES_EXTRA = [
         correct: '4',
         explanation: '$f\'(x) = 3x^2 + 1$. $f\'(1) = 3 \\cdot 1 + 1 = 4$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $(f \\cdot g)\' = f\' \\cdot g\'$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $(f \\cdot g)\' = f\' \\cdot g + f \\cdot g\'$ — правило добутку. Похідна добутку НЕ дорівнює добутку похідних!'
+      },
+      {
+        question: 'Правильно чи неправильно: $(e^x)\' = e^x$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Експонента — єдина функція, похідна якої дорівнює їй самій.'
+      },
+      {
+        question: 'Обчисліть $(x^2 \\cdot \\sin x)\'$:',
+        options: [
+          '$2x \\cdot \\cos x$',
+          '$2x \\cdot \\sin x + x^2 \\cdot \\cos x$',
+          '$x^2 \\cdot \\cos x$',
+          '$2x \\cdot \\sin x - x^2 \\cdot \\cos x$'
+        ],
+        correct: 1,
+        explanation: 'За правилом добутку: $(x^2)\' \\cdot \\sin x + x^2 \\cdot (\\sin x)\' = 2x\\sin x + x^2\\cos x$.'
+      },
+      {
+        question: 'Обчисліть $f\'(0)$, якщо $f(x) = e^x + \\sin x$:',
+        type: 'text_input',
+        correct: ['2'],
+        explanation: '$f\'(x) = e^x + \\cos x$. $f\'(0) = e^0 + \\cos 0 = 1 + 1 = 2$.'
+      },
+      {
+        question: 'Чому дорівнює $(\\dfrac{x^2}{x+1})\'$ у спрощеному вигляді?',
+        options: [
+          '$\\dfrac{x^2 + 2x}{(x+1)^2}$',
+          '$\\dfrac{2x}{x+1}$',
+          '$\\dfrac{x(x+2)}{(x+1)^2}$',
+          '$2x - 1$'
+        ],
+        correct: 0,
+        explanation: '$\\left(\\dfrac{x^2}{x+1}\\right)\' = \\dfrac{2x(x+1) - x^2 \\cdot 1}{(x+1)^2} = \\dfrac{x^2 + 2x}{(x+1)^2}$.'
+      },
+      {
+        question: 'Обчисліть $(2x^3 - 4x + 7)\'$:',
+        options: ['$6x^2 - 4$', '$6x^2 + 7$', '$2x^2 - 4$', '$6x^2 - 4x$'],
+        correct: 0,
+        explanation: '$(2x^3)\' = 6x^2$, $(-4x)\' = -4$, $(7)\' = 0$. Разом: $6x^2 - 4$.'
+      },
+      {
+        question: 'Чому дорівнює $(\\operatorname{ctg} x)\'$?',
+        options: ['$\\dfrac{1}{\\sin^2 x}$', '$-\\dfrac{1}{\\sin^2 x}$', '$\\dfrac{1}{\\cos^2 x}$', '$-\\dfrac{1}{\\cos^2 x}$'],
+        correct: 1,
+        explanation: '$(\\operatorname{ctg} x)\' = -\\dfrac{1}{\\sin^2 x}$.'
+      },
+      {
+        question: 'Обчисліть $f\'(2)$, якщо $f(x) = x^4 - 3x^2 + 5x$:',
+        type: 'text_input',
+        correct: ['25'],
+        explanation: '$f\'(x) = 4x^3 - 6x + 5$. $f\'(2) = 4 \\cdot 8 - 12 + 5 = 32 - 12 + 5 = 25$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: функція — похідна',
+        pairs: [
+          ['$e^x$', '$e^x$'],
+          ['$\\ln x$', '$\\dfrac{1}{x}$'],
+          ['$\\operatorname{tg} x$', '$\\dfrac{1}{\\cos^2 x}$'],
+          ['$x^n$', '$nx^{n-1}$']
+        ],
+        explanation: 'Таблиця похідних — необхідна база для обчислень.'
+      }
     ]
   },
 
@@ -605,6 +973,58 @@ const QUIZZES_EXTRA = [
         correct: 1,
         explanation: '$f\'(x) = -2x + 4 > 0$ при $x < 2$, тому зростає на $(-\\infty; 2)$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: якщо $f\'(x_0) = 0$, то $x_0$ обов\'язково є точкою екстремуму.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Наприклад, $f(x) = x^3$: $f\'(0) = 0$, але $x = 0$ — точка перегину, не екстремуму.'
+      },
+      {
+        question: 'Правильно чи неправильно: точка мінімуму — це точка, де $f\'$ змінює знак з "$-$" на "$+$".',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Функція спадала ($f\' < 0$), потім почала зростати ($f\' > 0$) — це мінімум.'
+      },
+      {
+        question: 'Знайдіть критичні точки $f(x) = x^3 - 12x$:',
+        options: ['$x = 0$', '$x = \\pm 2$', '$x = \\pm 3$', '$x = \\pm 4$'],
+        correct: 1,
+        explanation: '$f\'(x) = 3x^2 - 12 = 0 \\Rightarrow x^2 = 4 \\Rightarrow x = \\pm 2$.'
+      },
+      {
+        question: 'Знайдіть значення максимуму $f(x) = -x^2 + 8x - 12$:',
+        type: 'text_input',
+        correct: ['4'],
+        explanation: '$f\'(x) = -2x + 8 = 0 \\Rightarrow x = 4$. $f(4) = -16 + 32 - 12 = 4$.'
+      },
+      {
+        question: 'На якому проміжку спадає $f(x) = x^3 - 3x^2$?',
+        options: ['$(-\\infty; 0)$', '$(0; 2)$', '$(2; +\\infty)$', '$(-\\infty; 2)$'],
+        correct: 1,
+        explanation: '$f\'(x) = 3x^2 - 6x = 3x(x - 2) < 0$ при $0 < x < 2$.'
+      },
+      {
+        question: 'Функція $f(x) = 2x^3 - 9x^2 + 12x$ має точку максимуму при $x = $:',
+        type: 'text_input',
+        correct: ['1'],
+        explanation: '$f\'(x) = 6x^2 - 18x + 12 = 6(x-1)(x-2)$. $f\'$ змінює знак з "$+$" на "$-$" при $x = 1$ — максимум.'
+      },
+      {
+        question: 'Знайдіть мінімум $f(x) = x^2 + 4x + 7$:',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$f\'(x) = 2x + 4 = 0 \\Rightarrow x = -2$. $f(-2) = 4 - 8 + 7 = 3$.'
+      },
+      {
+        question: 'На якому проміжку зростає $f(x) = x^4 - 2x^2$?',
+        options: ['$(-1; 0) \\cup (1; +\\infty)$', '$(-\\infty; -1) \\cup (0; 1)$', '$(-\\infty; 0)$', '$(0; +\\infty)$'],
+        correct: 0,
+        explanation: '$f\'(x) = 4x^3 - 4x = 4x(x-1)(x+1) > 0$ при $x \\in (-1; 0) \\cup (1; +\\infty)$.'
+      }
     ]
   },
 
@@ -681,6 +1101,73 @@ const QUIZZES_EXTRA = [
         type: 'text_input',
         correct: '1',
         explanation: 'Найменше натуральне число — $1$. Множина $\\mathbb{N} = \\{1, 2, 3, ...\\}$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\dfrac{7}{3} \\in \\mathbb{Z}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\dfrac{7}{3}$ — не ціле число. Воно належить $\\mathbb{Q}$ (раціональні), але не $\\mathbb{Z}$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\pi \\in \\mathbb{Q}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $\\pi$ — ірраціональне число. Воно належить $\\mathbb{R}$, але не $\\mathbb{Q}$.'
+      },
+      {
+        question: 'Яке з чисел є ірраціональним?',
+        options: ['$0{,}75$', '$\\dfrac{22}{7}$', '$\\sqrt{5}$', '$-3$'],
+        correct: 2,
+        explanation: '$\\sqrt{5}$ — ірраціональне (не можна подати як дріб). Решта — раціональні числа.'
+      },
+      {
+        question: 'Число $-7$ належить множині:',
+        options: ['$\\mathbb{N}$', '$\\mathbb{Z}$, але не $\\mathbb{N}$', '$\\mathbb{Q}$, але не $\\mathbb{Z}$', '$\\mathbb{R}$, але не $\\mathbb{Q}$'],
+        correct: 1,
+        explanation: '$-7$ — ціле від\'ємне число. Воно належить $\\mathbb{Z}$, але не $\\mathbb{N}$ (натуральні — тільки додатні).'
+      },
+      {
+        question: 'Яка правильна ієрархія числових множин?',
+        options: [
+          '$\\mathbb{R} \\subset \\mathbb{Q} \\subset \\mathbb{Z} \\subset \\mathbb{N}$',
+          '$\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}$',
+          '$\\mathbb{N} \\subset \\mathbb{Q} \\subset \\mathbb{Z} \\subset \\mathbb{R}$',
+          '$\\mathbb{Z} \\subset \\mathbb{N} \\subset \\mathbb{Q} \\subset \\mathbb{R}$'
+        ],
+        correct: 1,
+        explanation: '$\\mathbb{N} \\subset \\mathbb{Z} \\subset \\mathbb{Q} \\subset \\mathbb{R}$ — кожна наступна множина "ширша".'
+      },
+      {
+        question: 'Число $0{,}121212... = 0{,}(12)$ є раціональним. Запишіть його у вигляді дробу:',
+        type: 'text_input',
+        correct: ['4/33', '12/99'],
+        explanation: '$0{,}(12) = \\dfrac{12}{99} = \\dfrac{4}{33}$.'
+      },
+      {
+        question: 'Яке з тверджень хибне?',
+        options: [
+          '$0 \\in \\mathbb{Z}$',
+          '$\\sqrt{4} \\in \\mathbb{N}$',
+          '$\\sqrt{3} \\in \\mathbb{Q}$',
+          '$-\\dfrac{2}{5} \\in \\mathbb{Q}$'
+        ],
+        correct: 2,
+        explanation: '$\\sqrt{3}$ — ірраціональне число, тому $\\sqrt{3} \\notin \\mathbb{Q}$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встановіть відповідність: число — найменша множина, якій воно належить',
+        pairs: [
+          ['$5$', '$\\mathbb{N}$'],
+          ['$-3$', '$\\mathbb{Z}$'],
+          ['$\\dfrac{2}{3}$', '$\\mathbb{Q}$'],
+          ['$\\sqrt{7}$', '$\\mathbb{R}$']
+        ],
+        explanation: 'Кожне число належить найменшій множині, яка його "вміщує".'
       }
     ]
   },
@@ -761,6 +1248,58 @@ const QUIZZES_EXTRA = [
         correct: '5',
         explanation: '$f(3) = 2 \\cdot 3 - 1 = 6 - 1 = 5$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: зсув графіка $y = x^2$ вправо на $2$ дає $y = (x + 2)^2$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Зсув вправо на $2$: $y = (x - 2)^2$. Зсув вліво: $y = (x + 2)^2$. Знак протилежний!'
+      },
+      {
+        question: 'Правильно чи неправильно: графік $y = -x^2$ — парабола з вітками вниз.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Від\'ємний коефіцієнт при $x^2$ "перевертає" параболу вниз.'
+      },
+      {
+        question: 'Яка з точок належить графіку $y = x^2 + 2x - 3$?',
+        options: ['$(0; -3)$', '$(1; 1)$', '$(2; 3)$', '$(-1; 0)$'],
+        correct: 0,
+        explanation: '$y(0) = 0 + 0 - 3 = -3$. Точка $(0; -3)$ належить графіку.'
+      },
+      {
+        question: 'При зсуві графіка $y = x^2$ на $4$ одиниці вниз отримаємо:',
+        options: ['$y = x^2 + 4$', '$y = (x - 4)^2$', '$y = x^2 - 4$', '$y = (x + 4)^2$'],
+        correct: 2,
+        explanation: 'Зсув вниз на $a$: $y = f(x) - a$. Тому $y = x^2 - 4$.'
+      },
+      {
+        question: 'Графік $y = \\dfrac{1}{x}$ розташований у:',
+        options: ['I і II чвертях', 'I і III чвертях', 'I і IV чвертях', 'Усіх чвертях'],
+        correct: 1,
+        explanation: 'При $x > 0$: $y > 0$ (I чверть). При $x < 0$: $y < 0$ (III чверть).'
+      },
+      {
+        question: 'Чому дорівнює $f(-1)$, якщо $f(x) = x^3 + 2x$?',
+        type: 'text_input',
+        correct: ['-3'],
+        explanation: '$f(-1) = (-1)^3 + 2(-1) = -1 - 2 = -3$.'
+      },
+      {
+        question: 'Вершина параболи $y = (x - 3)^2 + 1$ знаходиться в точці:',
+        options: ['$(3; 1)$', '$(-3; 1)$', '$(1; 3)$', '$(3; -1)$'],
+        correct: 0,
+        explanation: '$y = (x - 3)^2 + 1$: зсув вправо на $3$ і вгору на $1$. Вершина $(3; 1)$.'
+      },
+      {
+        question: 'Область визначення $y = \\sqrt{4 - x}$:',
+        options: ['$(4; +\\infty)$', '$(-\\infty; 4]$', '$[4; +\\infty)$', '$(-\\infty; 4)$'],
+        correct: 1,
+        explanation: '$4 - x \\geq 0 \\Rightarrow x \\leq 4$. Область визначення: $(-\\infty; 4]$.'
+      }
     ]
   },
 
@@ -835,6 +1374,64 @@ const QUIZZES_EXTRA = [
         correct: '3',
         explanation: '$9^{\\frac{1}{2}} = \\sqrt{9} = 3$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $a^{\\frac{1}{n}} = \\dfrac{a}{n}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! $a^{\\frac{1}{n}} = \\sqrt[n]{a}$, а не $\\dfrac{a}{n}$. Дробовий показник — це корінь!'
+      },
+      {
+        question: 'Правильно чи неправильно: $8^{\\frac{2}{3}} = 4$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $8^{\\frac{2}{3}} = (\\sqrt[3]{8})^2 = 2^2 = 4$.'
+      },
+      {
+        question: 'Обчисліть $32^{\\frac{2}{5}}$:',
+        type: 'text_input',
+        correct: ['4'],
+        explanation: '$32^{\\frac{2}{5}} = (\\sqrt[5]{32})^2 = 2^2 = 4$.'
+      },
+      {
+        question: 'Спростіть $(x^{\\frac{1}{3}})^6$:',
+        options: ['$x^2$', '$x^{18}$', '$x^{\\frac{1}{2}}$', '$x^3$'],
+        correct: 0,
+        explanation: '$(x^{\\frac{1}{3}})^6 = x^{\\frac{6}{3}} = x^2$.'
+      },
+      {
+        question: 'Обчисліть $25^{-\\frac{1}{2}}$:',
+        options: ['$-5$', '$5$', '$\\dfrac{1}{5}$', '$-\\dfrac{1}{5}$'],
+        correct: 2,
+        explanation: '$25^{-\\frac{1}{2}} = \\dfrac{1}{25^{\\frac{1}{2}}} = \\dfrac{1}{\\sqrt{25}} = \\dfrac{1}{5}$.'
+      },
+      {
+        question: 'Спростіть $\\dfrac{a^{\\frac{2}{3}} \\cdot a^{\\frac{1}{6}}}{a^{\\frac{1}{2}}}$:',
+        options: ['$a^{\\frac{1}{3}}$', '$a$', '$a^{\\frac{1}{2}}$', '$a^{\\frac{5}{6}}$'],
+        correct: 0,
+        explanation: '$\\dfrac{a^{\\frac{2}{3}} \\cdot a^{\\frac{1}{6}}}{a^{\\frac{1}{2}}} = a^{\\frac{2}{3}+\\frac{1}{6}-\\frac{1}{2}} = a^{\\frac{4+1-3}{6}} = a^{\\frac{2}{6}} = a^{\\frac{1}{3}}$.'
+      },
+      {
+        question: 'Обчисліть $64^{\\frac{2}{3}}$:',
+        type: 'text_input',
+        correct: ['16'],
+        explanation: '$64^{\\frac{2}{3}} = (\\sqrt[3]{64})^2 = 4^2 = 16$.'
+      },
+      {
+        question: 'Обчисліть $100^{\\frac{3}{2}}$:',
+        type: 'text_input',
+        correct: ['1000'],
+        explanation: '$100^{\\frac{3}{2}} = (\\sqrt{100})^3 = 10^3 = 1000$.'
+      },
+      {
+        question: 'Спростіть $x^{\\frac{1}{4}} \\cdot x^{\\frac{3}{4}}$:',
+        options: ['$x^{\\frac{3}{16}}$', '$x^{\\frac{1}{2}}$', '$x$', '$x^{\\frac{4}{4}}$'],
+        correct: 2,
+        explanation: '$x^{\\frac{1}{4}} \\cdot x^{\\frac{3}{4}} = x^{\\frac{1}{4}+\\frac{3}{4}} = x^1 = x$.'
+      }
     ]
   },
 
@@ -908,6 +1505,63 @@ const QUIZZES_EXTRA = [
         type: 'text_input',
         correct: '7',
         explanation: '$x^2 = 49 \\Rightarrow x = \\pm 7$. Більший корінь: $7$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: рівняння $x^2 = -4$ має два розв\'язки: $x = \\pm 2i$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'В дійсних числах рівняння $x^2 = -4$ не має розв\'язків (квадрат завжди $\\geq 0$). Комплексні числа не вивчаються у 10 класі.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\sqrt{x} = 4 \\Rightarrow x = 16$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $\\sqrt{x} = 4$, підносимо до квадрата: $x = 16$. Перевірка: $\\sqrt{16} = 4$ ✓.'
+      },
+      {
+        question: 'Розв\'яжіть $x^3 = 64$:',
+        type: 'text_input',
+        correct: ['4'],
+        explanation: '$x = \\sqrt[3]{64} = 4$, бо $4^3 = 64$.'
+      },
+      {
+        question: 'Скільки розв\'язків має рівняння $x^4 = 81$?',
+        options: ['$1$', '$2$', '$3$', '$4$'],
+        correct: 1,
+        explanation: '$x^4 = 81 \\Rightarrow x^2 = 9$ (бо $x^4 \\geq 0$) $\\Rightarrow x = \\pm 3$. Два розв\'язки.'
+      },
+      {
+        question: 'Розв\'яжіть нерівність $x^2 > 25$:',
+        options: [
+          '$x > 5$',
+          '$x < -5$',
+          '$x > 5$ або $x < -5$',
+          '$-5 < x < 5$'
+        ],
+        correct: 2,
+        explanation: '$x^2 > 25 \\Leftrightarrow |x| > 5 \\Leftrightarrow x > 5$ або $x < -5$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sqrt{2x + 1} = 3$:',
+        type: 'text_input',
+        correct: ['4'],
+        explanation: '$2x + 1 = 9 \\Rightarrow 2x = 8 \\Rightarrow x = 4$. Перевірка: $\\sqrt{9} = 3$ ✓.'
+      },
+      {
+        question: 'При яких $x$ виконується $x^3 \\leq -1$?',
+        options: ['$x \\leq -1$', '$x \\geq -1$', '$x \\leq 1$', '$x \\geq 1$'],
+        correct: 0,
+        explanation: '$x^3 \\leq -1 \\Leftrightarrow x \\leq \\sqrt[3]{-1} = -1$.'
+      },
+      {
+        question: 'Рівняння $x^6 = 1$ має скільки дійсних розв\'язків?',
+        type: 'text_input',
+        correct: ['2'],
+        explanation: '$x^6 = 1 \\Rightarrow |x| = 1 \\Rightarrow x = \\pm 1$. Два дійсні розв\'язки.'
       }
     ]
   },
@@ -1003,6 +1657,68 @@ const QUIZZES_EXTRA = [
         correct: '0',
         explanation: '$(\\cos(\\pi x))\' = -\\sin(\\pi x) \\cdot \\pi$. При $x = 1$: $-\\pi\\sin(\\pi) = -\\pi \\cdot 0 = 0$.'
       }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $(\\sin(5x))\' = \\cos(5x)$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Потрібно помножити на похідну внутрішньої: $(\\sin(5x))\' = 5\\cos(5x)$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $(e^{2x})\' = 2e^{2x}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! $(e^{2x})\' = e^{2x} \\cdot 2 = 2e^{2x}$.'
+      },
+      {
+        question: 'Знайдіть $(\\cos(4x))\'$:',
+        options: ['$\\sin(4x)$', '$-\\sin(4x)$', '$4\\sin(4x)$', '$-4\\sin(4x)$'],
+        correct: 3,
+        explanation: '$(\\cos(4x))\' = -\\sin(4x) \\cdot 4 = -4\\sin(4x)$.'
+      },
+      {
+        question: 'Знайдіть $(\\sqrt{2x + 3})\'$:',
+        options: [
+          '$\\dfrac{1}{\\sqrt{2x+3}}$',
+          '$\\dfrac{2}{\\sqrt{2x+3}}$',
+          '$\\dfrac{1}{2\\sqrt{2x+3}}$',
+          '$\\dfrac{2}{2\\sqrt{2x+3}}$'
+        ],
+        correct: 0,
+        explanation: '$(\\sqrt{2x+3})\' = \\dfrac{1}{2\\sqrt{2x+3}} \\cdot 2 = \\dfrac{1}{\\sqrt{2x+3}}$.'
+      },
+      {
+        question: 'Обчисліть $(\\ln(2x))\'$:',
+        options: ['$\\dfrac{2}{x}$', '$\\dfrac{1}{2x}$', '$\\dfrac{1}{x}$', '$\\dfrac{2}{2x}$'],
+        correct: 2,
+        explanation: '$(\\ln(2x))\' = \\dfrac{1}{2x} \\cdot 2 = \\dfrac{1}{x}$.'
+      },
+      {
+        question: 'Знайдіть $(e^{-3x})\'$ при $x = 0$:',
+        type: 'text_input',
+        correct: ['-3'],
+        explanation: '$(e^{-3x})\' = -3e^{-3x}$. При $x = 0$: $-3 \\cdot e^0 = -3 \\cdot 1 = -3$.'
+      },
+      {
+        question: 'Знайдіть $((2x+1)^4)\'$:',
+        options: ['$4(2x+1)^3$', '$8(2x+1)^3$', '$2(2x+1)^3$', '$(2x+1)^3$'],
+        correct: 1,
+        explanation: '$((2x+1)^4)\' = 4(2x+1)^3 \\cdot 2 = 8(2x+1)^3$.'
+      },
+      {
+        question: 'Знайдіть $(\\sin^3 x)\'$:',
+        options: [
+          '$3\\sin^2 x$',
+          '$3\\sin^2 x \\cdot \\cos x$',
+          '$\\cos^3 x$',
+          '$3\\cos^2 x \\cdot \\sin x$'
+        ],
+        correct: 1,
+        explanation: '$(\\sin^3 x)\' = 3\\sin^2 x \\cdot (\\sin x)\' = 3\\sin^2 x \\cdot \\cos x$.'
+      }
     ]
   },
 
@@ -1078,6 +1794,63 @@ const QUIZZES_EXTRA = [
         type: 'text_input',
         correct: '-2',
         explanation: '$y\' = 2x$. При $x_0 = -1$: $k = 2 \\cdot (-1) = -2$.'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: рівняння дотичної — $y = f\'(x_0)(x - x_0)$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Правильне рівняння: $y = f(x_0) + f\'(x_0)(x - x_0)$. Пропущений доданок $f(x_0)$!'
+      },
+      {
+        question: 'Правильно чи неправильно: якщо дотична горизонтальна, то $f\'(x_0) = 0$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Горизонтальна дотична означає кутовий коефіцієнт $= 0$, тобто $f\'(x_0) = 0$.'
+      },
+      {
+        question: 'Знайдіть рівняння дотичної до $y = x^2$ в точці $x_0 = 2$:',
+        options: ['$y = 4x - 4$', '$y = 2x$', '$y = 4x$', '$y = 4x + 4$'],
+        correct: 0,
+        explanation: '$f(2) = 4$, $f\'(x) = 2x$, $f\'(2) = 4$. Дотична: $y = 4 + 4(x-2) = 4x - 4$.'
+      },
+      {
+        question: 'Кутовий коефіцієнт дотичної до $y = x^3$ при $x_0 = -1$:',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$f\'(x) = 3x^2$. $f\'(-1) = 3 \\cdot 1 = 3$.'
+      },
+      {
+        question: 'Під яким кутом до осі $Ox$ нахилена дотична до $y = x^2$ в точці $x_0 = 0$?',
+        options: ['$0°$ (горизонтальна)', '$45°$', '$90°$', '$30°$'],
+        correct: 0,
+        explanation: '$f\'(0) = 0$. Кутовий коефіцієнт $= 0$ означає горизонтальну дотичну (кут $0°$).'
+      },
+      {
+        question: 'Рівняння дотичної до $y = \\cos x$ в точці $x_0 = \\dfrac{\\pi}{2}$:',
+        options: ['$y = x - \\dfrac{\\pi}{2}$', '$y = -x + \\dfrac{\\pi}{2}$', '$y = \\dfrac{\\pi}{2} - x$', '$y = 0$'],
+        correct: 1,
+        explanation: '$f(\\dfrac{\\pi}{2}) = 0$, $f\'(x) = -\\sin x$, $f\'(\\dfrac{\\pi}{2}) = -1$. Дотична: $y = 0 + (-1)(x - \\dfrac{\\pi}{2}) = -x + \\dfrac{\\pi}{2}$.'
+      },
+      {
+        question: 'Знайдіть рівняння дотичної до $y = \\sqrt{x}$ в точці $x_0 = 4$:',
+        options: [
+          '$y = \\dfrac{1}{4}x + 1$',
+          '$y = \\dfrac{1}{2}x$',
+          '$y = \\dfrac{1}{4}x$',
+          '$y = 4x - 14$'
+        ],
+        correct: 0,
+        explanation: '$f(4) = 2$, $f\'(x) = \\dfrac{1}{2\\sqrt{x}}$, $f\'(4) = \\dfrac{1}{4}$. Дотична: $y = 2 + \\dfrac{1}{4}(x - 4) = \\dfrac{1}{4}x + 1$.'
+      },
+      {
+        question: 'У якій точці дотична до $y = x^2 - 6x$ горизонтальна?',
+        type: 'text_input',
+        correct: ['3'],
+        explanation: '$f\'(x) = 2x - 6 = 0 \\Rightarrow x = 3$. Дотична горизонтальна при $x = 3$.'
       }
     ]
   },
@@ -1157,6 +1930,58 @@ const QUIZZES_EXTRA = [
         type: 'text_input',
         correct: ['так', 'Так', 'ТАК'],
         explanation: '$f\'(x) = 3x^2 - 12 = 0 \\Rightarrow x = 2$ (на $[0;3]$). $f(0) = 0$, $f(2) = 8 - 24 = -16$, $f(3) = -9$. Найменше: $-16$. Так!'
+      }
+    ],
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: для знаходження найбільшого значення на відрізку достатньо знайти лише критичні точки.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Потрібно порівняти значення функції і в критичних точках, і на КІНЦЯХ відрізка.'
+      },
+      {
+        question: 'Правильно чи неправильно: найменше значення $f(x) = x^2 + 1$ на $[-2; 3]$ дорівнює $1$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: '$f\'(x) = 2x = 0 \\Rightarrow x = 0$. $f(-2) = 5$, $f(0) = 1$, $f(3) = 10$. Найменше: $1$. Правильно!'
+      },
+      {
+        question: 'Найбільше значення $f(x) = -x^2 + 2x + 3$ на $[-1; 3]$:',
+        type: 'text_input',
+        correct: ['4'],
+        explanation: '$f\'(x) = -2x + 2 = 0 \\Rightarrow x = 1$. $f(-1) = 0$, $f(1) = 4$, $f(3) = 0$. Найбільше: $4$.'
+      },
+      {
+        question: 'Знайдіть найменше значення $f(x) = x^3 - 3x + 2$ на $[0; 2]$:',
+        type: 'text_input',
+        correct: ['0'],
+        explanation: '$f\'(x) = 3x^2 - 3 = 0 \\Rightarrow x = 1$ (на $[0;2]$). $f(0) = 2$, $f(1) = 0$, $f(2) = 4$. Найменше: $0$.'
+      },
+      {
+        question: 'Найбільше значення $f(x) = 3x - x^3$ на $[-1; 2]$:',
+        options: ['$2$', '$-2$', '$4$', '$0$'],
+        correct: 0,
+        explanation: '$f\'(x) = 3 - 3x^2 = 0 \\Rightarrow x = \\pm 1$. $f(-1) = -2$, $f(1) = 2$, $f(2) = -2$. Найбільше: $2$.'
+      },
+      {
+        question: 'Функція $f(x) = 5x$ на $[1; 4]$. Де досягається максимум?',
+        options: ['В критичній точці', 'На лівому кінці $x = 1$', 'На правому кінці $x = 4$', 'У середині відрізка'],
+        correct: 2,
+        explanation: '$f\'(x) = 5 > 0$ — функція зростає на всьому відрізку. Максимум на правому кінці: $f(4) = 20$.'
+      },
+      {
+        question: 'Найменше значення $f(x) = x^4 - 2x^2$ на $[-2; 2]$:',
+        type: 'text_input',
+        correct: ['-1'],
+        explanation: '$f\'(x) = 4x^3 - 4x = 4x(x^2-1) = 0 \\Rightarrow x = 0, \\pm 1$. $f(-2) = 8$, $f(-1) = -1$, $f(0) = 0$, $f(1) = -1$, $f(2) = 8$. Найменше: $-1$.'
+      },
+      {
+        question: 'Найбільше значення $f(x) = \\sin x$ на $[0; \\dfrac{2\\pi}{3}]$:',
+        options: ['$\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$1$', '$\\dfrac{\\sqrt{2}}{2}$'],
+        correct: 2,
+        explanation: '$f\'(x) = \\cos x = 0 \\Rightarrow x = \\dfrac{\\pi}{2}$ (на відрізку). $f(0) = 0$, $f(\\dfrac{\\pi}{2}) = 1$, $f(\\dfrac{2\\pi}{3}) = \\dfrac{\\sqrt{3}}{2}$. Найбільше: $1$.'
       }
     ]
   }
