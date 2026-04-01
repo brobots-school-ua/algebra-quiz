@@ -422,6 +422,7 @@ function renderTable() {
       <thead>
         <tr>
           <th onclick="sortBy('name')" class="${sortKey === 'name' ? 'sorted' : ''}">Ім'я ${sortKey === 'name' ? (sortAsc ? '↑' : '↓') : ''}</th>
+          <th onclick="sortBy('quizTitle')" class="${sortKey === 'quizTitle' ? 'sorted' : ''}">Квіз ${sortKey === 'quizTitle' ? (sortAsc ? '↑' : '↓') : ''}</th>
           <th onclick="sortBy('percentage')" class="${sortKey === 'percentage' ? 'sorted' : ''}">Результат ${sortKey === 'percentage' ? (sortAsc ? '↑' : '↓') : ''}</th>
           <th onclick="sortBy('score')" class="${sortKey === 'score' ? 'sorted' : ''}">Бал ${sortKey === 'score' ? (sortAsc ? '↑' : '↓') : ''}</th>
           <th onclick="sortBy('timeSpent')" class="${sortKey === 'timeSpent' ? 'sorted' : ''}">Час ${sortKey === 'timeSpent' ? (sortAsc ? '↑' : '↓') : ''}</th>
@@ -442,6 +443,7 @@ function renderTable() {
     html += `
       <tr>
         <td><strong>${escapeHtml(r.name)}</strong></td>
+        <td style="font-size:0.85em; color:#a0a0c0;">${escapeHtml(r.quizTitle || 'Квіз')}</td>
         <td><span class="badge ${badge.cls}">${r.percentage}%</span></td>
         <td>${r.score} / ${r.total}</td>
         <td>${min}:${sec.toString().padStart(2, '0')}</td>
@@ -449,7 +451,7 @@ function renderTable() {
         <td><span class="detail-toggle" onclick="toggleDetail(${i})">Деталі</span></td>
       </tr>
       <tr class="detail-row" id="detail-${i}">
-        <td colspan="6">
+        <td colspan="7">
           <div class="detail-content">
             ${r.answers ? r.answers.map((a, j) => `
               <div class="detail-answer">

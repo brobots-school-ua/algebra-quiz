@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Квіз — Тригонометричні формули</title>
+  <title>Алгебра 10 клас — Квізи</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,19 +15,18 @@
     }
 
     .container {
-      max-width: 750px;
+      max-width: 900px;
       margin: 0 auto;
       padding: 20px;
     }
 
-    /* Header */
     .header {
       text-align: center;
-      padding: 30px 0;
+      padding: 30px 0 10px;
     }
 
     .header h1 {
-      font-size: 2em;
+      font-size: 2.2em;
       background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -39,871 +38,168 @@
       font-size: 1.1em;
     }
 
-    /* Cards */
-    .card {
+    .section-group {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 1.2em;
+      color: #818cf8;
+      margin-bottom: 15px;
+      padding-left: 5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(129, 140, 248, 0.2);
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 15px;
+    }
+
+    .quiz-card {
       background: rgba(255, 255, 255, 0.07);
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 16px;
-      padding: 30px;
-      margin-bottom: 20px;
-      animation: fadeIn 0.4s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Welcome screen */
-    #welcome { text-align: center; }
-
-    #welcome h2 {
-      font-size: 1.5em;
-      margin-bottom: 20px;
-      color: #fff;
-    }
-
-    .info-box {
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      text-align: left;
-    }
-
-    .info-box h3 {
-      color: #818cf8;
-      margin-bottom: 10px;
-      font-size: 1.1em;
-    }
-
-    .info-box ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .info-box li {
-      padding: 4px 0;
-      color: #c0c0e0;
-    }
-
-    .info-box li::before {
-      content: "▸ ";
-      color: #818cf8;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      max-width: 350px;
-      padding: 14px 20px;
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      font-size: 1.1em;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-
-    input[type="text"]:focus {
-      border-color: #818cf8;
-    }
-
-    input[type="text"]::placeholder {
-      color: #666;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 14px 36px;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.1em;
-      font-weight: 600;
+      padding: 22px;
       cursor: pointer;
       transition: all 0.3s;
       text-decoration: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: #c0c0e0;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none !important;
-    }
-
-    /* Progress bar */
-    .progress-bar {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      height: 8px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #667eea, #764ba2);
-      border-radius: 20px;
-      transition: width 0.4s ease;
-    }
-
-    .question-counter {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-      font-size: 0.9em;
-      color: #a0a0c0;
-    }
-
-    .timer {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    /* Question */
-    .question-text {
-      font-size: 1.3em;
-      color: #fff;
-      margin-bottom: 25px;
-      line-height: 1.6;
-    }
-
-    .question-text .formula {
+      color: inherit;
       display: block;
-      text-align: center;
-      font-size: 1.2em;
-      margin: 15px 0;
-      padding: 15px;
-      background: rgba(99, 102, 241, 0.1);
-      border-radius: 10px;
-      font-family: 'Cambria Math', 'Times New Roman', serif;
-      color: #c4b5fd;
     }
 
-    /* Options */
-    .options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .quiz-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(129, 140, 248, 0.4);
+      box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
     }
 
-    .option {
-      padding: 16px 20px;
-      border: 2px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.03);
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 1.05em;
-      font-family: 'Cambria Math', 'Segoe UI', sans-serif;
+    .quiz-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+      display: block;
     }
 
-    .option:hover {
-      border-color: rgba(129, 140, 248, 0.5);
-      background: rgba(129, 140, 248, 0.1);
-    }
-
-    .option.selected {
-      border-color: #818cf8;
-      background: rgba(129, 140, 248, 0.2);
-    }
-
-    .option.correct {
-      border-color: #34d399;
-      background: rgba(52, 211, 153, 0.15);
-      animation: pulse 0.3s ease;
-    }
-
-    .option.wrong {
-      border-color: #f87171;
-      background: rgba(248, 113, 113, 0.15);
-    }
-
-    .option.show-correct {
-      border-color: #34d399;
-      background: rgba(52, 211, 153, 0.1);
-    }
-
-    @keyframes pulse {
-      50% { transform: scale(1.02); }
-    }
-
-    .option.disabled {
-      pointer-events: none;
-    }
-
-    .explanation {
-      margin-top: 20px;
-      padding: 15px 20px;
-      border-radius: 12px;
-      font-size: 0.95em;
-      line-height: 1.5;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .explanation.correct-exp {
-      background: rgba(52, 211, 153, 0.1);
-      border: 1px solid rgba(52, 211, 153, 0.3);
-      color: #6ee7b7;
-    }
-
-    .explanation.wrong-exp {
-      background: rgba(248, 113, 113, 0.1);
-      border: 1px solid rgba(248, 113, 113, 0.3);
-      color: #fca5a5;
-    }
-
-    /* Cat meme */
-    .cat-meme {
-      text-align: center;
-      margin-top: 15px;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .cat-meme img {
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 16px;
-      border: 3px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .cat-meme .cat-caption {
-      margin-top: 8px;
-      font-size: 1.1em;
-      font-weight: 600;
-    }
-
-    .cat-meme .cat-caption.correct-cat { color: #34d399; }
-    .cat-meme .cat-caption.wrong-cat { color: #fca5a5; }
-
-    .result-cat {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .result-cat img {
-      width: 280px;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 20px;
-      border: 3px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .result-cat .cat-caption {
-      margin-top: 10px;
-      font-size: 1.2em;
-      font-weight: 600;
-    }
-
-    .next-btn-wrap {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    /* Results screen */
-    #results { text-align: center; }
-
-    .score-circle {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      margin: 0 auto 25px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 3em;
-      font-weight: 700;
-      position: relative;
-    }
-
-    .score-circle::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      padding: 4px;
-      background: conic-gradient(var(--score-color) var(--score-deg), rgba(255,255,255,0.1) 0);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-    }
-
-    .score-circle .score-num { color: #fff; }
-    .score-circle .score-label { font-size: 0.3em; color: #a0a0c0; font-weight: 400; }
-
-    .grade-text {
-      font-size: 1.4em;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    .grade-emoji { font-size: 2em; margin-bottom: 15px; }
-
-    .results-details {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-      margin: 25px 0;
-    }
-
-    .detail-box {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 15px;
-    }
-
-    .detail-box .value {
-      font-size: 1.5em;
-      font-weight: 700;
+    .quiz-card h3 {
       color: #fff;
+      font-size: 1.05em;
+      margin-bottom: 8px;
+      line-height: 1.3;
     }
 
-    .detail-box .label {
-      font-size: 0.85em;
+    .quiz-card p {
       color: #a0a0c0;
-      margin-top: 4px;
-    }
-
-    .results-buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    /* Review section */
-    .review-section {
-      margin-top: 30px;
-      text-align: left;
-    }
-
-    .review-section h3 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #c0c0e0;
-    }
-
-    .review-item {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
-      padding: 20px;
+      font-size: 0.85em;
+      line-height: 1.4;
       margin-bottom: 12px;
-      border-left: 4px solid;
     }
 
-    .review-item.review-correct { border-left-color: #34d399; }
-    .review-item.review-wrong { border-left-color: #f87171; }
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8em;
+      color: #888;
+    }
 
-    .review-question { font-weight: 600; margin-bottom: 8px; color: #e0e0e0; }
-    .review-answer { font-size: 0.95em; color: #a0a0c0; }
-    .review-answer span { font-weight: 600; }
-    .review-answer .green { color: #34d399; }
-    .review-answer .red { color: #f87171; }
+    .quiz-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
 
-    /* Footer link */
-    .footer-link {
+    .cat-welcome {
       text-align: center;
-      margin-top: 20px;
-      padding-bottom: 30px;
+      margin: 10px 0 25px;
     }
 
-    .footer-link a {
-      color: #818cf8;
-      text-decoration: none;
-      font-size: 0.95em;
+    .cat-welcome img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.1);
     }
 
-    .footer-link a:hover { text-decoration: underline; }
+    .cat-welcome .cat-text {
+      margin-top: 10px;
+      color: #c0c0e0;
+      font-size: 1em;
+      font-style: italic;
+    }
 
-    /* Responsive */
     @media (max-width: 600px) {
-      .header h1 { font-size: 1.5em; }
-      .question-text { font-size: 1.1em; }
-      .results-details { grid-template-columns: 1fr; }
-      .card { padding: 20px; }
+      .header h1 { font-size: 1.6em; }
+      .quiz-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>Тригонометричний квіз</h1>
-      <p>Формули додавання та пониження степеня</p>
+      <h1>Алгебра та початки аналізу</h1>
+      <p>Інтерактивні квізи для 10 класу</p>
     </div>
 
-    <!-- Welcome Screen -->
-    <div id="welcome" class="card">
-      <h2>Готовий перевірити свої знання?</h2>
-
-      <div class="info-box">
-        <h3>Теми квізу:</h3>
-        <ul>
-          <li>Формули додавання: sin(α ± β), cos(α ± β), tg(α ± β)</li>
-          <li>Формули подвійного аргументу</li>
-          <li>Формули пониження степеня: sin²α, cos²α</li>
-          <li>Застосування формул до обчислень</li>
-        </ul>
-      </div>
-
-      <div style="margin-bottom: 20px;">
-        <input type="text" id="studentName" placeholder="Введи своє ім'я та прізвище" autocomplete="off">
-      </div>
-      <button class="btn btn-primary" onclick="startQuiz()" id="startBtn" disabled>Почати квіз</button>
+    <div class="cat-welcome">
+      <img src="https://cataas.com/cat?t=welcome" alt="Welcome cat" onerror="this.src='https://placekitten.com/160/160'">
+      <div class="cat-text">Мяу! Обирай тему та починай!</div>
     </div>
 
-    <!-- Quiz Screen -->
-    <div id="quiz" class="card" style="display:none;">
-      <div class="question-counter">
-        <span id="questionNum">Питання 1 / 12</span>
-        <span class="timer" id="timer">⏱ 0:00</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-      </div>
-      <div class="question-text" id="questionText"></div>
-      <div class="options" id="options"></div>
-      <div id="explanationBox"></div>
-      <div class="next-btn-wrap" id="nextBtnWrap" style="display:none;">
-        <button class="btn btn-primary" onclick="nextQuestion()">Далі →</button>
-      </div>
-    </div>
-
-    <!-- Results Screen -->
-    <div id="results" class="card" style="display:none;"></div>
-
-    <!-- Results page: /results.html (teacher only) -->
+    <div id="catalog"></div>
   </div>
 
-<script>
-// Cat memes for correct/wrong answers
-const correctCatMessages = [
-  'Мурр! Бездоганно!',
-  'Котик пишається тобою!',
-  'Ти розумніший за кота! А це складно...',
-  'Мяу! Так тримати!',
-  'Цей кіт аплодує тобі!',
-  'Геній тригонометрії!',
-  'Навіть кіт здивований, як ти це знаєш!',
-  'Правильно! Кіт задоволений!',
-  'Бінго! Кіт танцює від радості!',
-  'Мур-мур! Формула підкорена!',
-  'Кіт каже: ти найкращий!',
-  'Блискуча відповідь! Кіт в захваті!'
-];
-
-const wrongCatMessages = [
-  'Кіт вірить, що наступного разу вийде!',
-  'Мяу... Не здавайся!',
-  'Цей кіт теж плутає формули іноді...',
-  'Нічого страшного! Кіт підтримує!',
-  'Кіт каже: помилки — це нормально!',
-  'Не сумуй! Кіт обіймає тебе!',
-  'Кіт теж вчиться разом з тобою!',
-  'Ой! Але кіт все одно тебе любить!',
-  'Кіт каже: спробуй ще!',
-  'Мяу... Давай розберемося разом!',
-  'Кіт не засмучується і тобі не варто!',
-  'Помилка — це крок до перемоги! Мурр!'
-];
-
-const resultCatMessages = {
-  excellent: [
-    'Цей кіт коронує тебе королем тригонометрії!',
-    'Кіт в шоці від твоєї геніальності!',
-    'Мурр! Ти — легенда математики!'
-  ],
-  good: [
-    'Кіт задоволений! Майже ідеально!',
-    'Хороший результат! Кіт пишається!',
-    'Мяу! Ще трішки і буде відмінно!'
-  ],
-  ok: [
-    'Кіт каже: непогано, але є куди рости!',
-    'Кіт вірить — ти можеш краще!',
-    'Мяу! Повтори формули і спробуй ще раз!'
-  ],
-  bad: [
-    'Кіт обіймає тебе! Повтори теорію і повертайся!',
-    'Не сумуй! Кіт пропонує перечитати формули!',
-    'Мяу... Нічого, всі колись починали з нуля!'
-  ]
-};
-
-function getRandomItem(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-// Get a random cat image URL (using cataas.com)
-function getCatUrl() {
-  return `https://cataas.com/cat?t=${Date.now()}-${Math.random()}`;
-}
-
-// Quiz questions
-const questions = [
-  {
-    question: 'Яка формула sin(α + β)?',
-    formula: 'sin(α + β) = ?',
-    options: [
-      'sin α · cos β + cos α · sin β',
-      'sin α · cos β − cos α · sin β',
-      'cos α · cos β + sin α · sin β',
-      'cos α · cos β − sin α · sin β'
-    ],
-    correct: 0,
-    explanation: 'sin(α + β) = sin α · cos β + cos α · sin β — це базова формула додавання для синуса.'
-  },
-  {
-    question: 'Яка формула cos(α − β)?',
-    formula: 'cos(α − β) = ?',
-    options: [
-      'cos α · cos β − sin α · sin β',
-      'cos α · cos β + sin α · sin β',
-      'sin α · cos β − cos α · sin β',
-      'sin α · sin β + cos α · cos β'
-    ],
-    correct: 1,
-    explanation: 'cos(α − β) = cos α · cos β + sin α · sin β. Зверни увагу: при відніманні аргументів знак між добутками — плюс!'
-  },
-  {
-    question: 'Чому дорівнює sin(α − β)?',
-    formula: 'sin(α − β) = ?',
-    options: [
-      'sin α · cos β + cos α · sin β',
-      'cos α · sin β − sin α · cos β',
-      'sin α · cos β − cos α · sin β',
-      'cos α · cos β − sin α · sin β'
-    ],
-    correct: 2,
-    explanation: 'sin(α − β) = sin α · cos β − cos α · sin β. Знак мінус стоїть перед другим добутком.'
-  },
-  {
-    question: 'Яка формула cos(α + β)?',
-    formula: 'cos(α + β) = ?',
-    options: [
-      'cos α · cos β + sin α · sin β',
-      'sin α · cos β + cos α · sin β',
-      'cos α · cos β − sin α · sin β',
-      'sin α · cos β − cos α · sin β'
-    ],
-    correct: 2,
-    explanation: 'cos(α + β) = cos α · cos β − sin α · sin β. У формулі додавання для косинуса знак протилежний!'
-  },
-  {
-    question: 'Яка формула tg(α + β)?',
-    formula: 'tg(α + β) = ?',
-    options: [
-      '(tg α + tg β) / (1 + tg α · tg β)',
-      '(tg α − tg β) / (1 + tg α · tg β)',
-      '(tg α + tg β) / (1 − tg α · tg β)',
-      '(tg α · tg β) / (1 + tg α + tg β)'
-    ],
-    correct: 2,
-    explanation: 'tg(α + β) = (tg α + tg β) / (1 − tg α · tg β). У чисельнику — сума, у знаменнику — мінус добуток.'
-  },
-  {
-    question: 'Чому дорівнює tg(α − β)?',
-    formula: 'tg(α − β) = ?',
-    options: [
-      '(tg α + tg β) / (1 − tg α · tg β)',
-      '(tg α − tg β) / (1 + tg α · tg β)',
-      '(tg α − tg β) / (1 − tg α · tg β)',
-      '(tg α · tg β − 1) / (tg α + tg β)'
-    ],
-    correct: 1,
-    explanation: 'tg(α − β) = (tg α − tg β) / (1 + tg α · tg β). Порівняй з формулою додавання — знаки змінились!'
-  },
-  {
-    question: 'Яка формула пониження степеня для sin²α?',
-    formula: 'sin²α = ?',
-    options: [
-      '(1 + cos 2α) / 2',
-      '(1 − cos 2α) / 2',
-      '(1 − sin 2α) / 2',
-      '(cos 2α − 1) / 2'
-    ],
-    correct: 1,
-    explanation: 'sin²α = (1 − cos 2α) / 2. Для синуса квадрат — з мінусом перед косинусом подвійного аргументу.'
-  },
-  {
-    question: 'Яка формула пониження степеня для cos²α?',
-    formula: 'cos²α = ?',
-    options: [
-      '(1 − cos 2α) / 2',
-      '(cos 2α − 1) / 2',
-      '(1 + cos 2α) / 2',
-      '(1 + sin 2α) / 2'
-    ],
-    correct: 2,
-    explanation: 'cos²α = (1 + cos 2α) / 2. Для косинуса квадрат — з плюсом перед косинусом подвійного аргументу.'
-  },
-  {
-    question: 'Обчисли sin 75°, використовуючи формулу додавання:',
-    formula: 'sin 75° = sin(45° + 30°) = ?',
-    options: [
-      '(√6 − √2) / 4',
-      '(√6 + √2) / 4',
-      '(√3 + 1) / 4',
-      '(√3 + √2) / 2'
-    ],
-    correct: 1,
-    explanation: 'sin 75° = sin 45° · cos 30° + cos 45° · sin 30° = (√2/2)(√3/2) + (√2/2)(1/2) = (√6 + √2) / 4'
-  },
-  {
-    question: 'Обчисли cos 15°, використовуючи формулу віднімання:',
-    formula: 'cos 15° = cos(45° − 30°) = ?',
-    options: [
-      '(√6 − √2) / 4',
-      '(√3 − 1) / 4',
-      '(√6 + √2) / 4',
-      '(√2 + 1) / 4'
-    ],
-    correct: 2,
-    explanation: 'cos 15° = cos 45° · cos 30° + sin 45° · sin 30° = (√2/2)(√3/2) + (√2/2)(1/2) = (√6 + √2) / 4'
-  },
-  {
-    question: 'Яка формула подвійного аргументу для sin 2α?',
-    formula: 'sin 2α = ?',
-    options: [
-      'sin²α − cos²α',
-      '2 sin α · cos α',
-      'cos²α − sin²α',
-      '2 cos²α − 1'
-    ],
-    correct: 1,
-    explanation: 'sin 2α = 2 sin α · cos α. Це наслідок формули sin(α + α) = sin α · cos α + cos α · sin α.'
-  },
-  {
-    question: 'Спрости вираз: cos²x − sin²x',
-    formula: 'cos²x − sin²x = ?',
-    options: [
-      'sin 2x',
-      '1',
-      'cos 2x',
-      '−cos 2x'
-    ],
-    correct: 2,
-    explanation: 'cos²x − sin²x = cos 2x — це одна з форм запису формули подвійного аргументу для косинуса.'
-  }
-];
-
-let currentQuestion = 0;
-let score = 0;
-let answers = [];
-let startTime;
-let timerInterval;
-let studentName = '';
-
-// Enable start button when name is entered
-const nameInput = document.getElementById('studentName');
-const startBtn = document.getElementById('startBtn');
-
-nameInput.addEventListener('input', () => {
-  startBtn.disabled = nameInput.value.trim().length < 2;
-});
-
-nameInput.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter' && !startBtn.disabled) startQuiz();
-});
-
-function startQuiz() {
-  studentName = nameInput.value.trim();
-  if (studentName.length < 2) return;
-
-  document.getElementById('welcome').style.display = 'none';
-  document.getElementById('quiz').style.display = 'block';
-
-  startTime = Date.now();
-  timerInterval = setInterval(updateTimer, 1000);
-
-  showQuestion();
-}
-
-function updateTimer() {
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const min = Math.floor(elapsed / 60);
-  const sec = elapsed % 60;
-  document.getElementById('timer').textContent = `⏱ ${min}:${sec.toString().padStart(2, '0')}`;
-}
-
-function showQuestion() {
-  const q = questions[currentQuestion];
-  document.getElementById('questionNum').textContent = `Питання ${currentQuestion + 1} / ${questions.length}`;
-  document.getElementById('progressFill').style.width = `${((currentQuestion) / questions.length) * 100}%`;
-
-  let html = q.question;
-  if (q.formula) {
-    html += `<span class="formula">${q.formula}</span>`;
-  }
-  document.getElementById('questionText').innerHTML = html;
-
-  const optionsHtml = q.options.map((opt, i) =>
-    `<div class="option" onclick="selectAnswer(${i})" id="opt${i}">${String.fromCharCode(65 + i)}) ${opt}</div>`
-  ).join('');
-  document.getElementById('options').innerHTML = optionsHtml;
-  document.getElementById('explanationBox').innerHTML = '';
-  document.getElementById('nextBtnWrap').style.display = 'none';
-}
-
-function selectAnswer(index) {
-  const q = questions[currentQuestion];
-  const isCorrect = index === q.correct;
-
-  // Disable all options
-  document.querySelectorAll('.option').forEach(el => el.classList.add('disabled'));
-
-  // Highlight selected and correct
-  if (isCorrect) {
-    document.getElementById(`opt${index}`).classList.add('correct');
-    score++;
-  } else {
-    document.getElementById(`opt${index}`).classList.add('wrong');
-    document.getElementById(`opt${q.correct}`).classList.add('show-correct');
-  }
-
-  // Save answer
-  answers.push({
-    question: q.question,
-    selected: q.options[index],
-    correct: q.options[q.correct],
-    isCorrect
-  });
-
-  // Show explanation with cat meme
-  const expClass = isCorrect ? 'correct-exp' : 'wrong-exp';
-  const prefix = isCorrect ? '✓ Правильно!' : '✗ Неправильно.';
-  const catMsg = isCorrect ? getRandomItem(correctCatMessages) : getRandomItem(wrongCatMessages);
-  const catClass = isCorrect ? 'correct-cat' : 'wrong-cat';
-  document.getElementById('explanationBox').innerHTML =
-    `<div class="explanation ${expClass}"><strong>${prefix}</strong> ${q.explanation}</div>
-     <div class="cat-meme">
-       <img src="${getCatUrl()}" alt="Cat meme" onerror="this.src='https://placekitten.com/220/220'">
-       <div class="cat-caption ${catClass}">${catMsg}</div>
-     </div>`;
-
-  document.getElementById('nextBtnWrap').style.display = 'block';
-}
-
-function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    showQuestion();
-  } else {
-    showResults();
-  }
-}
-
-async function showResults() {
-  clearInterval(timerInterval);
-  const timeSpent = Math.floor((Date.now() - startTime) / 1000);
-  const percentage = Math.round((score / questions.length) * 100);
-
-  document.getElementById('quiz').style.display = 'none';
-  document.getElementById('progressFill').style.width = '100%';
-
-  // Determine grade and cat message
-  let gradeText, gradeColor, gradeKey;
-  if (percentage >= 90) { gradeText = 'Відмінно!'; gradeColor = '#34d399'; gradeKey = 'excellent'; }
-  else if (percentage >= 75) { gradeText = 'Добре!'; gradeColor = '#60a5fa'; gradeKey = 'good'; }
-  else if (percentage >= 50) { gradeText = 'Задовільно'; gradeColor = '#fbbf24'; gradeKey = 'ok'; }
-  else { gradeText = 'Потрібно повторити'; gradeColor = '#f87171'; gradeKey = 'bad'; }
-
-  const resultCatMsg = getRandomItem(resultCatMessages[gradeKey]);
-
-  const deg = (percentage / 100) * 360;
-  const min = Math.floor(timeSpent / 60);
-  const sec = timeSpent % 60;
-
-  let html = `
-    <div class="score-circle" style="--score-color: ${gradeColor}; --score-deg: ${deg}deg;">
-      <span class="score-num">${score}/${questions.length}</span>
-      <span class="score-label">${percentage}%</span>
-    </div>
-    <div class="grade-text" style="color: ${gradeColor}">${gradeText}</div>
-    <div class="result-cat">
-      <img src="${getCatUrl()}" alt="Result cat" onerror="this.src='https://placekitten.com/280/280'">
-      <div class="cat-caption" style="color: ${gradeColor}">${resultCatMsg}</div>
-    </div>
-    <div class="results-details">
-      <div class="detail-box">
-        <div class="value" style="color: #34d399">${score}</div>
-        <div class="label">Правильних</div>
-      </div>
-      <div class="detail-box">
-        <div class="value" style="color: #f87171">${questions.length - score}</div>
-        <div class="label">Помилок</div>
-      </div>
-      <div class="detail-box">
-        <div class="value" style="color: #60a5fa">${min}:${sec.toString().padStart(2, '0')}</div>
-        <div class="label">Час</div>
-      </div>
-    </div>
-
-    <div class="review-section">
-      <h3>Детальний розбір</h3>
-      ${answers.map((a, i) => `
-        <div class="review-item ${a.isCorrect ? 'review-correct' : 'review-wrong'}">
-          <div class="review-question">${i + 1}. ${a.question}</div>
-          <div class="review-answer">
-            Твоя відповідь: <span class="${a.isCorrect ? 'green' : 'red'}">${a.selected}</span>
-            ${!a.isCorrect ? `<br>Правильна: <span class="green">${a.correct}</span>` : ''}
-          </div>
-        </div>
-      `).join('')}
-    </div>
-
-    <div class="results-buttons">
-      <button class="btn btn-primary" onclick="location.reload()">Пройти ще раз</button>
-    </div>
-  `;
-
-  const resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = html;
-  resultsDiv.style.display = 'block';
-
-  // Save to server
-  try {
-    await fetch('/api/results', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: studentName,
-        score,
-        total: questions.length,
-        answers,
-        timeSpent
-      })
+  <script src="/js/quizzes.js"></script>
+  <script>
+    // Group quizzes by section
+    const sections = {};
+    QUIZZES.forEach(q => {
+      const key = q.section;
+      if (!sections[key]) {
+        sections[key] = { name: q.sectionName, quizzes: [] };
+      }
+      sections[key].quizzes.push(q);
     });
-  } catch (e) {
-    console.error('Failed to save results:', e);
-  }
-}
-</script>
+
+    // Render catalog
+    const catalog = document.getElementById('catalog');
+    Object.keys(sections).sort((a, b) => a - b).forEach(secNum => {
+      const sec = sections[secNum];
+      const group = document.createElement('div');
+      group.className = 'section-group';
+      group.innerHTML = `<div class="section-title">Розділ ${secNum}. ${sec.name}</div>`;
+
+      const grid = document.createElement('div');
+      grid.className = 'quiz-grid';
+
+      sec.quizzes.forEach(quiz => {
+        const card = document.createElement('a');
+        card.className = 'quiz-card';
+        card.href = `/quiz.html?id=${quiz.id}`;
+        card.innerHTML = `
+          <span class="quiz-icon">${quiz.icon}</span>
+          <h3>${quiz.title}</h3>
+          <p>${quiz.description}</p>
+          <div class="quiz-meta">
+            <span>📝 ${quiz.questions.length} питань</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      group.appendChild(grid);
+      catalog.appendChild(group);
+    });
+  </script>
 </body>
 </html>

@@ -76,7 +76,7 @@ const server = http.createServer(async (req, res) => {
     // POST - save result (no auth needed, students submit results)
     if (req.method === 'POST') {
       const body = JSON.parse(await readBody(req));
-      const { name, score, total, answers, timeSpent } = body;
+      const { name, score, total, answers, timeSpent, quizId, quizTitle } = body;
       if (!name || score === undefined || !total) {
         return sendJson(res, { error: 'Missing fields' }, 400);
       }
@@ -85,6 +85,8 @@ const server = http.createServer(async (req, res) => {
         id: Date.now(),
         name, score, total,
         percentage: Math.round((score / total) * 100),
+        quizId: quizId || 'unknown',
+        quizTitle: quizTitle || 'Квіз',
         answers, timeSpent,
         date: new Date().toISOString()
       });
