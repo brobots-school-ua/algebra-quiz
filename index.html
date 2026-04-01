@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Алгебра 10 клас — Квізи</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 30px 0 10px;
+    }
+
+    .header h1 {
+      font-size: 2.2em;
+      background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #a0a0c0;
+      font-size: 1.1em;
+    }
+
+    .section-group {
+      margin-bottom: 30px;
+    }
+
+    .section-title {
+      font-size: 1.2em;
+      color: #818cf8;
+      margin-bottom: 15px;
+      padding-left: 5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(129, 140, 248, 0.2);
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 15px;
+    }
+
+    .quiz-card {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 22px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .quiz-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(129, 140, 248, 0.4);
+      box-shadow: 0 8px 30px rgba(102, 126, 234, 0.15);
+    }
+
+    .quiz-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .quiz-card h3 {
+      color: #fff;
+      font-size: 1.05em;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .quiz-card p {
+      color: #a0a0c0;
+      font-size: 0.85em;
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8em;
+      color: #888;
+    }
+
+    .quiz-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cat-welcome {
+      text-align: center;
+      margin: 10px 0 25px;
+    }
+
+    .cat-welcome img {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cat-welcome .cat-text {
+      margin-top: 10px;
+      color: #c0c0e0;
+      font-size: 1em;
+      font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.6em; }
+      .quiz-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Алгебра та початки аналізу</h1>
+      <p>Інтерактивні квізи для 10 класу</p>
+    </div>
+
+    <div class="cat-welcome">
+      <img src="https://cataas.com/cat?t=welcome" alt="Welcome cat" onerror="this.src='https://placekitten.com/160/160'">
+      <div class="cat-text">Мяу! Обирай тему та починай!</div>
+    </div>
+
+    <div id="catalog"></div>
+  </div>
+
+  <script src="js/quizzes.js"></script>
+  <script>
+    // Group quizzes by section
+    const sections = {};
+    QUIZZES.forEach(q => {
+      const key = q.section;
+      if (!sections[key]) {
+        sections[key] = { name: q.sectionName, quizzes: [] };
+      }
+      sections[key].quizzes.push(q);
+    });
+
+    // Render catalog
+    const catalog = document.getElementById('catalog');
+    Object.keys(sections).sort((a, b) => a - b).forEach(secNum => {
+      const sec = sections[secNum];
+      const group = document.createElement('div');
+      group.className = 'section-group';
+      group.innerHTML = `<div class="section-title">Розділ ${secNum}. ${sec.name}</div>`;
+
+      const grid = document.createElement('div');
+      grid.className = 'quiz-grid';
+
+      sec.quizzes.forEach(quiz => {
+        const card = document.createElement('a');
+        card.className = 'quiz-card';
+        card.href = `quiz.html?id=${quiz.id}`;
+        card.innerHTML = `
+          <span class="quiz-icon">${quiz.icon}</span>
+          <h3>${quiz.title}</h3>
+          <p>${quiz.description}</p>
+          <div class="quiz-meta">
+            <span>📝 ${quiz.questions.length} питань</span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      group.appendChild(grid);
+      catalog.appendChild(group);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Квіз — Алгебра 10 клас</title>
+  <!-- KaTeX for beautiful math formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      padding: 30px 0;
+    }
+
+    .header h1 {
+      font-size: 1.8em;
+      background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: #a0a0c0;
+      font-size: 1.05em;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: #818cf8;
+      text-decoration: none;
+      font-size: 0.95em;
+      margin-bottom: 10px;
+    }
+
+    .back-link:hover { text-decoration: underline; }
+
+    .card {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 20px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Welcome screen */
+    #welcome { text-align: center; }
+    #welcome h2 { font-size: 1.5em; margin-bottom: 20px; color: #fff; }
+
+    .info-box {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      text-align: left;
+    }
+
+    .info-box h3 { color: #818cf8; margin-bottom: 10px; font-size: 1.1em; }
+
+    input[type="text"] {
+      width: 100%;
+      max-width: 350px;
+      padding: 14px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1.1em;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus { border-color: #818cf8; }
+    input[type="text"]::placeholder { color: #666; }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 36px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      height: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      border-radius: 20px;
+      transition: width 0.4s ease;
+    }
+
+    .question-counter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      font-size: 0.9em;
+      color: #a0a0c0;
+    }
+
+    /* Question */
+    .question-text {
+      font-size: 1.25em;
+      color: #fff;
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+
+    /* Options */
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .option {
+      padding: 16px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.03);
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.05em;
+      line-height: 1.5;
+    }
+
+    .option:hover {
+      border-color: rgba(129, 140, 248, 0.5);
+      background: rgba(129, 140, 248, 0.1);
+    }
+
+    .option.correct {
+      border-color: #34d399;
+      background: rgba(52, 211, 153, 0.15);
+      animation: pulse 0.3s ease;
+    }
+
+    .option.wrong {
+      border-color: #f87171;
+      background: rgba(248, 113, 113, 0.15);
+    }
+
+    .option.show-correct {
+      border-color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+    }
+
+    @keyframes pulse { 50% { transform: scale(1.02); } }
+
+    .option.disabled { pointer-events: none; }
+
+    .explanation {
+      margin-top: 20px;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 0.95em;
+      line-height: 1.6;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .explanation.correct-exp {
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      color: #6ee7b7;
+    }
+
+    .explanation.wrong-exp {
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      color: #fca5a5;
+    }
+
+    /* Cat meme */
+    .cat-meme {
+      text-align: center;
+      margin-top: 15px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .cat-meme img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .cat-meme .cat-caption {
+      margin-top: 8px;
+      font-size: 1.05em;
+      font-weight: 600;
+    }
+
+    .cat-caption.correct-cat { color: #34d399; }
+    .cat-caption.wrong-cat { color: #fca5a5; }
+
+    .next-btn-wrap {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    /* Results screen */
+    #results { text-align: center; }
+
+    .score-circle {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 3em;
+      font-weight: 700;
+      position: relative;
+    }
+
+    .score-circle::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      padding: 4px;
+      background: conic-gradient(var(--score-color) var(--score-deg), rgba(255,255,255,0.1) 0);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .score-circle .score-num { color: #fff; }
+    .score-circle .score-label { font-size: 0.3em; color: #a0a0c0; font-weight: 400; }
+
+    .grade-text { font-size: 1.4em; margin-bottom: 8px; font-weight: 600; }
+
+    .result-cat {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .result-cat img {
+      width: 260px;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .result-cat .cat-caption {
+      margin-top: 10px;
+      font-size: 1.15em;
+      font-weight: 600;
+    }
+
+    .results-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .detail-box {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .detail-box .value { font-size: 1.5em; font-weight: 700; color: #fff; }
+    .detail-box .label { font-size: 0.85em; color: #a0a0c0; margin-top: 4px; }
+
+    .results-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #c0c0e0;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .review-section { margin-top: 30px; text-align: left; }
+    .review-section h3 { text-align: center; margin-bottom: 20px; color: #c0c0e0; }
+
+    .review-item {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 12px;
+      border-left: 4px solid;
+    }
+
+    .review-item.review-correct { border-left-color: #34d399; }
+    .review-item.review-wrong { border-left-color: #f87171; }
+    .review-question { font-weight: 600; margin-bottom: 8px; color: #e0e0e0; }
+    .review-answer { font-size: 0.95em; color: #a0a0c0; line-height: 1.6; }
+    .review-answer span { font-weight: 600; }
+    .green { color: #34d399; }
+    .red { color: #f87171; }
+
+    /* KaTeX overrides for dark theme */
+    .katex { color: #e0e0e0; }
+    .option .katex { font-size: 1em; }
+    .question-text .katex { font-size: 1.1em; }
+
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.4em; }
+      .question-text { font-size: 1.1em; }
+      .results-details { grid-template-columns: 1fr; }
+      .card { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="./" class="back-link">← Всі квізи</a>
+
+    <div class="header">
+      <h1 id="quizTitle">Квіз</h1>
+      <p id="quizDescription"></p>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div id="welcome" class="card">
+      <h2>Готовий перевірити свої знання?</h2>
+      <div class="info-box">
+        <h3 id="quizInfoTitle">Тема:</h3>
+        <p id="quizInfoDesc" style="color: #c0c0e0; margin: 0;"></p>
+      </div>
+      <div style="margin-bottom: 20px;">
+        <input type="text" id="studentName" placeholder="Введи своє ім'я та прізвище" autocomplete="off">
+      </div>
+      <button class="btn btn-primary" onclick="startQuiz()" id="startBtn" disabled>Почати квіз</button>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quiz" class="card" style="display:none;">
+      <div class="question-counter">
+        <span id="questionNum"></span>
+        <span id="timer">⏱ 0:00</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <div class="question-text" id="questionText"></div>
+      <div class="options" id="options"></div>
+      <div id="explanationBox"></div>
+      <div class="next-btn-wrap" id="nextBtnWrap" style="display:none;">
+        <button class="btn btn-primary" onclick="nextQuestion()">Далі →</button>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div id="results" class="card" style="display:none;"></div>
+  </div>
+
+  <script src="js/quizzes.js"></script>
+  <script src="js/api.js"></script>
+  <script>
+// Cat messages
+const correctCatMessages = [
+  'Мурр! Бездоганно!', 'Котик пишається тобою!', 'Ти розумніший за кота!',
+  'Мяу! Так тримати!', 'Цей кіт аплодує тобі!', 'Геній математики!',
+  'Навіть кіт здивований!', 'Правильно! Кіт задоволений!',
+  'Бінго! Кіт танцює!', 'Мур-мур! Формулу підкорено!',
+  'Кіт каже: ти найкращий!', 'Блискуча відповідь!'
+];
+
+const wrongCatMessages = [
+  'Кіт вірить в тебе!', 'Мяу... Не здавайся!',
+  'Цей кіт теж плутає формули...', 'Нічого! Кіт підтримує!',
+  'Кіт каже: помилки — це ОК!', 'Не сумуй! Кіт обіймає!',
+  'Кіт вчиться разом з тобою!', 'Ой! Але кіт тебе любить!',
+  'Кіт каже: спробуй ще!', 'Давай розберемося разом!',
+  'Кіт не засмучується!', 'Помилка — крок до перемоги!'
+];
+
+const resultCatMessages = {
+  excellent: ['Кіт коронує тебе!', 'Кіт в шоці від геніальності!', 'Мурр! Ти легенда!'],
+  good: ['Кіт задоволений! Майже ідеально!', 'Хороший результат!', 'Ще трішки і буде відмінно!'],
+  ok: ['Непогано, але є куди рости!', 'Кіт вірить — ти можеш краще!', 'Повтори формули!'],
+  bad: ['Кіт обіймає! Повтори теорію!', 'Не сумуй! Перечитай формули!', 'Нічого, всі починали з нуля!']
+};
+
+function rand(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function getCatUrl() { return `https://cataas.com/cat?t=${Date.now()}-${Math.random()}`; }
+
+// Shuffle array (Fisher-Yates)
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Render KaTeX in element
+function renderMath(el) {
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(el || document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+// Get quiz ID from URL
+const params = new URLSearchParams(window.location.search);
+const quizId = params.get('id');
+const quizData = QUIZZES.find(q => q.id === quizId);
+
+if (!quizData) {
+  document.querySelector('.container').innerHTML = `
+    <div style="text-align:center; padding: 60px 20px;">
+      <h2 style="color:#fff; margin-bottom:15px;">Квіз не знайдено</h2>
+      <p style="color:#a0a0c0; margin-bottom:20px;">Можливо, він ще не створений.</p>
+      <a href="./" class="btn btn-primary" style="display:inline-block; padding:14px 36px; border-radius:12px; text-decoration:none; color:#fff; background:linear-gradient(135deg,#667eea,#764ba2);">← До каталогу</a>
+    </div>`;
+} else {
+  // Set up page
+  document.getElementById('quizTitle').textContent = quizData.title;
+  document.getElementById('quizDescription').textContent = quizData.sectionName;
+  document.getElementById('quizInfoTitle').textContent = quizData.title;
+  document.getElementById('quizInfoDesc').textContent = quizData.description;
+  document.title = `${quizData.title} — Квіз`;
+}
+
+// Prepare shuffled questions with shuffled options
+let preparedQuestions = [];
+if (quizData) {
+  preparedQuestions = shuffle(quizData.questions).map(q => {
+    // Shuffle options, track correct answer position
+    const correctAnswer = q.options[q.correct];
+    const shuffledOptions = shuffle(q.options);
+    const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
+    return { ...q, options: shuffledOptions, correct: newCorrectIndex };
+  });
+}
+
+let currentQuestion = 0;
+let score = 0;
+let answers = [];
+let startTime;
+let timerInterval;
+let studentName = '';
+
+// Input handlers
+const nameInput = document.getElementById('studentName');
+const startBtn = document.getElementById('startBtn');
+
+if (nameInput) {
+  nameInput.addEventListener('input', () => {
+    startBtn.disabled = nameInput.value.trim().length < 2;
+  });
+  nameInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && !startBtn.disabled) startQuiz();
+  });
+}
+
+// Wait for KaTeX to load, then render welcome page
+window.addEventListener('load', () => {
+  setTimeout(() => renderMath(), 100);
+});
+
+function startQuiz() {
+  studentName = nameInput.value.trim();
+  if (studentName.length < 2) return;
+
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('quiz').style.display = 'block';
+
+  startTime = Date.now();
+  timerInterval = setInterval(updateTimer, 1000);
+  showQuestion();
+}
+
+function updateTimer() {
+  const elapsed = Math.floor((Date.now() - startTime) / 1000);
+  const min = Math.floor(elapsed / 60);
+  const sec = elapsed % 60;
+  document.getElementById('timer').textContent = `⏱ ${min}:${sec.toString().padStart(2, '0')}`;
+}
+
+function showQuestion() {
+  const q = preparedQuestions[currentQuestion];
+  const total = preparedQuestions.length;
+
+  document.getElementById('questionNum').textContent = `Питання ${currentQuestion + 1} / ${total}`;
+  document.getElementById('progressFill').style.width = `${(currentQuestion / total) * 100}%`;
+
+  document.getElementById('questionText').innerHTML = q.question;
+
+  const optionsHtml = q.options.map((opt, i) =>
+    `<div class="option" onclick="selectAnswer(${i})" id="opt${i}">${String.fromCharCode(65 + i)}) ${opt}</div>`
+  ).join('');
+  document.getElementById('options').innerHTML = optionsHtml;
+  document.getElementById('explanationBox').innerHTML = '';
+  document.getElementById('nextBtnWrap').style.display = 'none';
+
+  // Render math in question and options
+  setTimeout(() => renderMath(document.getElementById('quiz')), 10);
+}
+
+function selectAnswer(index) {
+  const q = preparedQuestions[currentQuestion];
+  const isCorrect = index === q.correct;
+
+  document.querySelectorAll('.option').forEach(el => el.classList.add('disabled'));
+
+  if (isCorrect) {
+    document.getElementById(`opt${index}`).classList.add('correct');
+    score++;
+  } else {
+    document.getElementById(`opt${index}`).classList.add('wrong');
+    document.getElementById(`opt${q.correct}`).classList.add('show-correct');
+  }
+
+  answers.push({
+    question: q.question,
+    selected: q.options[index],
+    correct: q.options[q.correct],
+    isCorrect
+  });
+
+  const expClass = isCorrect ? 'correct-exp' : 'wrong-exp';
+  const prefix = isCorrect ? '✓ Правильно!' : '✗ Неправильно.';
+  const catMsg = isCorrect ? rand(correctCatMessages) : rand(wrongCatMessages);
+  const catClass = isCorrect ? 'correct-cat' : 'wrong-cat';
+
+  document.getElementById('explanationBox').innerHTML =
+    `<div class="explanation ${expClass}"><strong>${prefix}</strong> ${q.explanation}</div>
+     <div class="cat-meme">
+       <img src="${getCatUrl()}" alt="Cat" onerror="this.src='https://placekitten.com/200/200'">
+       <div class="cat-caption ${catClass}">${catMsg}</div>
+     </div>`;
+
+  document.getElementById('nextBtnWrap').style.display = 'block';
+  setTimeout(() => renderMath(document.getElementById('explanationBox')), 10);
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  if (currentQuestion < preparedQuestions.length) {
+    showQuestion();
+  } else {
+    showResults();
+  }
+}
+
+async function showResults() {
+  clearInterval(timerInterval);
+  const total = preparedQuestions.length;
+  const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+  const percentage = Math.round((score / total) * 100);
+
+  document.getElementById('quiz').style.display = 'none';
+
+  let gradeText, gradeColor, gradeKey;
+  if (percentage >= 90) { gradeText = 'Відмінно!'; gradeColor = '#34d399'; gradeKey = 'excellent'; }
+  else if (percentage >= 75) { gradeText = 'Добре!'; gradeColor = '#60a5fa'; gradeKey = 'good'; }
+  else if (percentage >= 50) { gradeText = 'Задовільно'; gradeColor = '#fbbf24'; gradeKey = 'ok'; }
+  else { gradeText = 'Потрібно повторити'; gradeColor = '#f87171'; gradeKey = 'bad'; }
+
+  const resultCatMsg = rand(resultCatMessages[gradeKey]);
+  const deg = (percentage / 100) * 360;
+  const min = Math.floor(timeSpent / 60);
+  const sec = timeSpent % 60;
+
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.innerHTML = `
+    <div class="score-circle" style="--score-color: ${gradeColor}; --score-deg: ${deg}deg;">
+      <span class="score-num">${score}/${total}</span>
+      <span class="score-label">${percentage}%</span>
+    </div>
+    <div class="grade-text" style="color: ${gradeColor}">${gradeText}</div>
+    <div class="result-cat">
+      <img src="${getCatUrl()}" alt="Result cat" onerror="this.src='https://placekitten.com/260/260'">
+      <div class="cat-caption" style="color: ${gradeColor}">${resultCatMsg}</div>
+    </div>
+    <div class="results-details">
+      <div class="detail-box">
+        <div class="value" style="color: #34d399">${score}</div>
+        <div class="label">Правильних</div>
+      </div>
+      <div class="detail-box">
+        <div class="value" style="color: #f87171">${total - score}</div>
+        <div class="label">Помилок</div>
+      </div>
+      <div class="detail-box">
+        <div class="value" style="color: #60a5fa">${min}:${sec.toString().padStart(2, '0')}</div>
+        <div class="label">Час</div>
+      </div>
+    </div>
+    <div class="review-section">
+      <h3>Детальний розбір</h3>
+      ${answers.map((a, i) => `
+        <div class="review-item ${a.isCorrect ? 'review-correct' : 'review-wrong'}">
+          <div class="review-question">${i + 1}. ${a.question}</div>
+          <div class="review-answer">
+            Твоя відповідь: <span class="${a.isCorrect ? 'green' : 'red'}">${a.selected}</span>
+            ${!a.isCorrect ? `<br>Правильна: <span class="green">${a.correct}</span>` : ''}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="results-buttons">
+      <button class="btn btn-primary" onclick="location.reload()">Пройти ще раз</button>
+      <a href="./" class="btn btn-secondary" style="text-decoration:none;">Інші квізи</a>
+    </div>
+  `;
+  resultsDiv.style.display = 'block';
+  setTimeout(() => renderMath(resultsDiv), 10);
+
+  // Save to cloud storage
+  API.saveResult({
+    name: studentName,
+    quizId: quizData.id,
+    quizTitle: quizData.title,
+    score, total, answers, timeSpent
+  });
+}
+</script>
+</body>
+</html>
