@@ -354,6 +354,111 @@
     .green { color: #34d399; }
     .red { color: #f87171; }
 
+    /* True/False options */
+    .tf-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .tf-options .option {
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    /* Text input answer */
+    .text-input-wrap {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .text-input-wrap input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1.1em;
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: 'Cambria Math', 'Segoe UI', sans-serif;
+    }
+
+    .text-input-wrap input:focus {
+      border-color: #818cf8;
+    }
+
+    .text-input-wrap input::placeholder {
+      color: #555;
+    }
+
+    .text-input-wrap input.input-correct {
+      border-color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+    }
+
+    .text-input-wrap input.input-wrong {
+      border-color: #f87171;
+      background: rgba(248, 113, 113, 0.1);
+    }
+
+    .btn-check {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .btn-check:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-check:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .correct-answer-show {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      border-radius: 10px;
+      color: #6ee7b7;
+      font-size: 0.95em;
+    }
+
+    /* Question type badge */
+    .q-type-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-size: 0.75em;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .q-type-badge.badge-tf {
+      background: rgba(251, 191, 36, 0.15);
+      color: #fbbf24;
+    }
+
+    .q-type-badge.badge-input {
+      background: rgba(96, 165, 250, 0.15);
+      color: #60a5fa;
+    }
+
     /* KaTeX overrides for dark theme */
     .katex { color: #e0e0e0; }
     .option .katex { font-size: 1em; }
@@ -411,6 +516,7 @@
   </div>
 
   <script src="js/quizzes.js"></script>
+  <script src="js/quizzes-extra.js"></script>
   <script src="js/api.js"></script>
   <script>
 // Cat messages
@@ -489,11 +595,23 @@ if (!quizData) {
 let preparedQuestions = [];
 if (quizData) {
   preparedQuestions = shuffle(quizData.questions).map(q => {
-    // Shuffle options, track correct answer position
+    const type = q.type || 'choice';
+
+    // Text input questions have no options to shuffle
+    if (type === 'text_input') {
+      return { ...q, type };
+    }
+
+    // True/false: don't shuffle (Правильно always first)
+    if (type === 'true_false') {
+      return { ...q, type };
+    }
+
+    // Regular choice: shuffle options
     const correctAnswer = q.options[q.correct];
     const shuffledOptions = shuffle(q.options);
     const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
-    return { ...q, options: shuffledOptions, correct: newCorrectIndex };
+    return { ...q, type, options: shuffledOptions, correct: newCorrectIndex };
   });
 }
 
@@ -548,17 +666,70 @@ function showQuestion() {
   document.getElementById('questionNum').textContent = `Питання ${currentQuestion + 1} / ${total}`;
   document.getElementById('progressFill').style.width = `${(currentQuestion / total) * 100}%`;
 
-  document.getElementById('questionText').innerHTML = q.question;
+  // Type badge
+  let badge = '';
+  if (q.type === 'true_false') badge = '<span class="q-type-badge badge-tf">Правильно чи ні?</span><br>';
+  if (q.type === 'text_input') badge = '<span class="q-type-badge badge-input">Введи відповідь</span><br>';
 
-  const optionsHtml = q.options.map((opt, i) =>
-    `<div class="option" onclick="selectAnswer(${i})" id="opt${i}">${String.fromCharCode(65 + i)}) ${opt}</div>`
-  ).join('');
-  document.getElementById('options').innerHTML = optionsHtml;
+  document.getElementById('questionText').innerHTML = badge + q.question;
+
+  const optionsEl = document.getElementById('options');
+
+  if (q.type === 'text_input') {
+    // Text input question
+    optionsEl.innerHTML = `
+      <div class="text-input-wrap">
+        <input type="text" id="textAnswer" placeholder="Введи відповідь..." autocomplete="off">
+        <button class="btn-check" onclick="checkTextAnswer()">Перевірити</button>
+      </div>
+      <div id="correctAnswerShow"></div>`;
+    setTimeout(() => {
+      const inp = document.getElementById('textAnswer');
+      if (inp) {
+        inp.focus();
+        inp.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') checkTextAnswer();
+        });
+      }
+    }, 50);
+  } else if (q.type === 'true_false') {
+    // True/false question
+    const optionsHtml = q.options.map((opt, i) =>
+      `<div class="option" onclick="selectAnswer(${i})" id="opt${i}">${opt}</div>`
+    ).join('');
+    optionsEl.innerHTML = optionsHtml;
+    optionsEl.classList.add('tf-options');
+  } else {
+    // Regular multiple choice
+    optionsEl.classList.remove('tf-options');
+    const optionsHtml = q.options.map((opt, i) =>
+      `<div class="option" onclick="selectAnswer(${i})" id="opt${i}">${String.fromCharCode(65 + i)}) ${opt}</div>`
+    ).join('');
+    optionsEl.innerHTML = optionsHtml;
+  }
+
   document.getElementById('explanationBox').innerHTML = '';
   document.getElementById('nextBtnWrap').style.display = 'none';
 
   // Render math in question and options
   setTimeout(() => renderMath(document.getElementById('quiz')), 10);
+}
+
+function showFeedback(isCorrect, explanation) {
+  const expClass = isCorrect ? 'correct-exp' : 'wrong-exp';
+  const prefix = isCorrect ? '✓ Правильно!' : '✗ Неправильно.';
+  const catMsg = isCorrect ? rand(correctCatMessages) : rand(wrongCatMessages);
+  const catClass = isCorrect ? 'correct-cat' : 'wrong-cat';
+
+  document.getElementById('explanationBox').innerHTML =
+    `<div class="explanation ${expClass}"><strong>${prefix}</strong> ${explanation}</div>
+     <div class="cat-meme">
+       <img src="${getCatUrl()}" alt="Cat" onerror="this.src='https://placekitten.com/200/200'">
+       <div class="cat-caption ${catClass}">${catMsg}</div>
+     </div>`;
+
+  document.getElementById('nextBtnWrap').style.display = 'block';
+  setTimeout(() => renderMath(document.getElementById('explanationBox')), 10);
 }
 
 function selectAnswer(index) {
@@ -582,20 +753,46 @@ function selectAnswer(index) {
     isCorrect
   });
 
-  const expClass = isCorrect ? 'correct-exp' : 'wrong-exp';
-  const prefix = isCorrect ? '✓ Правильно!' : '✗ Неправильно.';
-  const catMsg = isCorrect ? rand(correctCatMessages) : rand(wrongCatMessages);
-  const catClass = isCorrect ? 'correct-cat' : 'wrong-cat';
+  showFeedback(isCorrect, q.explanation);
+}
 
-  document.getElementById('explanationBox').innerHTML =
-    `<div class="explanation ${expClass}"><strong>${prefix}</strong> ${q.explanation}</div>
-     <div class="cat-meme">
-       <img src="${getCatUrl()}" alt="Cat" onerror="this.src='https://placekitten.com/200/200'">
-       <div class="cat-caption ${catClass}">${catMsg}</div>
-     </div>`;
+function checkTextAnswer() {
+  const q = preparedQuestions[currentQuestion];
+  const input = document.getElementById('textAnswer');
+  const btn = document.querySelector('.btn-check');
+  if (!input || !btn) return;
 
-  document.getElementById('nextBtnWrap').style.display = 'block';
-  setTimeout(() => renderMath(document.getElementById('explanationBox')), 10);
+  const userAnswer = input.value.trim();
+  if (!userAnswer) return;
+
+  btn.disabled = true;
+  input.disabled = true;
+
+  // Normalize for comparison: lowercase, remove spaces, replace comma with dot
+  const normalize = s => s.toLowerCase().replace(/\s+/g, '').replace(',', '.');
+  const correctAnswers = Array.isArray(q.correct) ? q.correct : [q.correct];
+  const isCorrect = correctAnswers.some(ca => normalize(userAnswer) === normalize(ca));
+
+  if (isCorrect) {
+    input.classList.add('input-correct');
+    score++;
+  } else {
+    input.classList.add('input-wrong');
+    const correctDisplay = Array.isArray(q.correct) ? q.correct[0] : q.correct;
+    document.getElementById('correctAnswerShow').innerHTML =
+      `<div class="correct-answer-show">Правильна відповідь: <strong>${correctDisplay}</strong></div>`;
+    setTimeout(() => renderMath(document.getElementById('correctAnswerShow')), 10);
+  }
+
+  const correctDisplay = Array.isArray(q.correct) ? q.correct[0] : q.correct;
+  answers.push({
+    question: q.question,
+    selected: userAnswer,
+    correct: correctDisplay,
+    isCorrect
+  });
+
+  showFeedback(isCorrect, q.explanation);
 }
 
 function nextQuestion() {

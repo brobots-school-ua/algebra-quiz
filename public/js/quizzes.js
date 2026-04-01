@@ -1184,5 +1184,447 @@ const QUIZZES = [
         explanation: '$(x^3 + 2x - 5)\' = 3x^2 + 2 - 0 = 3x^2 + 2$. Похідна суми = сума похідних.'
       }
     ]
+  },
+
+  // ===== SECTION 4: TRIGONOMETRIC EQUATIONS AND INEQUALITIES =====
+  {
+    id: '4-1-inverse-trig',
+    section: 4,
+    sectionName: 'Тригонометричні рівняння і нерівності',
+    title: 'Обернені тригонометричні функції',
+    description: 'arcsin, arccos, arctg, arcctg — означення та обчислення',
+    icon: '🔄',
+    questions: [
+      {
+        question: 'Чому дорівнює $\\arcsin \\dfrac{1}{2}$?',
+        options: ['$\\dfrac{\\pi}{6}$', '$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{3}$', '$\\dfrac{\\pi}{2}$'],
+        correct: 0,
+        explanation: '$\\arcsin \\dfrac{1}{2} = \\dfrac{\\pi}{6}$, бо $\\sin \\dfrac{\\pi}{6} = \\dfrac{1}{2}$ і $\\dfrac{\\pi}{6} \\in [-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}]$.'
+      },
+      {
+        question: 'Яка область значень функції $y = \\arccos x$?',
+        options: ['$[-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}]$', '$[0; \\pi]$', '$(-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2})$', '$[0; 2\\pi]$'],
+        correct: 1,
+        explanation: 'Функція $\\arccos x$ повертає значення з відрізка $[0; \\pi]$ — це її область значень за означенням.'
+      },
+      {
+        question: 'Чому дорівнює $\\arccos 0$?',
+        options: ['$0$', '$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{2}$', '$\\pi$'],
+        correct: 2,
+        explanation: '$\\arccos 0 = \\dfrac{\\pi}{2}$, бо $\\cos \\dfrac{\\pi}{2} = 0$ і $\\dfrac{\\pi}{2} \\in [0; \\pi]$.'
+      },
+      {
+        question: 'Яка область визначення функції $y = \\arcsin x$?',
+        options: ['$(-\\infty; +\\infty)$', '$[-1; 1]$', '$[0; 1]$', '$(-1; 1)$'],
+        correct: 1,
+        explanation: 'Оскільки $\\sin$ набуває значень від $-1$ до $1$, обернена функція $\\arcsin x$ визначена на $[-1; 1]$.'
+      },
+      {
+        question: '$\\operatorname{arctg} 1 = \\dfrac{\\pi}{4}$',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Так, $\\operatorname{tg} \\dfrac{\\pi}{4} = 1$, тому $\\operatorname{arctg} 1 = \\dfrac{\\pi}{4}$.'
+      },
+      {
+        question: 'Область значень $\\arcsin x$ — це $[0; \\pi]$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно. Область значень $\\arcsin x$ — це $[-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}]$, а не $[0; \\pi]$. Відрізок $[0; \\pi]$ — це область значень $\\arccos x$.'
+      },
+      {
+        question: 'Обчисліть $\\arccos(-1)$. Відповідь дайте у вигляді $k\\pi$ (наприклад: π або 2π).',
+        type: 'text_input',
+        correct: 'π',
+        explanation: '$\\arccos(-1) = \\pi$, бо $\\cos \\pi = -1$ і $\\pi \\in [0; \\pi]$.'
+      },
+      {
+        question: 'Обчисліть $\\arcsin(-1)$. Відповідь дайте у вигляді дробу з π (наприклад: -π/2).',
+        type: 'text_input',
+        correct: '-π/2',
+        explanation: '$\\arcsin(-1) = -\\dfrac{\\pi}{2}$, бо $\\sin(-\\dfrac{\\pi}{2}) = -1$ і $-\\dfrac{\\pi}{2} \\in [-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}]$.'
+      },
+      {
+        question: 'Чому дорівнює $\\arccos \\dfrac{\\sqrt{2}}{2}$?',
+        options: ['$\\dfrac{\\pi}{6}$', '$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{3}$', '$\\dfrac{\\pi}{2}$'],
+        correct: 1,
+        explanation: '$\\arccos \\dfrac{\\sqrt{2}}{2} = \\dfrac{\\pi}{4}$, бо $\\cos \\dfrac{\\pi}{4} = \\dfrac{\\sqrt{2}}{2}$.'
+      },
+      {
+        question: 'Яка область визначення функції $y = \\operatorname{arctg} x$?',
+        options: ['$[-1; 1]$', '$[0; \\pi]$', '$(-\\infty; +\\infty)$', '$(-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2})$'],
+        correct: 2,
+        explanation: 'Функція $\\operatorname{tg}$ набуває всіх дійсних значень, тому $\\operatorname{arctg} x$ визначена для всіх $x \\in (-\\infty; +\\infty)$.'
+      }
+    ]
+  },
+  {
+    id: '4-2-simple-equations',
+    section: 4,
+    sectionName: 'Тригонометричні рівняння і нерівності',
+    title: 'Найпростіші тригонометричні рівняння',
+    description: 'Розв\'язання sin x = a, cos x = a, tg x = a — загальні формули',
+    icon: '📝',
+    questions: [
+      {
+        question: 'Яка загальна формула розв\'язків рівняння $\\sin x = a$, де $|a| \\le 1$?',
+        options: [
+          '$x = (-1)^n \\arcsin a + \\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\arcsin a + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\pm \\arcsin a + \\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\arcsin a + \\pi n, \\; n \\in \\mathbb{Z}$'
+        ],
+        correct: 0,
+        explanation: 'Загальна формула: $x = (-1)^n \\arcsin a + \\pi n, \\; n \\in \\mathbb{Z}$. Множник $(-1)^n$ забезпечує чергування знаків.'
+      },
+      {
+        question: 'Яка загальна формула розв\'язків рівняння $\\cos x = a$, де $|a| \\le 1$?',
+        options: [
+          '$x = (-1)^n \\arccos a + \\pi n$',
+          '$x = \\pm \\arccos a + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\arccos a + \\pi n$',
+          '$x = \\arccos a + 2\\pi n$'
+        ],
+        correct: 1,
+        explanation: 'Загальна формула: $x = \\pm \\arccos a + 2\\pi n, \\; n \\in \\mathbb{Z}$. Знак $\\pm$ дає два розв\'язки на кожному періоді.'
+      },
+      {
+        question: 'Розв\'яжіть рівняння $\\sin x = 0$. Загальний розв\'язок:',
+        options: ['$x = \\dfrac{\\pi}{2} + \\pi n$', '$x = \\pi n, \\; n \\in \\mathbb{Z}$', '$x = 2\\pi n$', '$x = \\dfrac{\\pi}{2} + 2\\pi n$'],
+        correct: 1,
+        explanation: '$\\sin x = 0$ при $x = 0, \\pm\\pi, \\pm 2\\pi, \\ldots$, тобто $x = \\pi n, \\; n \\in \\mathbb{Z}$.'
+      },
+      {
+        question: 'Розв\'яжіть рівняння $\\cos x = 1$. Загальний розв\'язок:',
+        options: ['$x = \\pi n$', '$x = \\dfrac{\\pi}{2} + 2\\pi n$', '$x = 2\\pi n, \\; n \\in \\mathbb{Z}$', '$x = \\pi + 2\\pi n$'],
+        correct: 2,
+        explanation: '$\\cos x = 1$ лише при $x = 0, \\pm 2\\pi, \\pm 4\\pi, \\ldots$, тобто $x = 2\\pi n, \\; n \\in \\mathbb{Z}$.'
+      },
+      {
+        question: 'Розв\'яжіть: $\\operatorname{tg} x = \\sqrt{3}$. Загальний розв\'язок:',
+        options: [
+          '$x = \\dfrac{\\pi}{6} + \\pi n$',
+          '$x = \\dfrac{\\pi}{4} + \\pi n$',
+          '$x = \\dfrac{\\pi}{3} + \\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x = \\dfrac{\\pi}{3} + 2\\pi n$'
+        ],
+        correct: 2,
+        explanation: '$\\operatorname{tg} \\dfrac{\\pi}{3} = \\sqrt{3}$, тому $x = \\operatorname{arctg} \\sqrt{3} + \\pi n = \\dfrac{\\pi}{3} + \\pi n$.'
+      },
+      {
+        question: 'Рівняння $\\sin x = 2$ має розв\'язки.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно. $|\\sin x| \\le 1$ для будь-якого $x$, тому $\\sin x = 2$ не має розв\'язків.'
+      },
+      {
+        question: 'Загальна формула розв\'язків $\\operatorname{tg} x = a$ має вигляд $x = \\operatorname{arctg} a + \\pi n, \\; n \\in \\mathbb{Z}$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно. Період тангенса $= \\pi$, тому всі розв\'язки: $x = \\operatorname{arctg} a + \\pi n$.'
+      },
+      {
+        question: 'Знайдіть найменший додатний розв\'язок $\\cos x = \\dfrac{1}{2}$. Відповідь у вигляді дробу з π (наприклад: π/3).',
+        type: 'text_input',
+        correct: 'π/3',
+        explanation: '$\\arccos \\dfrac{1}{2} = \\dfrac{\\pi}{3}$, це і є найменший додатний розв\'язок.'
+      },
+      {
+        question: 'Знайдіть найменший додатний розв\'язок $\\sin x = \\dfrac{\\sqrt{3}}{2}$. Відповідь у вигляді дробу з π.',
+        type: 'text_input',
+        correct: 'π/3',
+        explanation: '$\\arcsin \\dfrac{\\sqrt{3}}{2} = \\dfrac{\\pi}{3}$ — це найменший додатний розв\'язок.'
+      },
+      {
+        question: 'Скільки розв\'язків має рівняння $\\cos x = -1$ на проміжку $[0; 2\\pi]$?',
+        options: ['$0$', '$1$', '$2$', '$4$'],
+        correct: 1,
+        explanation: 'На $[0; 2\\pi]$ рівняння $\\cos x = -1$ має єдиний розв\'язок $x = \\pi$.'
+      }
+    ]
+  },
+  {
+    id: '4-3-quadratic-trig',
+    section: 4,
+    sectionName: 'Тригонометричні рівняння і нерівності',
+    title: 'Тригонометричні рівняння, що зводяться до квадратних',
+    description: 'Заміна t = sin x або t = cos x, розв\'язання квадратних рівнянь',
+    icon: '🔢',
+    questions: [
+      {
+        question: 'Яку заміну потрібно зробити в рівнянні $2\\sin^2 x - 3\\sin x + 1 = 0$?',
+        options: ['$t = \\cos x$', '$t = \\sin x$', '$t = \\operatorname{tg} x$', '$t = \\sin 2x$'],
+        correct: 1,
+        explanation: 'Рівняння містить лише $\\sin x$, тому робимо заміну $t = \\sin x$ і отримуємо $2t^2 - 3t + 1 = 0$.'
+      },
+      {
+        question: 'Після заміни $t = \\sin x$ рівняння $2\\sin^2 x - 3\\sin x + 1 = 0$ набуває вигляду $2t^2 - 3t + 1 = 0$. Знайдіть корені:',
+        options: ['$t = 1$ і $t = \\dfrac{1}{2}$', '$t = -1$ і $t = \\dfrac{1}{2}$', '$t = 2$ і $t = 1$', '$t = 1$ і $t = -\\dfrac{1}{2}$'],
+        correct: 0,
+        explanation: '$2t^2 - 3t + 1 = 0$. За теоремою Вієта або дискримінантом: $t_1 = 1$, $t_2 = \\dfrac{1}{2}$.'
+      },
+      {
+        question: 'Розв\'яжіть: $\\cos^2 x - \\cos x = 0$. Які значення $\\cos x$ задовольняють рівняння?',
+        options: ['$\\cos x = 0$ або $\\cos x = 1$', '$\\cos x = 0$ або $\\cos x = -1$', '$\\cos x = 1$ або $\\cos x = -1$', '$\\cos x = 0$'],
+        correct: 0,
+        explanation: '$\\cos x(\\cos x - 1) = 0$, звідки $\\cos x = 0$ або $\\cos x = 1$.'
+      },
+      {
+        question: 'При заміні $t = \\cos x$ яке обмеження на $t$ потрібно враховувати?',
+        options: ['$t > 0$', '$t \\ge 0$', '$|t| \\le 1$', '$t \\ne 0$'],
+        correct: 2,
+        explanation: 'Оскільки $-1 \\le \\cos x \\le 1$, маємо $|t| \\le 1$. Корені поза цим проміжком відкидаємо.'
+      },
+      {
+        question: 'Рівняння $\\sin^2 x + \\sin x - 2 = 0$ після заміни $t = \\sin x$ дає $t^2 + t - 2 = 0$. Корені: $t = 1$ та $t = -2$. Який корінь відкидаємо?',
+        options: ['$t = 1$', '$t = -2$', 'Обидва підходять', 'Обидва відкидаємо'],
+        correct: 1,
+        explanation: '$t = -2$ не задовольняє умову $|t| \\le 1$, тому його відкидаємо. Залишається $\\sin x = 1$.'
+      },
+      {
+        question: 'Рівняння $2\\cos^2 x + \\cos x - 1 = 0$ можна звести до квадратного заміною $t = \\cos x$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно. Заміна $t = \\cos x$ дає $2t^2 + t - 1 = 0$ — звичайне квадратне рівняння.'
+      },
+      {
+        question: 'Рівняння $\\sin^2 x = 1$ має лише два розв\'язки на $[0; 2\\pi]$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно. $\\sin^2 x = 1 \\Rightarrow \\sin x = \\pm 1$, тобто $x = \\dfrac{\\pi}{2}$ і $x = \\dfrac{3\\pi}{2}$ — рівно два розв\'язки.'
+      },
+      {
+        question: 'Скільки розв\'язків на $[0; 2\\pi]$ має рівняння $\\cos^2 x - \\cos x = 0$? Введіть число.',
+        type: 'text_input',
+        correct: '3',
+        explanation: '$\\cos x(\\cos x - 1) = 0$: $\\cos x = 0$ дає $x = \\dfrac{\\pi}{2}, \\dfrac{3\\pi}{2}$; $\\cos x = 1$ дає $x = 0$. Але $2\\pi$ — та сама точка, тому $x = 0$ і $x = 2\\pi$ дають один розв\'язок в $[0; 2\\pi]$ — разом $3$.'
+      },
+      {
+        question: 'Розв\'яжіть $2t^2 + t - 1 = 0$ (де $t = \\cos x$). Введіть менший корінь у вигляді дробу (наприклад: -1/2).',
+        type: 'text_input',
+        correct: '-1',
+        explanation: '$2t^2 + t - 1 = 0$. $D = 1 + 8 = 9$. $t = \\dfrac{-1 \\pm 3}{4}$. $t_1 = \\dfrac{1}{2}$, $t_2 = -1$. Менший корінь: $-1$.'
+      },
+      {
+        question: 'Як перетворити рівняння $1 - 2\\sin^2 x = \\sin x$ до квадратного?',
+        options: [
+          'Замінити $1 = \\sin^2 x + \\cos^2 x$',
+          'Перенести все в один бік: $2\\sin^2 x + \\sin x - 1 = 0$',
+          'Поділити на $\\sin x$',
+          'Замінити $\\sin^2 x = 1 - \\cos^2 x$'
+        ],
+        correct: 1,
+        explanation: 'Переносимо все в один бік: $-2\\sin^2 x - \\sin x + 1 = 0$, або $2\\sin^2 x + \\sin x - 1 = 0$. Заміна $t = \\sin x$.'
+      }
+    ]
+  },
+  {
+    id: '4-4-homogeneous',
+    section: 4,
+    sectionName: 'Тригонометричні рівняння і нерівності',
+    title: 'Однорідні тригонометричні рівняння',
+    description: 'Однорідні рівняння, ділення на cos²x, універсальна підстановка',
+    icon: '⚖️',
+    questions: [
+      {
+        question: 'Рівняння $a\\sin x + b\\cos x = 0$ називається однорідним тригонометричним рівнянням:',
+        options: [
+          'Першого степеня',
+          'Другого степеня',
+          'Третього степеня',
+          'Нульового степеня'
+        ],
+        correct: 0,
+        explanation: 'Це однорідне рівняння першого степеня відносно $\\sin x$ і $\\cos x$, бо кожен доданок має степінь 1.'
+      },
+      {
+        question: 'Як розв\'язати однорідне рівняння $3\\sin x - \\cos x = 0$?',
+        options: [
+          'Поділити обидві частини на $\\cos x$',
+          'Поділити обидві частини на $\\sin x$',
+          'Піднести до квадрата',
+          'Додати $1$ до обох частин'
+        ],
+        correct: 0,
+        explanation: 'Ділимо на $\\cos x \\ne 0$: $3\\operatorname{tg} x - 1 = 0$, звідки $\\operatorname{tg} x = \\dfrac{1}{3}$.'
+      },
+      {
+        question: 'Рівняння $a\\sin^2 x + b\\sin x \\cos x + c\\cos^2 x = 0$ є однорідним рівнянням:',
+        options: [
+          'Першого степеня',
+          'Другого степеня',
+          'Нульового степеня',
+          'Це не однорідне рівняння'
+        ],
+        correct: 1,
+        explanation: 'Кожен доданок має другий степінь відносно $\\sin x$ та $\\cos x$ сумарно, тому це однорідне рівняння другого степеня.'
+      },
+      {
+        question: 'Після ділення рівняння $\\sin^2 x - 3\\sin x \\cos x + 2\\cos^2 x = 0$ на $\\cos^2 x$ отримаємо:',
+        options: [
+          '$\\operatorname{tg}^2 x - 3\\operatorname{tg} x + 2 = 0$',
+          '$\\operatorname{tg}^2 x - 3 + 2 = 0$',
+          '$\\sin^2 x - 3\\sin x + 2 = 0$',
+          '$1 - 3\\operatorname{tg} x + 2\\operatorname{tg}^2 x = 0$'
+        ],
+        correct: 0,
+        explanation: 'Ділимо кожен доданок на $\\cos^2 x$: $\\dfrac{\\sin^2 x}{\\cos^2 x} - 3\\dfrac{\\sin x}{\\cos x} + 2 = \\operatorname{tg}^2 x - 3\\operatorname{tg} x + 2 = 0$.'
+      },
+      {
+        question: 'Універсальна підстановка $t = \\operatorname{tg} \\dfrac{x}{2}$ виражає $\\sin x$ як:',
+        options: [
+          '$\\dfrac{2t}{1 + t^2}$',
+          '$\\dfrac{1 - t^2}{1 + t^2}$',
+          '$\\dfrac{t}{1 + t}$',
+          '$\\dfrac{2t}{1 - t^2}$'
+        ],
+        correct: 0,
+        explanation: 'При підстановці $t = \\operatorname{tg} \\dfrac{x}{2}$: $\\sin x = \\dfrac{2t}{1 + t^2}$.'
+      },
+      {
+        question: 'При універсальній підстановці $t = \\operatorname{tg} \\dfrac{x}{2}$ формула для $\\cos x$:',
+        options: [
+          '$\\dfrac{2t}{1 + t^2}$',
+          '$\\dfrac{1 - t^2}{1 + t^2}$',
+          '$\\dfrac{1 + t^2}{1 - t^2}$',
+          '$\\dfrac{t^2 - 1}{1 + t^2}$'
+        ],
+        correct: 1,
+        explanation: 'При підстановці $t = \\operatorname{tg} \\dfrac{x}{2}$: $\\cos x = \\dfrac{1 - t^2}{1 + t^2}$.'
+      },
+      {
+        question: 'Чи можна ділити однорідне рівняння на $\\cos x$, якщо $\\cos x = 0$ є розв\'язком?',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно. Якщо $\\cos x = 0$ може бути розв\'язком, потрібно спочатку перевірити цей випадок окремо, а потім ділити.'
+      },
+      {
+        question: 'Рівняння $5\\sin^2 x + 3\\cos^2 x = 0$ не має розв\'язків, бо обидва доданки невід\'ємні і не можуть одночасно дорівнювати нулю.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно. $5\\sin^2 x \\ge 0$ і $3\\cos^2 x \\ge 0$, причому $\\sin^2 x + \\cos^2 x = 1$, тому обидва не можуть бути нулями одночасно.'
+      },
+      {
+        question: 'Розв\'яжіть: $\\operatorname{tg}^2 x - 3\\operatorname{tg} x + 2 = 0$. Знайдіть менший корінь для $\\operatorname{tg} x$. Введіть число.',
+        type: 'text_input',
+        correct: '1',
+        explanation: '$t^2 - 3t + 2 = 0 \\Rightarrow (t-1)(t-2) = 0 \\Rightarrow t = 1$ або $t = 2$. Менший: $\\operatorname{tg} x = 1$.'
+      },
+      {
+        question: 'Розв\'яжіть $\\sin x + \\cos x = 0$. Чому дорівнює $\\operatorname{tg} x$? Введіть число.',
+        type: 'text_input',
+        correct: '-1',
+        explanation: 'Ділимо на $\\cos x$: $\\operatorname{tg} x + 1 = 0$, звідки $\\operatorname{tg} x = -1$.'
+      }
+    ]
+  },
+  {
+    id: '4-5-inequalities',
+    section: 4,
+    sectionName: 'Тригонометричні рівняння і нерівності',
+    title: 'Найпростіші тригонометричні нерівності',
+    description: 'Розв\'язання sin x > a, cos x ≤ a на одиничному колі',
+    icon: '📊',
+    questions: [
+      {
+        question: 'Розв\'яжіть нерівність $\\sin x > 0$:',
+        options: [
+          '$x \\in (0; \\pi) + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x \\in (-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}) + 2\\pi n$',
+          '$x \\in (0; 2\\pi) + 2\\pi n$',
+          '$x \\in (\\dfrac{\\pi}{2}; \\dfrac{3\\pi}{2}) + 2\\pi n$'
+        ],
+        correct: 0,
+        explanation: '$\\sin x > 0$ у верхній півплощині одиничного кола, тобто при $x \\in (2\\pi n; \\pi + 2\\pi n)$.'
+      },
+      {
+        question: 'Розв\'яжіть нерівність $\\cos x \\ge 0$:',
+        options: [
+          '$x \\in [0; \\pi] + 2\\pi n$',
+          '$x \\in [-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}] + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x \\in [0; 2\\pi] + 2\\pi n$',
+          '$x \\in [-\\pi; \\pi] + 2\\pi n$'
+        ],
+        correct: 1,
+        explanation: '$\\cos x \\ge 0$ у правій півплощині одиничного кола: $x \\in [-\\dfrac{\\pi}{2} + 2\\pi n; \\dfrac{\\pi}{2} + 2\\pi n]$.'
+      },
+      {
+        question: 'Яка множина розв\'язків нерівності $\\sin x \\ge 1$?',
+        options: [
+          '$x = \\dfrac{\\pi}{2} + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x \\in [0; \\pi] + 2\\pi n$',
+          'Порожня множина',
+          '$x \\in \\mathbb{R}$'
+        ],
+        correct: 0,
+        explanation: '$\\sin x \\le 1$ завжди, а $\\sin x = 1$ лише при $x = \\dfrac{\\pi}{2} + 2\\pi n$. Тому $\\sin x \\ge 1 \\Leftrightarrow \\sin x = 1$.'
+      },
+      {
+        question: 'Розв\'яжіть: $\\cos x < -1$.',
+        options: [
+          '$x = \\pi + 2\\pi n$',
+          '$x \\in (\\pi; 2\\pi) + 2\\pi n$',
+          'Порожня множина — розв\'язків немає',
+          '$x \\in (-\\pi; \\pi)$'
+        ],
+        correct: 2,
+        explanation: '$\\cos x \\ge -1$ для будь-якого $x$, тому $\\cos x < -1$ не виконується ніколи. Розв\'язків немає.'
+      },
+      {
+        question: 'Розв\'яжіть нерівність $\\sin x > \\dfrac{1}{2}$:',
+        options: [
+          '$x \\in (\\dfrac{\\pi}{6}; \\dfrac{5\\pi}{6}) + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x \\in (\\dfrac{\\pi}{6}; \\pi) + 2\\pi n$',
+          '$x \\in (0; \\dfrac{\\pi}{6}) + 2\\pi n$',
+          '$x \\in (\\dfrac{\\pi}{3}; \\dfrac{2\\pi}{3}) + 2\\pi n$'
+        ],
+        correct: 0,
+        explanation: '$\\sin x = \\dfrac{1}{2}$ при $x = \\dfrac{\\pi}{6}$ та $x = \\dfrac{5\\pi}{6}$. Між ними $\\sin x > \\dfrac{1}{2}$.'
+      },
+      {
+        question: 'Розв\'яжіть: $\\cos x \\le \\dfrac{1}{2}$:',
+        options: [
+          '$x \\in [-\\dfrac{\\pi}{3}; \\dfrac{\\pi}{3}] + 2\\pi n$',
+          '$x \\in [\\dfrac{\\pi}{3}; \\dfrac{5\\pi}{3}] + 2\\pi n, \\; n \\in \\mathbb{Z}$',
+          '$x \\in [\\dfrac{\\pi}{6}; \\dfrac{5\\pi}{6}] + 2\\pi n$',
+          '$x \\in [0; \\dfrac{\\pi}{3}] + 2\\pi n$'
+        ],
+        correct: 1,
+        explanation: '$\\cos x = \\dfrac{1}{2}$ при $x = \\pm \\dfrac{\\pi}{3}$. $\\cos x \\le \\dfrac{1}{2}$ на дузі $[\\dfrac{\\pi}{3}; \\dfrac{5\\pi}{3}] + 2\\pi n$.'
+      },
+      {
+        question: 'Нерівність $\\sin x > 2$ не має розв\'язків.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно. $\\sin x \\le 1 < 2$ для будь-якого $x$, тому нерівність не має розв\'язків.'
+      },
+      {
+        question: 'Нерівність $\\cos x \\ge -1$ виконується для всіх дійсних $x$.',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно. Мінімальне значення $\\cos x = -1$, тому $\\cos x \\ge -1$ виконується завжди.'
+      },
+      {
+        question: 'Скільки розв\'язків має нерівність $\\sin x > 0$ на проміжку $[0; 2\\pi]$? Відповідь: "нескінченно".',
+        type: 'text_input',
+        correct: 'нескінченно',
+        explanation: 'На інтервалі $(0; \\pi)$ нескінченно багато точок, де $\\sin x > 0$. Нерівність задовольняє весь інтервал.'
+      },
+      {
+        question: 'При розв\'язуванні $\\sin x \\ge \\dfrac{1}{2}$ на $[0; 2\\pi]$, введіть праву межу проміжку розв\'язків у вигляді дробу з π (наприклад: 5π/6).',
+        type: 'text_input',
+        correct: '5π/6',
+        explanation: '$\\sin x \\ge \\dfrac{1}{2}$ на $[0; 2\\pi]$ має розв\'язок $x \\in [\\dfrac{\\pi}{6}; \\dfrac{5\\pi}{6}]$. Права межа — $\\dfrac{5\\pi}{6}$.'
+      }
+    ]
   }
 ];
