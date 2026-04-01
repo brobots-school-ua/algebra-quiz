@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Результати квізу</title>
+  <title>Результати квізу — Вчитель</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -44,6 +44,64 @@
       border-radius: 16px;
       padding: 25px;
       margin-bottom: 20px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Login screen */
+    .login-card {
+      max-width: 420px;
+      margin: 60px auto;
+      text-align: center;
+    }
+
+    .login-card h2 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 1.4em;
+    }
+
+    .login-card p {
+      color: #a0a0c0;
+      margin-bottom: 25px;
+    }
+
+    .login-card .lock-icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      max-width: 300px;
+      padding: 14px 20px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 1.1em;
+      outline: none;
+      transition: border-color 0.3s;
+      margin-bottom: 15px;
+    }
+
+    input[type="password"]:focus {
+      border-color: #818cf8;
+    }
+
+    input[type="password"]::placeholder {
+      color: #666;
+    }
+
+    .login-error {
+      color: #f87171;
+      margin-bottom: 15px;
+      font-size: 0.95em;
+      display: none;
     }
 
     .stats-row {
@@ -209,35 +267,50 @@
       <p>Тригонометричні формули додавання та пониження степеня</p>
     </div>
 
-    <div class="stats-row" id="statsRow" style="display:none;">
-      <div class="stat-box">
-        <div class="value" id="totalAttempts">0</div>
-        <div class="label">Проходжень</div>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="card login-card">
+      <div class="lock-icon">🔒</div>
+      <h2>Доступ для вчителя</h2>
+      <p>Введіть пароль для перегляду результатів учнів</p>
+      <div class="login-error" id="loginError">Невірний пароль. Спробуйте ще раз.</div>
+      <div>
+        <input type="password" id="passwordInput" placeholder="Пароль" autocomplete="off">
       </div>
-      <div class="stat-box">
-        <div class="value" id="avgScore">0%</div>
-        <div class="label">Середній бал</div>
-      </div>
-      <div class="stat-box">
-        <div class="value" id="bestScore">0%</div>
-        <div class="label">Найкращий</div>
-      </div>
-      <div class="stat-box">
-        <div class="value" id="uniqueStudents">0</div>
-        <div class="label">Учнів</div>
-      </div>
+      <button class="btn btn-primary" onclick="login()" id="loginBtn">Увійти</button>
     </div>
 
-    <div class="card">
-      <div class="toolbar">
-        <a href="/" class="btn btn-secondary">← Назад до квізу</a>
-        <div>
-          <button class="btn btn-primary" onclick="loadResults()" style="margin-right: 8px;">Оновити</button>
-          <button class="btn btn-danger" onclick="clearResults()">Очистити все</button>
+    <!-- Dashboard (hidden until login) -->
+    <div id="dashboard" style="display: none;">
+      <div class="stats-row" id="statsRow" style="display:none;">
+        <div class="stat-box">
+          <div class="value" id="totalAttempts">0</div>
+          <div class="label">Проходжень</div>
+        </div>
+        <div class="stat-box">
+          <div class="value" id="avgScore">0%</div>
+          <div class="label">Середній бал</div>
+        </div>
+        <div class="stat-box">
+          <div class="value" id="bestScore">0%</div>
+          <div class="label">Найкращий</div>
+        </div>
+        <div class="stat-box">
+          <div class="value" id="uniqueStudents">0</div>
+          <div class="label">Учнів</div>
         </div>
       </div>
 
-      <div id="tableContainer"></div>
+      <div class="card">
+        <div class="toolbar">
+          <a href="/" class="btn btn-secondary">← Назад до квізу</a>
+          <div>
+            <button class="btn btn-primary" onclick="loadResults()" style="margin-right: 8px;">Оновити</button>
+            <button class="btn btn-danger" onclick="clearResults()">Очистити все</button>
+          </div>
+        </div>
+
+        <div id="tableContainer"></div>
+      </div>
     </div>
   </div>
 
@@ -245,10 +318,61 @@
 let allResults = [];
 let sortKey = 'date';
 let sortAsc = false;
+let teacherPassword = '';
+
+// Check if already logged in this session
+if (sessionStorage.getItem('teacherAuth')) {
+  teacherPassword = sessionStorage.getItem('teacherAuth');
+  showDashboard();
+}
+
+document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') login();
+});
+
+async function login() {
+  const pwd = document.getElementById('passwordInput').value;
+  if (!pwd) return;
+
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd })
+    });
+
+    if (res.ok) {
+      teacherPassword = pwd;
+      sessionStorage.setItem('teacherAuth', pwd);
+      showDashboard();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordInput').focus();
+    }
+  } catch (e) {
+    alert('Помилка підключення до сервера');
+  }
+}
+
+function showDashboard() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadResults();
+}
 
 async function loadResults() {
   try {
-    const res = await fetch('/api/results');
+    const res = await fetch('/api/results', {
+      headers: { 'X-Teacher-Password': teacherPassword }
+    });
+
+    if (res.status === 401) {
+      sessionStorage.removeItem('teacherAuth');
+      location.reload();
+      return;
+    }
+
     allResults = await res.json();
     renderStats();
     renderTable();
@@ -285,7 +409,6 @@ function renderTable() {
     return;
   }
 
-  // Sort
   const sorted = [...allResults].sort((a, b) => {
     let va = a[sortKey], vb = b[sortKey];
     if (sortKey === 'name') { va = va.toLowerCase(); vb = vb.toLowerCase(); }
@@ -371,15 +494,15 @@ function escapeHtml(str) {
 async function clearResults() {
   if (!confirm('Ви впевнені? Всі результати буде видалено назавжди.')) return;
   try {
-    await fetch('/api/results', { method: 'DELETE' });
+    await fetch('/api/results', {
+      method: 'DELETE',
+      headers: { 'X-Teacher-Password': teacherPassword }
+    });
     loadResults();
   } catch (e) {
     alert('Помилка видалення');
   }
 }
-
-// Load on page open
-loadResults();
 </script>
 </body>
 </html>

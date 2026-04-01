@@ -1,1 +1,95 @@
-[]
+[
+  {
+    "id": 1775049596606,
+    "name": "Тест",
+    "score": 10,
+    "total": 12,
+    "percentage": 83,
+    "answers": [],
+    "timeSpent": 60,
+    "date": "2026-04-01T13:19:56.606Z"
+  },
+  {
+    "id": 1775050094390,
+    "name": "Олена Павлюк",
+    "score": 7,
+    "total": 12,
+    "percentage": 58,
+    "answers": [
+      {
+        "question": "Яка формула sin(α + β)?",
+        "selected": "sin α · cos β + cos α · sin β",
+        "correct": "sin α · cos β + cos α · sin β",
+        "isCorrect": true
+      },
+      {
+        "question": "Яка формула cos(α − β)?",
+        "selected": "cos α · cos β + sin α · sin β",
+        "correct": "cos α · cos β + sin α · sin β",
+        "isCorrect": true
+      },
+      {
+        "question": "Чому дорівнює sin(α − β)?",
+        "selected": "cos α · sin β − sin α · cos β",
+        "correct": "sin α · cos β − cos α · sin β",
+        "isCorrect": false
+      },
+      {
+        "question": "Яка формула cos(α + β)?",
+        "selected": "cos α · cos β − sin α · sin β",
+        "correct": "cos α · cos β − sin α · sin β",
+        "isCorrect": true
+      },
+      {
+        "question": "Яка формула tg(α + β)?",
+        "selected": "(tg α + tg β) / (1 + tg α · tg β)",
+        "correct": "(tg α + tg β) / (1 − tg α · tg β)",
+        "isCorrect": false
+      },
+      {
+        "question": "Чому дорівнює tg(α − β)?",
+        "selected": "(tg α − tg β) / (1 + tg α · tg β)",
+        "correct": "(tg α − tg β) / (1 + tg α · tg β)",
+        "isCorrect": true
+      },
+      {
+        "question": "Яка формула пониження степеня для sin²α?",
+        "selected": "(1 − cos 2α) / 2",
+        "correct": "(1 − cos 2α) / 2",
+        "isCorrect": true
+      },
+      {
+        "question": "Яка формула пониження степеня для cos²α?",
+        "selected": "(cos 2α − 1) / 2",
+        "correct": "(1 + cos 2α) / 2",
+        "isCorrect": false
+      },
+      {
+        "question": "Обчисли sin 75°, використовуючи формулу додавання:",
+        "selected": "(√3 + 1) / 4",
+        "correct": "(√6 + √2) / 4",
+        "isCorrect": false
+      },
+      {
+        "question": "Обчисли cos 15°, використовуючи формулу віднімання:",
+        "selected": "(√6 + √2) / 4",
+        "correct": "(√6 + √2) / 4",
+        "isCorrect": true
+      },
+      {
+        "question": "Яка формула подвійного аргументу для sin 2α?",
+        "selected": "2 sin α · cos α",
+        "correct": "2 sin α · cos α",
+        "isCorrect": true
+      },
+      {
+        "question": "Спрости вираз: cos²x − sin²x",
+        "selected": "sin 2x",
+        "correct": "cos 2x",
+        "isCorrect": false
+      }
+    ],
+    "timeSpent": 415,
+    "date": "2026-04-01T13:28:14.390Z"
+  }
+]

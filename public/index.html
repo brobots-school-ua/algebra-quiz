@@ -277,6 +277,49 @@
       color: #fca5a5;
     }
 
+    /* Cat meme */
+    .cat-meme {
+      text-align: center;
+      margin-top: 15px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .cat-meme img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .cat-meme .cat-caption {
+      margin-top: 8px;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    .cat-meme .cat-caption.correct-cat { color: #34d399; }
+    .cat-meme .cat-caption.wrong-cat { color: #fca5a5; }
+
+    .result-cat {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .result-cat img {
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .result-cat .cat-caption {
+      margin-top: 10px;
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+
     .next-btn-wrap {
       text-align: center;
       margin-top: 25px;
@@ -455,12 +498,73 @@
     <!-- Results Screen -->
     <div id="results" class="card" style="display:none;"></div>
 
-    <div class="footer-link">
-      <a href="/results.html">📊 Переглянути всі результати</a>
-    </div>
+    <!-- Results page: /results.html (teacher only) -->
   </div>
 
 <script>
+// Cat memes for correct/wrong answers
+const correctCatMessages = [
+  'Мурр! Бездоганно!',
+  'Котик пишається тобою!',
+  'Ти розумніший за кота! А це складно...',
+  'Мяу! Так тримати!',
+  'Цей кіт аплодує тобі!',
+  'Геній тригонометрії!',
+  'Навіть кіт здивований, як ти це знаєш!',
+  'Правильно! Кіт задоволений!',
+  'Бінго! Кіт танцює від радості!',
+  'Мур-мур! Формула підкорена!',
+  'Кіт каже: ти найкращий!',
+  'Блискуча відповідь! Кіт в захваті!'
+];
+
+const wrongCatMessages = [
+  'Кіт вірить, що наступного разу вийде!',
+  'Мяу... Не здавайся!',
+  'Цей кіт теж плутає формули іноді...',
+  'Нічого страшного! Кіт підтримує!',
+  'Кіт каже: помилки — це нормально!',
+  'Не сумуй! Кіт обіймає тебе!',
+  'Кіт теж вчиться разом з тобою!',
+  'Ой! Але кіт все одно тебе любить!',
+  'Кіт каже: спробуй ще!',
+  'Мяу... Давай розберемося разом!',
+  'Кіт не засмучується і тобі не варто!',
+  'Помилка — це крок до перемоги! Мурр!'
+];
+
+const resultCatMessages = {
+  excellent: [
+    'Цей кіт коронує тебе королем тригонометрії!',
+    'Кіт в шоці від твоєї геніальності!',
+    'Мурр! Ти — легенда математики!'
+  ],
+  good: [
+    'Кіт задоволений! Майже ідеально!',
+    'Хороший результат! Кіт пишається!',
+    'Мяу! Ще трішки і буде відмінно!'
+  ],
+  ok: [
+    'Кіт каже: непогано, але є куди рости!',
+    'Кіт вірить — ти можеш краще!',
+    'Мяу! Повтори формули і спробуй ще раз!'
+  ],
+  bad: [
+    'Кіт обіймає тебе! Повтори теорію і повертайся!',
+    'Не сумуй! Кіт пропонує перечитати формули!',
+    'Мяу... Нічого, всі колись починали з нуля!'
+  ]
+};
+
+function getRandomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Get a random cat image URL (using cataas.com)
+function getCatUrl() {
+  return `https://cataas.com/cat?t=${Date.now()}-${Math.random()}`;
+}
+
 // Quiz questions
 const questions = [
   {
@@ -691,11 +795,17 @@ function selectAnswer(index) {
     isCorrect
   });
 
-  // Show explanation
+  // Show explanation with cat meme
   const expClass = isCorrect ? 'correct-exp' : 'wrong-exp';
   const prefix = isCorrect ? '✓ Правильно!' : '✗ Неправильно.';
+  const catMsg = isCorrect ? getRandomItem(correctCatMessages) : getRandomItem(wrongCatMessages);
+  const catClass = isCorrect ? 'correct-cat' : 'wrong-cat';
   document.getElementById('explanationBox').innerHTML =
-    `<div class="explanation ${expClass}"><strong>${prefix}</strong> ${q.explanation}</div>`;
+    `<div class="explanation ${expClass}"><strong>${prefix}</strong> ${q.explanation}</div>
+     <div class="cat-meme">
+       <img src="${getCatUrl()}" alt="Cat meme" onerror="this.src='https://placekitten.com/220/220'">
+       <div class="cat-caption ${catClass}">${catMsg}</div>
+     </div>`;
 
   document.getElementById('nextBtnWrap').style.display = 'block';
 }
@@ -717,12 +827,14 @@ async function showResults() {
   document.getElementById('quiz').style.display = 'none';
   document.getElementById('progressFill').style.width = '100%';
 
-  // Determine grade
-  let gradeText, gradeColor;
-  if (percentage >= 90) { gradeText = 'Відмінно!'; gradeColor = '#34d399'; }
-  else if (percentage >= 75) { gradeText = 'Добре!'; gradeColor = '#60a5fa'; }
-  else if (percentage >= 50) { gradeText = 'Задовільно'; gradeColor = '#fbbf24'; }
-  else { gradeText = 'Потрібно повторити'; gradeColor = '#f87171'; }
+  // Determine grade and cat message
+  let gradeText, gradeColor, gradeKey;
+  if (percentage >= 90) { gradeText = 'Відмінно!'; gradeColor = '#34d399'; gradeKey = 'excellent'; }
+  else if (percentage >= 75) { gradeText = 'Добре!'; gradeColor = '#60a5fa'; gradeKey = 'good'; }
+  else if (percentage >= 50) { gradeText = 'Задовільно'; gradeColor = '#fbbf24'; gradeKey = 'ok'; }
+  else { gradeText = 'Потрібно повторити'; gradeColor = '#f87171'; gradeKey = 'bad'; }
+
+  const resultCatMsg = getRandomItem(resultCatMessages[gradeKey]);
 
   const deg = (percentage / 100) * 360;
   const min = Math.floor(timeSpent / 60);
@@ -734,6 +846,10 @@ async function showResults() {
       <span class="score-label">${percentage}%</span>
     </div>
     <div class="grade-text" style="color: ${gradeColor}">${gradeText}</div>
+    <div class="result-cat">
+      <img src="${getCatUrl()}" alt="Result cat" onerror="this.src='https://placekitten.com/280/280'">
+      <div class="cat-caption" style="color: ${gradeColor}">${resultCatMsg}</div>
+    </div>
     <div class="results-details">
       <div class="detail-box">
         <div class="value" style="color: #34d399">${score}</div>
@@ -764,7 +880,6 @@ async function showResults() {
 
     <div class="results-buttons">
       <button class="btn btn-primary" onclick="location.reload()">Пройти ще раз</button>
-      <a href="/results.html" class="btn btn-secondary">Всі результати</a>
     </div>
   `;
 
