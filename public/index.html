@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Алгебра 10 клас — Квізи</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#302b63">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Алгебра">
+  <link rel="apple-touch-icon" href="icon.svg">
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -281,5 +286,10 @@
   <div style="text-align:center; padding: 30px 0 20px;">
     <a href="results.html" style="color:#555; text-decoration:none; font-size:0.8em;">Для вчителя</a>
   </div>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    }
+  </script>
 </body>
 </html>

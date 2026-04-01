@@ -4,6 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Квіз — Алгебра 10 клас</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#302b63">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Алгебра">
+  <link rel="apple-touch-icon" href="icon.svg">
   <!-- KaTeX for beautiful math formulas -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
@@ -719,6 +724,44 @@
     .new-ach-item .ach-title { color: #fff; font-weight: 600; }
     .new-ach-item .ach-desc { color: #a0a0c0; font-size: 0.85em; }
 
+    /* Mode selection */
+    .mode-select {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .mode-card {
+      padding: 14px 12px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .mode-card:hover { border-color: rgba(129,140,248,0.4); background: rgba(129,140,248,0.05); }
+    .mode-card.selected { border-color: #818cf8; background: rgba(129,140,248,0.15); }
+    .mode-card.disabled { opacity: 0.35; cursor: not-allowed; }
+    .mode-icon { font-size: 1.5em; display: block; margin-bottom: 4px; }
+    .mode-name { font-weight: 700; color: #fff; font-size: 0.92em; }
+    .mode-desc { color: #a0a0c0; font-size: 0.75em; margin-top: 3px; line-height: 1.3; }
+
+    /* Blitz per-question timer */
+    .blitz-timer-wrap { text-align: center; margin-bottom: 12px; }
+    .blitz-seconds { font-size: 2em; font-weight: 700; color: #34d399; transition: color 0.3s; }
+    .blitz-seconds.warning { color: #f87171; }
+    .blitz-progress-bar {
+      height: 5px; border-radius: 3px;
+      background: rgba(255,255,255,0.1);
+      margin-top: 5px; overflow: hidden;
+    }
+    .blitz-progress-fill {
+      height: 100%; background: #34d399;
+      transition: width 1s linear, background 0.3s;
+    }
+    .blitz-progress-fill.warning { background: #f87171; }
+
     /* Hint system */
     .hint-btn {
       display: inline-block;
@@ -826,6 +869,32 @@
       </div>
       <div id="theoryToggleWrap"></div>
       <div class="theory-block" id="theoryBlock"></div>
+      <!-- Mode selection -->
+      <div id="modeSelect" style="margin-bottom:20px; display:none;">
+        <p style="color:#a0a0c0; font-size:0.88em; margin-bottom:8px;">Режим проходження:</p>
+        <div class="mode-select">
+          <div class="mode-card selected" data-mode="training" onclick="selectMode('training')">
+            <span class="mode-icon">📚</span>
+            <div class="mode-name">Тренування</div>
+            <div class="mode-desc">Підказки, без ліміту часу</div>
+          </div>
+          <div class="mode-card" data-mode="exam" onclick="selectMode('exam')">
+            <span class="mode-icon">📝</span>
+            <div class="mode-name">Контрольна</div>
+            <div class="mode-desc">15 хв на весь квіз</div>
+          </div>
+          <div class="mode-card" data-mode="blitz" onclick="selectMode('blitz')">
+            <span class="mode-icon">⚡</span>
+            <div class="mode-name">Бліц</div>
+            <div class="mode-desc">30 сек на питання</div>
+          </div>
+          <div class="mode-card disabled" id="retryModeCard" data-mode="retry" onclick="selectMode('retry')">
+            <span class="mode-icon">🔄</span>
+            <div class="mode-name">Помилки</div>
+            <div class="mode-desc" id="retryDesc">Немає збережених помилок</div>
+          </div>
+        </div>
+      </div>
       <div id="loginArea" style="margin-bottom: 20px;"></div>
       <button class="btn btn-primary" onclick="startQuiz()" id="startBtn" style="display:none;">Почати квіз</button>
     </div>
@@ -838,6 +907,11 @@
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+      <!-- Blitz per-question timer (shown only in blitz mode) -->
+      <div id="blitzTimerWrap" class="blitz-timer-wrap" style="display:none;">
+        <span class="blitz-seconds" id="blitzSeconds">30</span>с
+        <div class="blitz-progress-bar"><div class="blitz-progress-fill" id="blitzFill" style="width:100%"></div></div>
       </div>
       <div class="question-text" id="questionText"></div>
       <div class="options" id="options"></div>
@@ -1048,6 +1122,12 @@ let timerInterval;
 let studentName = '';
 let studentUser = null;
 let hintUsed = false;
+let quizMode = 'training';
+let blitzInterval = null;
+let blitzTimeLeft = 30;
+const BLITZ_TIME = 30;
+const EXAM_MINUTES = 15;
+let lastResult = {}; // for sharing
 
 // Show theory block if available for this quiz
 if (quizData && THEORY[quizData.id]) {
@@ -1077,6 +1157,16 @@ window.addEventListener('load', () => {
         <span>${user.name}</span>
       </div>`;
     startBtn.style.display = 'inline-block';
+
+    // Show mode selection and update retry card
+    document.getElementById('modeSelect').style.display = 'block';
+    const mistakesCount = JSON.parse(localStorage.getItem(`mistakes_${quizId}`) || '[]').length;
+    const retryCard = document.getElementById('retryModeCard');
+    const retryDesc = document.getElementById('retryDesc');
+    if (mistakesCount > 0) {
+      retryCard.classList.remove('disabled');
+      retryDesc.textContent = `Повтори ${mistakesCount} помилок`;
+    }
   } else {
     loginArea.innerHTML = '<p class="login-prompt">Увійди через Google, щоб почати квіз</p><div id="googleBtn"></div>';
     Auth.init(() => location.reload());
@@ -1084,11 +1174,95 @@ window.addEventListener('load', () => {
   }
 });
 
+function selectMode(mode) {
+  const retryCard = document.getElementById('retryModeCard');
+  if (mode === 'retry' && retryCard.classList.contains('disabled')) return;
+  quizMode = mode;
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector(`[data-mode="${mode}"]`).classList.add('selected');
+  Sound.click();
+}
+
+// ===== BLITZ TIMER =====
+function startBlitzTimer() {
+  blitzTimeLeft = BLITZ_TIME;
+  updateBlitzDisplay();
+  document.getElementById('blitzTimerWrap').style.display = 'block';
+  blitzInterval = setInterval(() => {
+    blitzTimeLeft--;
+    updateBlitzDisplay();
+    if (blitzTimeLeft <= 0) {
+      clearInterval(blitzInterval); blitzInterval = null;
+      autoTimeoutAnswer();
+    }
+  }, 1000);
+}
+
+function clearBlitzTimer() {
+  if (blitzInterval) { clearInterval(blitzInterval); blitzInterval = null; }
+  const wrap = document.getElementById('blitzTimerWrap');
+  if (wrap) wrap.style.display = 'none';
+}
+
+function updateBlitzDisplay() {
+  const el = document.getElementById('blitzSeconds');
+  const fill = document.getElementById('blitzFill');
+  if (!el) return;
+  el.textContent = blitzTimeLeft;
+  const warn = blitzTimeLeft <= 10;
+  el.className = 'blitz-seconds' + (warn ? ' warning' : '');
+  if (fill) {
+    fill.style.width = (blitzTimeLeft / BLITZ_TIME * 100) + '%';
+    fill.className = 'blitz-progress-fill' + (warn ? ' warning' : '');
+  }
+}
+
+function autoTimeoutAnswer() {
+  const q = preparedQuestions[currentQuestion];
+  // Disable all interactivity
+  document.querySelectorAll('.option, .blank-option, .matching-item, .ordering-item').forEach(el => {
+    el.style.pointerEvents = 'none';
+  });
+  document.querySelectorAll('input, .btn-check').forEach(el => { el.disabled = true; });
+  // Show correct option for choice questions
+  if ((q.type === 'choice' || !q.type) && q.correct !== undefined) {
+    const correctEl = document.getElementById(`opt${q.correct}`);
+    if (correctEl) correctEl.classList.add('show-correct');
+  }
+  answers.push({
+    question: q.question,
+    selected: '— (час вийшов)',
+    correct: q.options ? q.options[q.correct] : String(q.correct),
+    isCorrect: false
+  });
+  showFeedback(false, q.explanation || 'Час на питання вийшов!');
+}
+
 function startQuiz() {
   if (!studentName || studentName.length < 2) return;
 
+  // Retry mode: filter to only previously wrong questions
+  if (quizMode === 'retry') {
+    const storedMistakes = JSON.parse(localStorage.getItem(`mistakes_${quizId}`) || '[]');
+    preparedQuestions = quizData.questions
+      .filter(q => storedMistakes.includes(q.question))
+      .map(q => {
+        const type = q.type || 'choice';
+        if (['text_input', 'true_false', 'matching', 'fill_blanks', 'ordering'].includes(type)) return { ...q, type };
+        const correctAnswer = q.options[q.correct];
+        const shuffledOptions = shuffle(q.options);
+        return { ...q, type, options: shuffledOptions, correct: shuffledOptions.indexOf(correctAnswer) };
+      });
+    if (preparedQuestions.length === 0) { alert('Немає питань для повторення!'); return; }
+  }
+
   document.getElementById('welcome').style.display = 'none';
   document.getElementById('quiz').style.display = 'block';
+
+  // Exam mode: show countdown color hint
+  if (quizMode === 'exam') {
+    document.getElementById('timer').style.color = '#60a5fa';
+  }
 
   startTime = Date.now();
   timerInterval = setInterval(updateTimer, 1000);
@@ -1097,9 +1271,24 @@ function startQuiz() {
 
 function updateTimer() {
   const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const min = Math.floor(elapsed / 60);
-  const sec = elapsed % 60;
-  document.getElementById('timer').textContent = `⏱ ${min}:${sec.toString().padStart(2, '0')}`;
+  if (quizMode === 'exam') {
+    const remaining = EXAM_MINUTES * 60 - elapsed;
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('timer').textContent = '⏱ 0:00';
+      showResults();
+      return;
+    }
+    const min = Math.floor(remaining / 60);
+    const sec = remaining % 60;
+    document.getElementById('timer').textContent = `⏱ ${min}:${sec.toString().padStart(2, '0')}`;
+    if (remaining <= 60) document.getElementById('timer').style.color = '#f87171';
+    else if (remaining <= 180) document.getElementById('timer').style.color = '#fbbf24';
+  } else {
+    const min = Math.floor(elapsed / 60);
+    const sec = elapsed % 60;
+    document.getElementById('timer').textContent = `⏱ ${min}:${sec.toString().padStart(2, '0')}`;
+  }
 }
 
 function showQuestion() {
@@ -1158,16 +1347,20 @@ function showQuestion() {
   document.getElementById('explanationBox').innerHTML = '';
   document.getElementById('nextBtnWrap').style.display = 'none';
 
-  // Show hint button if question has a hint
+  // Show hint button only in training mode
   const hintArea = document.getElementById('hintArea');
   if (hintArea) hintArea.remove();
-  if (q.hint) {
+  if (q.hint && quizMode === 'training') {
     const hintDiv = document.createElement('div');
     hintDiv.id = 'hintArea';
     hintDiv.innerHTML = `<button class="hint-btn" onclick="showHint()">💡 Підказка (-50% балів)</button>`;
     document.getElementById('options').before(hintDiv);
   }
   hintUsed = false;
+
+  // Blitz mode: start per-question countdown
+  clearBlitzTimer();
+  if (quizMode === 'blitz') startBlitzTimer();
 
   // Render math in question and options
   setTimeout(() => renderMath(document.getElementById('quiz')), 10);
@@ -1231,6 +1424,7 @@ function showHint() {
 function selectAnswer(index) {
   const q = preparedQuestions[currentQuestion];
   const isCorrect = index === q.correct;
+  clearBlitzTimer();
 
   document.querySelectorAll('.option').forEach(el => el.classList.add('disabled'));
 
@@ -1263,6 +1457,7 @@ function checkTextAnswer() {
 
   btn.disabled = true;
   input.disabled = true;
+  clearBlitzTimer();
 
   // Normalize for comparison: lowercase, remove spaces, replace comma with dot
   const normalize = s => s.toLowerCase().replace(/\s+/g, '').replace(',', '.');
@@ -1344,6 +1539,7 @@ function matchSelectRight(j) {
 }
 
 function checkMatching() {
+  clearBlitzTimer();
   const q = preparedQuestions[currentQuestion];
   let correctCount = 0;
   const { pairs, matches, leftItems, rightItems } = matchState;
@@ -1443,6 +1639,7 @@ function selectBlankOption(optIdx) {
 }
 
 function checkFillBlanks() {
+  clearBlitzTimer();
   const q = preparedQuestions[currentQuestion];
   let correctCount = 0;
 
@@ -1555,6 +1752,7 @@ function reRenderOrder() {
 }
 
 function checkOrdering() {
+  clearBlitzTimer();
   const q = preparedQuestions[currentQuestion];
   let correctCount = 0;
 
@@ -1584,11 +1782,29 @@ function checkOrdering() {
 }
 
 function nextQuestion() {
+  clearBlitzTimer();
   currentQuestion++;
   if (currentQuestion < preparedQuestions.length) {
     showQuestion();
   } else {
     showResults();
+  }
+}
+
+async function shareResult() {
+  const { scoreDisplay, total, percentage, gradeText } = lastResult;
+  const emoji = percentage >= 90 ? '🏆' : percentage >= 75 ? '🌟' : percentage >= 50 ? '📈' : '💪';
+  const text = `${emoji} Я пройшов квіз з алгебри!\n"${quizData.title}"\nРезультат: ${scoreDisplay}/${total} (${percentage}%)\n${gradeText}\n👉 https://brobots-school-ua.github.io/algebra-quiz/`;
+  const btn = document.getElementById('shareBtn');
+  if (navigator.share) {
+    try { await navigator.share({ text }); } catch(e) {}
+  } else {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (btn) { btn.textContent = '✓ Скопійовано!'; setTimeout(() => { btn.textContent = '📤 Поділитися'; }, 2500); }
+    } catch(e) {
+      prompt('Скопіюй та надішли у месенджер:', text);
+    }
   }
 }
 
@@ -1614,6 +1830,17 @@ async function showResults() {
 
   // Save topic progress locally
   localStorage.setItem(`progress_${quizData.id}`, JSON.stringify({ percentage, date: new Date().toISOString() }));
+
+  // Save wrong questions for retry mode
+  const wrongTexts = answers.filter(a => !a.isCorrect).map(a => a.question);
+  if (wrongTexts.length > 0) {
+    localStorage.setItem(`mistakes_${quizData.id}`, JSON.stringify(wrongTexts));
+  } else {
+    localStorage.removeItem(`mistakes_${quizData.id}`);
+  }
+
+  // Store for sharing
+  lastResult = { scoreDisplay, total, percentage, gradeText };
 
   // Update streak
   const streak = updateStreak();
@@ -1675,6 +1902,7 @@ async function showResults() {
     <div class="results-buttons">
       <button class="btn btn-primary" onclick="location.reload()">Пройти ще раз</button>
       <a href="./" class="btn btn-secondary" style="text-decoration:none;">Інші квізи</a>
+      <button class="btn btn-secondary" id="shareBtn" onclick="shareResult()">📤 Поділитися</button>
     </div>
   `;
   resultsDiv.style.display = 'block';
@@ -1719,6 +1947,9 @@ async function showResults() {
     }
   }
 }
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  }
 </script>
 </body>
 </html>
