@@ -1,7 +1,7 @@
 // Google Sign-In module using Google Identity Services
 const Auth = {
   // Google OAuth Client ID (set via Auth.setClientId or GOOGLE_CLIENT_ID in config)
-  CLIENT_ID: '816218498498-2m61sqv0ce0bh83e1fsbqp93j93s23kd.apps.googleusercontent.com',
+  CLIENT_ID: '660115412123-d4p20v0se8n5b18n7jk70dj4gps4e2jp.apps.googleusercontent.com',
   STORAGE_KEY: 'google_user',
 
   // Get current user from localStorage (or null)
