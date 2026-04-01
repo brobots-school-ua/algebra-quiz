@@ -248,6 +248,164 @@
     .cat-caption.correct-cat { color: #34d399; }
     .cat-caption.wrong-cat { color: #fca5a5; }
 
+    /* Matching question */
+    .matching-container {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .matching-left, .matching-right {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .matching-arrows {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      padding-top: 4px;
+    }
+
+    .matching-item {
+      padding: 12px 16px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      font-size: 0.95em;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      line-height: 1.4;
+    }
+
+    .matching-item.left-item {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .matching-item.left-item:hover { border-color: rgba(129,140,248,0.5); }
+    .matching-item.left-item.selected { border-color: #818cf8; background: rgba(129,140,248,0.15); }
+
+    .matching-item.right-item {
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .matching-item.right-item:hover { border-color: rgba(129,140,248,0.5); }
+
+    .matching-item.matched { border-color: #818cf8; opacity: 0.6; pointer-events: none; }
+    .matching-item.match-correct { border-color: #34d399; background: rgba(52,211,153,0.1); }
+    .matching-item.match-wrong { border-color: #f87171; background: rgba(248,113,113,0.1); }
+
+    .match-line {
+      color: #818cf8;
+      font-size: 0.8em;
+    }
+
+    .match-pair-display {
+      padding: 6px 0;
+      font-size: 0.9em;
+      color: #c0c0e0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Fill blanks question */
+    .fill-blank-text {
+      font-size: 1.15em;
+      line-height: 2;
+      color: #fff;
+    }
+
+    .blank-slot {
+      display: inline-block;
+      min-width: 80px;
+      padding: 4px 12px;
+      border: 2px dashed rgba(129,140,248,0.4);
+      border-radius: 8px;
+      background: rgba(129,140,248,0.05);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      vertical-align: middle;
+      margin: 2px 4px;
+      min-height: 32px;
+    }
+
+    .blank-slot:hover { border-color: #818cf8; }
+    .blank-slot.filled { border-style: solid; border-color: #818cf8; background: rgba(129,140,248,0.15); color: #fff; }
+    .blank-slot.slot-correct { border-color: #34d399; background: rgba(52,211,153,0.1); }
+    .blank-slot.slot-wrong { border-color: #f87171; background: rgba(248,113,113,0.1); }
+
+    .blank-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .blank-option {
+      padding: 8px 16px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.95em;
+      color: #e0e0e0;
+    }
+
+    .blank-option:hover { border-color: rgba(129,140,248,0.5); background: rgba(129,140,248,0.1); }
+    .blank-option.used { opacity: 0.3; pointer-events: none; }
+
+    /* Ordering question */
+    .ordering-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ordering-item {
+      padding: 14px 18px;
+      border: 2px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      cursor: grab;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      user-select: none;
+      font-size: 0.95em;
+    }
+
+    .ordering-item:active { cursor: grabbing; }
+    .ordering-item:hover { border-color: rgba(129,140,248,0.4); }
+    .ordering-item.dragging { opacity: 0.5; border-color: #818cf8; }
+    .ordering-item.drag-over { border-color: #818cf8; border-style: dashed; }
+    .ordering-item.order-correct { border-color: #34d399; background: rgba(52,211,153,0.1); }
+    .ordering-item.order-wrong { border-color: #f87171; background: rgba(248,113,113,0.1); }
+
+    .ordering-handle {
+      color: #555;
+      font-size: 1.2em;
+      cursor: grab;
+    }
+
+    .ordering-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(129,140,248,0.2);
+      color: #818cf8;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8em; font-weight: 700;
+      flex-shrink: 0;
+    }
+
     .next-btn-wrap {
       text-align: center;
       margin-top: 25px;
@@ -455,10 +613,10 @@
       color: #fbbf24;
     }
 
-    .q-type-badge.badge-input {
-      background: rgba(96, 165, 250, 0.15);
-      color: #60a5fa;
-    }
+    .q-type-badge.badge-input { background: rgba(96,165,250,0.15); color: #60a5fa; }
+    .q-type-badge.badge-matching { background: rgba(168,85,247,0.15); color: #c084fc; }
+    .q-type-badge.badge-fill { background: rgba(251,146,60,0.15); color: #fb923c; }
+    .q-type-badge.badge-order { background: rgba(45,212,191,0.15); color: #2dd4bf; }
 
     /* Theory block */
     .theory-toggle {
@@ -601,6 +759,7 @@
 
   <script src="js/quizzes.js"></script>
   <script src="js/quizzes-extra.js"></script>
+  <script src="js/quizzes-interactive.js"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script>
@@ -772,13 +931,8 @@ if (quizData) {
   preparedQuestions = shuffle(quizData.questions).map(q => {
     const type = q.type || 'choice';
 
-    // Text input questions have no options to shuffle
-    if (type === 'text_input') {
-      return { ...q, type };
-    }
-
-    // True/false: don't shuffle (Правильно always first)
-    if (type === 'true_false') {
+    // These types have no options to shuffle
+    if (['text_input', 'true_false', 'matching', 'fill_blanks', 'ordering'].includes(type)) {
       return { ...q, type };
     }
 
@@ -860,16 +1014,19 @@ function showQuestion() {
   document.getElementById('progressFill').style.width = `${(currentQuestion / total) * 100}%`;
 
   // Type badge
-  let badge = '';
-  if (q.type === 'true_false') badge = '<span class="q-type-badge badge-tf">Правильно чи ні?</span><br>';
-  if (q.type === 'text_input') badge = '<span class="q-type-badge badge-input">Введи відповідь</span><br>';
-
-  document.getElementById('questionText').innerHTML = badge + q.question;
+  const badges = {
+    true_false: '<span class="q-type-badge badge-tf">Правильно чи ні?</span><br>',
+    text_input: '<span class="q-type-badge badge-input">Введи відповідь</span><br>',
+    matching: '<span class="q-type-badge badge-matching">Встанови відповідність</span><br>',
+    fill_blanks: '<span class="q-type-badge badge-fill">Заповни пропуски</span><br>',
+    ordering: '<span class="q-type-badge badge-order">Розстав у порядку</span><br>'
+  };
+  document.getElementById('questionText').innerHTML = (badges[q.type] || '') + q.question;
 
   const optionsEl = document.getElementById('options');
+  optionsEl.classList.remove('tf-options');
 
   if (q.type === 'text_input') {
-    // Text input question
     optionsEl.innerHTML = `
       <div class="text-input-wrap">
         <input type="text" id="textAnswer" placeholder="Введи відповідь..." autocomplete="off">
@@ -878,27 +1035,28 @@ function showQuestion() {
       <div id="correctAnswerShow"></div>`;
     setTimeout(() => {
       const inp = document.getElementById('textAnswer');
-      if (inp) {
-        inp.focus();
-        inp.addEventListener('keypress', (e) => {
-          if (e.key === 'Enter') checkTextAnswer();
-        });
-      }
+      if (inp) { inp.focus(); inp.addEventListener('keypress', e => { if (e.key === 'Enter') checkTextAnswer(); }); }
     }, 50);
+
   } else if (q.type === 'true_false') {
-    // True/false question
-    const optionsHtml = q.options.map((opt, i) =>
+    optionsEl.classList.add('tf-options');
+    optionsEl.innerHTML = q.options.map((opt, i) =>
       `<div class="option" onclick="selectAnswer(${i})" id="opt${i}">${opt}</div>`
     ).join('');
-    optionsEl.innerHTML = optionsHtml;
-    optionsEl.classList.add('tf-options');
+
+  } else if (q.type === 'matching') {
+    renderMatching(q, optionsEl);
+
+  } else if (q.type === 'fill_blanks') {
+    renderFillBlanks(q, optionsEl);
+
+  } else if (q.type === 'ordering') {
+    renderOrdering(q, optionsEl);
+
   } else {
-    // Regular multiple choice
-    optionsEl.classList.remove('tf-options');
-    const optionsHtml = q.options.map((opt, i) =>
+    optionsEl.innerHTML = q.options.map((opt, i) =>
       `<div class="option" onclick="selectAnswer(${i})" id="opt${i}">${String.fromCharCode(65 + i)}) ${opt}</div>`
     ).join('');
-    optionsEl.innerHTML = optionsHtml;
   }
 
   document.getElementById('explanationBox').innerHTML = '';
@@ -986,6 +1144,298 @@ function checkTextAnswer() {
   });
 
   showFeedback(isCorrect, q.explanation);
+}
+
+// ====== MATCHING ======
+let matchState = {};
+function renderMatching(q, el) {
+  const leftItems = q.pairs.map(p => p[0]);
+  const rightItems = shuffle(q.pairs.map(p => p[1]));
+  matchState = { pairs: q.pairs, selected: null, matches: {}, leftItems, rightItems };
+
+  el.innerHTML = `
+    <div class="matching-container">
+      <div class="matching-left">
+        ${leftItems.map((item, i) => `<div class="matching-item left-item" id="ml${i}" onclick="matchSelectLeft(${i})">${item}</div>`).join('')}
+      </div>
+      <div class="matching-arrows" id="matchArrows">
+        ${leftItems.map(() => '<div class="match-line" style="min-height:46px;display:flex;align-items:center;">—</div>').join('')}
+      </div>
+      <div class="matching-right">
+        ${rightItems.map((item, i) => `<div class="matching-item right-item" id="mr${i}" onclick="matchSelectRight(${i})">${item}</div>`).join('')}
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:15px;">
+      <button class="btn-check" id="matchCheckBtn" onclick="checkMatching()" style="display:none;">Перевірити</button>
+    </div>`;
+  setTimeout(() => renderMath(el), 10);
+}
+
+function matchSelectLeft(i) {
+  document.querySelectorAll('.left-item').forEach(el => el.classList.remove('selected'));
+  if (matchState.matches[i] !== undefined) return;
+  matchState.selected = i;
+  document.getElementById(`ml${i}`).classList.add('selected');
+}
+
+function matchSelectRight(j) {
+  if (matchState.selected === null) return;
+  const i = matchState.selected;
+  if (matchState.matches[i] !== undefined) return;
+
+  matchState.matches[i] = j;
+  document.getElementById(`ml${i}`).classList.add('matched');
+  document.getElementById(`ml${i}`).classList.remove('selected');
+  document.getElementById(`mr${j}`).classList.add('matched');
+
+  const arrows = document.getElementById('matchArrows').children;
+  arrows[i].textContent = '→';
+  arrows[i].style.color = '#818cf8';
+  matchState.selected = null;
+
+  if (Object.keys(matchState.matches).length === matchState.pairs.length) {
+    document.getElementById('matchCheckBtn').style.display = 'inline-block';
+  }
+}
+
+function checkMatching() {
+  const q = preparedQuestions[currentQuestion];
+  let correctCount = 0;
+  const { pairs, matches, leftItems, rightItems } = matchState;
+
+  pairs.forEach((pair, i) => {
+    const userRight = rightItems[matches[i]];
+    const isCorrect = userRight === pair[1];
+    document.getElementById(`ml${i}`).classList.add(isCorrect ? 'match-correct' : 'match-wrong');
+    document.getElementById(`mr${matches[i]}`).classList.add(isCorrect ? 'match-correct' : 'match-wrong');
+    if (isCorrect) correctCount++;
+  });
+
+  const allCorrect = correctCount === pairs.length;
+  if (allCorrect) score++;
+
+  answers.push({
+    question: q.question,
+    selected: `${correctCount}/${pairs.length} пар`,
+    correct: `${pairs.length}/${pairs.length} пар`,
+    isCorrect: allCorrect
+  });
+
+  document.getElementById('matchCheckBtn').style.display = 'none';
+  document.querySelectorAll('.matching-item').forEach(el => el.style.pointerEvents = 'none');
+  showFeedback(allCorrect, q.explanation);
+}
+
+// ====== FILL BLANKS ======
+let fillState = {};
+function renderFillBlanks(q, el) {
+  const blankOptions = q.allOptions ? shuffle([...q.allOptions]) : shuffle([...q.blanks]);
+  fillState = { blanks: q.blanks, filled: {}, currentSlot: null, options: blankOptions };
+
+  let html = `<div class="fill-blank-text">${q.template.replace(/___/g, () => {
+    const idx = (html.match(/blank-slot/g) || []).length;
+    return `<span class="blank-slot" id="slot${idx}" onclick="selectSlot(${idx})">?</span>`;
+  })}</div>`;
+  // Re-count slots properly
+  let slotIdx = 0;
+  const rendered = q.template.replace(/___/g, () => {
+    const s = `<span class="blank-slot" id="slot${slotIdx}" onclick="selectSlot(${slotIdx})">?</span>`;
+    slotIdx++;
+    return s;
+  });
+
+  el.innerHTML = `
+    <div class="fill-blank-text">${rendered}</div>
+    <div class="blank-options" id="blankOptions">
+      ${blankOptions.map((opt, i) => `<div class="blank-option" id="bopt${i}" onclick="selectBlankOption(${i})">${opt}</div>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:15px;">
+      <button class="btn-check" id="fillCheckBtn" onclick="checkFillBlanks()" style="display:none;">Перевірити</button>
+    </div>`;
+  setTimeout(() => renderMath(el), 10);
+}
+
+function selectSlot(idx) {
+  document.querySelectorAll('.blank-slot').forEach(el => el.style.boxShadow = 'none');
+  fillState.currentSlot = idx;
+  document.getElementById(`slot${idx}`).style.boxShadow = '0 0 0 2px #818cf8';
+}
+
+function selectBlankOption(optIdx) {
+  const slot = fillState.currentSlot;
+  if (slot === null) {
+    selectSlot(0);
+    fillState.currentSlot = 0;
+  }
+  const slotEl = document.getElementById(`slot${fillState.currentSlot}`);
+  const optEl = document.getElementById(`bopt${optIdx}`);
+
+  // If slot already filled, unmark old option
+  if (fillState.filled[fillState.currentSlot] !== undefined) {
+    const oldOpt = fillState.filled[fillState.currentSlot];
+    document.getElementById(`bopt${oldOpt}`).classList.remove('used');
+  }
+
+  fillState.filled[fillState.currentSlot] = optIdx;
+  slotEl.textContent = fillState.options[optIdx];
+  slotEl.classList.add('filled');
+  optEl.classList.add('used');
+  setTimeout(() => renderMath(slotEl), 10);
+
+  // Auto-advance to next empty slot
+  const totalSlots = fillState.blanks.length;
+  for (let i = 1; i <= totalSlots; i++) {
+    const next = (fillState.currentSlot + i) % totalSlots;
+    if (fillState.filled[next] === undefined) {
+      selectSlot(next);
+      break;
+    }
+  }
+
+  if (Object.keys(fillState.filled).length === totalSlots) {
+    document.getElementById('fillCheckBtn').style.display = 'inline-block';
+  }
+}
+
+function checkFillBlanks() {
+  const q = preparedQuestions[currentQuestion];
+  let correctCount = 0;
+
+  q.blanks.forEach((correct, i) => {
+    const userAnswer = fillState.options[fillState.filled[i]];
+    const isCorrect = userAnswer === correct;
+    const slotEl = document.getElementById(`slot${i}`);
+    slotEl.classList.add(isCorrect ? 'slot-correct' : 'slot-wrong');
+    if (isCorrect) correctCount++;
+  });
+
+  const allCorrect = correctCount === q.blanks.length;
+  if (allCorrect) score++;
+
+  answers.push({
+    question: q.question,
+    selected: `${correctCount}/${q.blanks.length} пропусків`,
+    correct: q.blanks.join(', '),
+    isCorrect: allCorrect
+  });
+
+  document.getElementById('fillCheckBtn').style.display = 'none';
+  document.querySelectorAll('.blank-option, .blank-slot').forEach(el => el.style.pointerEvents = 'none');
+  showFeedback(allCorrect, q.explanation);
+}
+
+// ====== ORDERING ======
+let orderState = {};
+function renderOrdering(q, el) {
+  const shuffled = shuffle([...q.items]);
+  orderState = { correct: q.items, current: [...shuffled] };
+
+  el.innerHTML = `
+    <div class="ordering-list" id="orderList">
+      ${shuffled.map((item, i) => `
+        <div class="ordering-item" draggable="true" data-idx="${i}" id="oi${i}"
+             ondragstart="orderDragStart(event)" ondragover="orderDragOver(event)"
+             ondrop="orderDrop(event)" ondragend="orderDragEnd(event)"
+             ontouchstart="orderTouchStart(event)" ontouchmove="orderTouchMove(event)" ontouchend="orderTouchEnd(event)">
+          <span class="ordering-num">${i + 1}</span>
+          <span class="ordering-handle">⠿</span>
+          <span>${item}</span>
+        </div>`).join('')}
+    </div>
+    <div style="text-align:center;margin-top:15px;">
+      <button class="btn-check" onclick="checkOrdering()">Перевірити</button>
+    </div>`;
+  setTimeout(() => renderMath(el), 10);
+}
+
+let dragIdx = null;
+function orderDragStart(e) {
+  dragIdx = +e.target.closest('.ordering-item').dataset.idx;
+  e.target.closest('.ordering-item').classList.add('dragging');
+}
+function orderDragOver(e) {
+  e.preventDefault();
+  const item = e.target.closest('.ordering-item');
+  if (item) item.classList.add('drag-over');
+}
+function orderDrop(e) {
+  e.preventDefault();
+  const target = e.target.closest('.ordering-item');
+  if (!target) return;
+  const targetIdx = +target.dataset.idx;
+  // Swap in array
+  [orderState.current[dragIdx], orderState.current[targetIdx]] =
+    [orderState.current[targetIdx], orderState.current[dragIdx]];
+  reRenderOrder();
+}
+function orderDragEnd(e) {
+  document.querySelectorAll('.ordering-item').forEach(el => {
+    el.classList.remove('dragging', 'drag-over');
+  });
+}
+
+// Touch support for mobile
+let touchDragIdx = null;
+function orderTouchStart(e) {
+  touchDragIdx = +e.target.closest('.ordering-item').dataset.idx;
+}
+function orderTouchMove(e) { e.preventDefault(); }
+function orderTouchEnd(e) {
+  const touch = e.changedTouches[0];
+  const target = document.elementFromPoint(touch.clientX, touch.clientY);
+  const item = target ? target.closest('.ordering-item') : null;
+  if (item && touchDragIdx !== null) {
+    const targetIdx = +item.dataset.idx;
+    if (targetIdx !== touchDragIdx) {
+      [orderState.current[touchDragIdx], orderState.current[targetIdx]] =
+        [orderState.current[targetIdx], orderState.current[touchDragIdx]];
+      reRenderOrder();
+    }
+  }
+  touchDragIdx = null;
+}
+
+function reRenderOrder() {
+  const list = document.getElementById('orderList');
+  list.innerHTML = orderState.current.map((item, i) => `
+    <div class="ordering-item" draggable="true" data-idx="${i}" id="oi${i}"
+         ondragstart="orderDragStart(event)" ondragover="orderDragOver(event)"
+         ondrop="orderDrop(event)" ondragend="orderDragEnd(event)"
+         ontouchstart="orderTouchStart(event)" ontouchmove="orderTouchMove(event)" ontouchend="orderTouchEnd(event)">
+      <span class="ordering-num">${i + 1}</span>
+      <span class="ordering-handle">⠿</span>
+      <span>${item}</span>
+    </div>`).join('');
+  setTimeout(() => renderMath(list), 10);
+}
+
+function checkOrdering() {
+  const q = preparedQuestions[currentQuestion];
+  let correctCount = 0;
+
+  orderState.current.forEach((item, i) => {
+    const isCorrect = item === orderState.correct[i];
+    document.getElementById(`oi${i}`).classList.add(isCorrect ? 'order-correct' : 'order-wrong');
+    if (isCorrect) correctCount++;
+  });
+
+  const allCorrect = correctCount === orderState.correct.length;
+  if (allCorrect) score++;
+
+  answers.push({
+    question: q.question,
+    selected: `${correctCount}/${orderState.correct.length} на місці`,
+    correct: orderState.correct.join(' → '),
+    isCorrect: allCorrect
+  });
+
+  document.querySelectorAll('.ordering-item').forEach(el => {
+    el.draggable = false;
+    el.style.cursor = 'default';
+    el.ontouchstart = null;
+  });
+  document.querySelector('.btn-check').style.display = 'none';
+  showFeedback(allCorrect, q.explanation);
 }
 
 function nextQuestion() {
