@@ -617,6 +617,105 @@ const QUIZZES = [
         correct: 2,
         explanation: '$\\cos^2 x - \\sin^2 x = \\cos 2x$ — формула подвійного аргументу для косинуса.'
       }
+    ],
+    // Контрольні питання — застосування формул (інший набір від тренувального)
+    examQuestions: [
+      {
+        question: 'Правильно чи неправильно: $\\sin(\\alpha + \\beta) = \\sin\\alpha \\cdot \\cos\\beta - \\cos\\alpha \\cdot \\sin\\beta$',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Знак між доданками — ПЛЮС: $\\sin(\\alpha+\\beta) = \\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos(\\alpha + \\beta) = \\cos\\alpha \\cdot \\cos\\beta + \\sin\\alpha \\cdot \\sin\\beta$',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 1,
+        explanation: 'Неправильно! Знак між доданками — МІНУС: $\\cos(\\alpha+\\beta) = \\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\operatorname{tg}(\\alpha - \\beta) = \\dfrac{\\operatorname{tg}\\alpha - \\operatorname{tg}\\beta}{1 + \\operatorname{tg}\\alpha \\cdot \\operatorname{tg}\\beta}$',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! У знаменнику формули віднімання — знак плюс.'
+      },
+      {
+        question: 'Правильно чи неправильно: $\\cos 2\\alpha = 1 - 2\\sin^2\\alpha$',
+        type: 'true_false',
+        options: ['Правильно', 'Неправильно'],
+        correct: 0,
+        explanation: 'Правильно! Це одна з еквівалентних форм: $\\cos 2\\alpha = \\cos^2\\alpha - \\sin^2\\alpha = 1 - 2\\sin^2\\alpha = 2\\cos^2\\alpha - 1$.'
+      },
+      {
+        question: 'Обчисли $\\sin 15°$ через $\\sin(45° - 30°)$:',
+        options: [
+          '$\\dfrac{\\sqrt{6} - \\sqrt{2}}{4}$',
+          '$\\dfrac{\\sqrt{6} + \\sqrt{2}}{4}$',
+          '$\\dfrac{\\sqrt{3} - 1}{2}$',
+          '$\\dfrac{\\sqrt{2} - 1}{4}$'
+        ],
+        correct: 0,
+        explanation: '$\\sin 15° = \\sin45°\\cos30° - \\cos45°\\sin30° = \\dfrac{\\sqrt{2}}{2}\\cdot\\dfrac{\\sqrt{3}}{2} - \\dfrac{\\sqrt{2}}{2}\\cdot\\dfrac{1}{2} = \\dfrac{\\sqrt{6}-\\sqrt{2}}{4}$'
+      },
+      {
+        question: 'Обчисли $\\cos 105°$ через $\\cos(60° + 45°)$:',
+        options: [
+          '$\\dfrac{\\sqrt{2} - \\sqrt{6}}{4}$',
+          '$\\dfrac{\\sqrt{6} + \\sqrt{2}}{4}$',
+          '$\\dfrac{\\sqrt{6} - \\sqrt{2}}{4}$',
+          '$-\\dfrac{\\sqrt{2}}{2}$'
+        ],
+        correct: 0,
+        explanation: '$\\cos 105° = \\cos60°\\cos45° - \\sin60°\\sin45° = \\dfrac{1}{2}\\cdot\\dfrac{\\sqrt{2}}{2} - \\dfrac{\\sqrt{3}}{2}\\cdot\\dfrac{\\sqrt{2}}{2} = \\dfrac{\\sqrt{2}-\\sqrt{6}}{4}$'
+      },
+      {
+        question: 'Спростіть: $2\\cos^2\\alpha - 1$',
+        options: ['$\\cos 2\\alpha$', '$\\sin 2\\alpha$', '$\\cos\\alpha$', '$-\\cos 2\\alpha$'],
+        correct: 0,
+        explanation: '$2\\cos^2\\alpha - 1 = \\cos 2\\alpha$ — одна з форм подвійного кута.'
+      },
+      {
+        question: 'Спростіть: $1 - 2\\sin^2\\alpha$',
+        options: ['$\\sin 2\\alpha$', '$\\cos 2\\alpha$', '$-\\cos 2\\alpha$', '$1$'],
+        correct: 1,
+        explanation: '$1 - 2\\sin^2\\alpha = \\cos 2\\alpha$.'
+      },
+      {
+        question: 'Обчисли $\\cos^2(45°)$ за формулою пониження степеня:',
+        type: 'text_input',
+        correct: ['1/2', '0.5', '0,5'],
+        explanation: '$\\cos^2(45°) = \\dfrac{1 + \\cos 90°}{2} = \\dfrac{1 + 0}{2} = \\dfrac{1}{2}$'
+      },
+      {
+        question: 'Обчисли $\\sin^2(60°)$ за формулою пониження степеня:',
+        type: 'text_input',
+        correct: ['3/4', '0.75', '0,75'],
+        explanation: '$\\sin^2(60°) = \\dfrac{1 - \\cos 120°}{2} = \\dfrac{1 - (-\\frac{1}{2})}{2} = \\dfrac{\\frac{3}{2}}{2} = \\dfrac{3}{4}$'
+      },
+      {
+        question: 'Яка формула $\\operatorname{tg} 2\\alpha$?',
+        options: [
+          '$\\dfrac{2\\operatorname{tg}\\alpha}{1 - \\operatorname{tg}^2\\alpha}$',
+          '$\\dfrac{2\\operatorname{tg}\\alpha}{1 + \\operatorname{tg}^2\\alpha}$',
+          '$\\dfrac{\\operatorname{tg}^2\\alpha}{2}$',
+          '$2\\operatorname{tg}\\alpha$'
+        ],
+        correct: 0,
+        explanation: '$\\operatorname{tg} 2\\alpha = \\dfrac{2\\operatorname{tg}\\alpha}{1 - \\operatorname{tg}^2\\alpha}$ — наслідок формули $\\operatorname{tg}(\\alpha+\\alpha)$.'
+      },
+      {
+        type: 'matching',
+        question: 'Встанови відповідність: вираз — спрощена форма',
+        pairs: [
+          ['$2\\sin\\alpha\\cos\\alpha$', '$\\sin 2\\alpha$'],
+          ['$\\cos^2\\alpha - \\sin^2\\alpha$', '$\\cos 2\\alpha$'],
+          ['$\\dfrac{1-\\cos 2\\alpha}{2}$', '$\\sin^2\\alpha$'],
+          ['$\\dfrac{1+\\cos 2\\alpha}{2}$', '$\\cos^2\\alpha$']
+        ],
+        explanation: 'Подвійний кут і пониження степеня — основні формули цієї теми.'
+      }
     ]
   },
 

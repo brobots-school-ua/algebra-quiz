@@ -881,7 +881,7 @@
           <div class="mode-card" data-mode="exam" onclick="selectMode('exam')">
             <span class="mode-icon">📝</span>
             <div class="mode-name">Контрольна</div>
-            <div class="mode-desc">15 хв на весь квіз</div>
+            <div class="mode-desc">Інші завдання, 15 хв</div>
           </div>
           <div class="mode-card" data-mode="blitz" onclick="selectMode('blitz')">
             <span class="mode-icon">⚡</span>
@@ -1095,23 +1095,24 @@ if (!quizData) {
   document.title = `${quizData.title} — Квіз`;
 }
 
-// Prepare shuffled questions with shuffled options
-let preparedQuestions = [];
-if (quizData) {
-  preparedQuestions = shuffle(quizData.questions).map(q => {
+// Helper: build prepared questions from a pool, optionally limiting count
+function buildPreparedQuestions(questions, count) {
+  const s = shuffle([...questions]);
+  const sel = count ? s.slice(0, Math.min(count, s.length)) : s;
+  return sel.map(q => {
     const type = q.type || 'choice';
-
-    // These types have no options to shuffle
     if (['text_input', 'true_false', 'matching', 'fill_blanks', 'ordering'].includes(type)) {
       return { ...q, type };
     }
-
-    // Regular choice: shuffle options
     const correctAnswer = q.options[q.correct];
     const shuffledOptions = shuffle(q.options);
-    const newCorrectIndex = shuffledOptions.indexOf(correctAnswer);
-    return { ...q, type, options: shuffledOptions, correct: newCorrectIndex };
+    return { ...q, type, options: shuffledOptions, correct: shuffledOptions.indexOf(correctAnswer) };
   });
+}
+
+let preparedQuestions = [];
+if (quizData) {
+  preparedQuestions = buildPreparedQuestions(quizData.questions, null);
 }
 
 let currentQuestion = 0;
@@ -1158,14 +1159,30 @@ window.addEventListener('load', () => {
       </div>`;
     startBtn.style.display = 'inline-block';
 
-    // Show mode selection and update retry card
+    // Show mode selection and update descriptions
     document.getElementById('modeSelect').style.display = 'block';
+    const trainCount = quizData.questions.length;
+    const examPool = quizData.examQuestions || quizData.questions;
+    const blitzCount = quizData.blitzCount || Math.min(10, trainCount);
+
+    document.querySelector('[data-mode="training"] .mode-desc').textContent =
+      `${trainCount} питань, підказки, без ліміту`;
+    document.querySelector('[data-mode="exam"] .mode-desc').textContent =
+      quizData.examQuestions
+        ? `${examPool.length} інших завдань, 15 хв, без підказок`
+        : `${trainCount} питань, 15 хв, без підказок`;
+    document.querySelector('[data-mode="blitz"] .mode-desc').textContent =
+      `${blitzCount} з ${trainCount} випадкових, 30 с`;
+
+    // Retry card
     const mistakesCount = JSON.parse(localStorage.getItem(`mistakes_${quizId}`) || '[]').length;
     const retryCard = document.getElementById('retryModeCard');
     const retryDesc = document.getElementById('retryDesc');
     if (mistakesCount > 0) {
       retryCard.classList.remove('disabled');
       retryDesc.textContent = `Повтори ${mistakesCount} помилок`;
+    } else {
+      retryDesc.textContent = 'Немає збережених помилок';
     }
   } else {
     loginArea.innerHTML = '<p class="login-prompt">Увійди через Google, щоб почати квіз</p><div id="googleBtn"></div>';
@@ -1241,19 +1258,22 @@ function autoTimeoutAnswer() {
 function startQuiz() {
   if (!studentName || studentName.length < 2) return;
 
-  // Retry mode: filter to only previously wrong questions
-  if (quizMode === 'retry') {
+  // Select question pool based on mode
+  if (quizMode === 'training') {
+    preparedQuestions = buildPreparedQuestions(quizData.questions, null);
+  } else if (quizMode === 'exam') {
+    // Use dedicated exam questions if available, else fallback to training questions
+    const pool = quizData.examQuestions || quizData.questions;
+    preparedQuestions = buildPreparedQuestions(pool, null);
+  } else if (quizMode === 'blitz') {
+    // Random 10 from training pool
+    const blitzCount = quizData.blitzCount || Math.min(10, quizData.questions.length);
+    preparedQuestions = buildPreparedQuestions(quizData.questions, blitzCount);
+  } else if (quizMode === 'retry') {
     const storedMistakes = JSON.parse(localStorage.getItem(`mistakes_${quizId}`) || '[]');
-    preparedQuestions = quizData.questions
-      .filter(q => storedMistakes.includes(q.question))
-      .map(q => {
-        const type = q.type || 'choice';
-        if (['text_input', 'true_false', 'matching', 'fill_blanks', 'ordering'].includes(type)) return { ...q, type };
-        const correctAnswer = q.options[q.correct];
-        const shuffledOptions = shuffle(q.options);
-        return { ...q, type, options: shuffledOptions, correct: shuffledOptions.indexOf(correctAnswer) };
-      });
-    if (preparedQuestions.length === 0) { alert('Немає питань для повторення!'); return; }
+    const retryQs = quizData.questions.filter(q => storedMistakes.includes(q.question));
+    if (retryQs.length === 0) { alert('Немає питань для повторення!'); return; }
+    preparedQuestions = buildPreparedQuestions(retryQs, null);
   }
 
   document.getElementById('welcome').style.display = 'none';
