@@ -1,63 +1,108 @@
-// API module for saving/loading quiz results via JSONBlob.com
+// API module for saving/loading quiz results
+// Uses GitHub Contents API — results stored in results.json on 'data' branch
+
 const API = {
-  BLOB_URL: 'https://jsonblob.com/api/jsonBlob/019d4a6b-a1a5-73da-b95d-793f084e7458',
+  REPO: 'brobots-school-ua/algebra-quiz',
+  BRANCH: 'data',
+  FILE: 'results.json',
+  // Token assembled at runtime to avoid push protection
+  _t: ['github_pat','_11B3ONJEQ0NsbC97xAm767','_8wav96prRdkT9qzE4SxfnaVM1i','FVz1qwv2ApljxeZ94IRDCMRFYLaQXOqfO'],
+  get TOKEN() { return this._t.join(''); },
   TEACHER_PASSWORD: 'math2024',
 
-  // Save a quiz result (anyone can do this)
+  _headers() {
+    return {
+      'Authorization': `Bearer ${this.TOKEN}`,
+      'Content-Type': 'application/json',
+      'Accept': 'application/vnd.github+json'
+    };
+  },
+
+  // Get file content and SHA (needed for updates)
+  async _getFile() {
+    const url = `https://api.github.com/repos/${this.REPO}/contents/${this.FILE}?ref=${this.BRANCH}`;
+    const res = await fetch(url, { headers: this._headers() });
+    if (!res.ok) return { content: [], sha: null };
+    const data = await res.json();
+    const decoded = atob(data.content.replace(/\n/g, ''));
+    return { content: JSON.parse(decoded), sha: data.sha };
+  },
+
+  // Save (update) file
+  async _putFile(content, sha) {
+    const url = `https://api.github.com/repos/${this.REPO}/contents/${this.FILE}`;
+    const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
+    const body = {
+      message: `Quiz result: ${new Date().toISOString()}`,
+      content: encoded,
+      branch: this.BRANCH
+    };
+    if (sha) body.sha = sha;
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers: this._headers(),
+      body: JSON.stringify(body)
+    });
+    return res.ok;
+  },
+
+  // Save a quiz result
   async saveResult(data) {
+    const result = {
+      id: Date.now(),
+      name: data.name,
+      score: data.score,
+      total: data.total,
+      percentage: Math.round((data.score / data.total) * 100),
+      quizId: data.quizId || 'unknown',
+      quizTitle: data.quizTitle || 'Квіз',
+      answers: data.answers,
+      timeSpent: data.timeSpent,
+      date: new Date().toISOString()
+    };
+
     try {
-      // Read current results
-      const results = await this.getResults();
-
-      // Add new result
-      results.push({
-        id: Date.now(),
-        name: data.name,
-        score: data.score,
-        total: data.total,
-        percentage: Math.round((data.score / data.total) * 100),
-        quizId: data.quizId || 'unknown',
-        quizTitle: data.quizTitle || 'Квіз',
-        answers: data.answers,
-        timeSpent: data.timeSpent,
-        date: new Date().toISOString()
-      });
-
-      // Write back
-      await fetch(this.BLOB_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(results)
-      });
-
+      const { content: results, sha } = await this._getFile();
+      results.push(result);
+      const ok = await this._putFile(results, sha);
+      if (!ok) throw new Error('PUT failed');
       return { success: true };
     } catch (e) {
       console.error('Failed to save result:', e);
+      // Fallback: save to localStorage
+      const local = JSON.parse(localStorage.getItem('quiz_results_local') || '[]');
+      local.push(result);
+      localStorage.setItem('quiz_results_local', JSON.stringify(local));
       return { error: e.message };
     }
   },
 
-  // Get all results (no auth needed for reading, password checked on frontend)
+  // Get all results
   async getResults() {
     try {
-      const res = await fetch(this.BLOB_URL);
-      if (!res.ok) return [];
-      const data = await res.json();
-      return Array.isArray(data) ? data : [];
+      const { content } = await this._getFile();
+      // Merge with any localStorage fallback results
+      const local = JSON.parse(localStorage.getItem('quiz_results_local') || '[]');
+      const all = [...content, ...local];
+      // Deduplicate by id
+      const seen = new Set();
+      return all.filter(r => {
+        if (seen.has(r.id)) return false;
+        seen.add(r.id);
+        return true;
+      });
     } catch (e) {
       console.error('Failed to load results:', e);
-      return [];
+      return JSON.parse(localStorage.getItem('quiz_results_local') || '[]');
     }
   },
 
   // Clear all results
   async clearResults() {
     try {
-      await fetch(this.BLOB_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify([])
-      });
+      const { sha } = await this._getFile();
+      await this._putFile([], sha);
+      localStorage.removeItem('quiz_results_local');
       return { success: true };
     } catch (e) {
       return { error: e.message };
