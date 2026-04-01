@@ -33,8 +33,8 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   const url = e.request.url;
-  // Don't cache: cat images, Google APIs, GitHub API calls
-  if (url.includes('cataas') || url.includes('googleapis') || url.includes('api.github.com') || url.includes('accounts.google')) {
+  // Don't cache: cat images, Google APIs, GitHub API calls, teacher dashboard
+  if (url.includes('cataas') || url.includes('googleapis') || url.includes('api.github.com') || url.includes('accounts.google') || url.includes('results.html')) {
     return;
   }
   e.respondWith(
