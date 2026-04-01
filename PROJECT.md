@@ -251,10 +251,8 @@
 ### Що потрібно зробити
 
 #### Крок 1. Запушити код на GitHub
-1. Репозиторій вже створений: `https://github.com/pavliukolenka-ops/algebra-quiz.git`
-2. Потрібно додати collaborator `deimoc` в налаштуваннях репо (бо Coder workspace пушить через цей акаунт)
-3. GitHub → `algebra-quiz` → **Settings** → **Collaborators** → **Add people** → `deimoc`
-4. Після цього виконати `git push -u origin main`
+1. ✅ Репозиторій створений: `https://github.com/brobots-school-ua/algebra-quiz`
+2. ✅ Код запушений на GitHub
 
 #### Крок 2. Деплой на Render.com (безкоштовно)
 1. Зайти на [render.com](https://render.com) і зареєструватися через GitHub
@@ -302,5 +300,5 @@
 | Стилі | Вбудований CSS | Tailwind CSS |
 | Деплой | Coder workspace (локально) | Render.com → VPS + Docker |
 | Формули | KaTeX (CDN) ✅ | KaTeX ✅ |
-| GitHub | `pavliukolenka-ops/algebra-quiz` | Автодеплой з main |
+| GitHub | `brobots-school-ua/algebra-quiz` ✅ | Автодеплой з main |
 | Пароль вчителя | `math2024` | Повноцінна авторизація |
