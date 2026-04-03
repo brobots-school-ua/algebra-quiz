@@ -272,8 +272,10 @@
 38. ~~index.html — Signal навігація, holo-text, quiz-grid, chips~~ ✅
 39. ~~quiz.html — Signal стиль, neon опції, scanlines~~ ✅
 40. ~~results.html — TEACHER.SYS, magenta тема, Signal таблиця~~ ✅
-41. Шрифти: Russo One + Share Tech Mono, кольори: lime/cyan/magenta/purple ✅
-42. Квізи що залишились: 1.6, 1.7, 2.4, 2.6, 5.1, 5.2, 5.9, 5.10 — ⬜ наступна фаза
+41. ~~my-results.html та leaderboard.html — оновлено під Signal дизайн~~ ✅
+42. ~~Прибрано дубльований CTA блок з головної сторінки~~ ✅
+43. ~~SW: HTML/CSS більше не кешуються — оновлення завжди свіжі~~ ✅
+44. Квізи що залишились: 1.6, 1.7, 2.4, 2.6, 5.1, 5.2, 5.9, 5.10 — ⬜ наступна фаза
 
 ---
 
