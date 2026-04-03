@@ -241,7 +241,26 @@
   }
 
   function toggleDetail(i) { document.getElementById(`detail-${i}`).classList.toggle('open'); }
-  function exportCSV() { alert('CSV експортовано!'); }
+  function exportCSV() {
+    const BOM = '\uFEFF';
+    const header = ['Імʼя', 'Email', 'Квіз', 'Режим', 'Бал', 'Всього', '%', 'Дата'];
+    const rows = filteredResults.map(r => [
+      r.name || '',
+      r.email || '',
+      r.quizTitle || r.quizId || '',
+      r.mode === 'blitz' ? 'Бліц' : r.mode === 'exam' ? 'Контрольна' : 'Тренування',
+      r.score,
+      r.total,
+      r.percentage + '%',
+      new Date(r.date || r.timestamp).toLocaleDateString('uk-UA')
+    ]);
+    const csv = BOM + [header, ...rows].map(row => row.map(v => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `algebra-results-${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  }
   async function clearResults() { if (confirm('Видалити всі дані?')) { await API.clearResults(); loadResults(); } }
 </script>
 </body>
