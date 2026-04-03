@@ -417,8 +417,51 @@
         </div>
       `;
       lucide.createIcons();
+      // Update streak
+      const today = new Date().toDateString();
+      const streakData = JSON.parse(localStorage.getItem('quiz_streak') || '{"streak":0,"lastDate":""}');
+      const yesterday = new Date(Date.now() - 86400000).toDateString();
+      if (streakData.lastDate === today) {
+        // already counted today
+      } else if (streakData.lastDate === yesterday) {
+        streakData.streak += 1;
+        streakData.lastDate = today;
+      } else {
+        streakData.streak = 1;
+        streakData.lastDate = today;
+      }
+      localStorage.setItem('quiz_streak', JSON.stringify(streakData));
+
+      const elapsed = Math.round((Date.now() - startTime) / 1000);
       const user = Auth.getUser();
-      if (user) API.saveResult({ name: user.name, email: user.email, quizId, score, total, percentage, mode: quizMode });
+      if (user) {
+        API.saveResult({
+          name: user.name,
+          email: user.email,
+          picture: user.picture || '',
+          quizId,
+          quizTitle: quizData ? quizData.title : quizId,
+          score,
+          total,
+          percentage,
+          mode: quizMode,
+          timeSpent: elapsed
+        });
+      }
+
+      // Add share button
+      const shareText = `${quizData ? quizData.title : 'Квіз'}: ${percentage}% (${score}/${total}) — ALGEBRA.SYS`;
+      const shareBtn = document.createElement('button');
+      shareBtn.className = 'btn btn-secondary';
+      shareBtn.textContent = '📤 ПОДІЛИТИСЯ';
+      shareBtn.onclick = () => {
+        if (navigator.share) {
+          navigator.share({ title: 'ALGEBRA.SYS', text: shareText, url: location.href });
+        } else {
+          navigator.clipboard.writeText(shareText).then(() => alert('Скопійовано в буфер!'));
+        }
+      };
+      resultsDiv.querySelector('.results-buttons').appendChild(shareBtn);
     }
   </script>
 </body>
