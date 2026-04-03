@@ -179,7 +179,8 @@
           <div class="nav-username">
             ${user.name}
             <span>УЧЕНЬ // 10-А</span>
-          </div>`;
+          </div>
+          <button onclick="Auth.signOut()" class="btn-signout" title="Вийти" style="background:none;border:1px solid rgba(255,0,170,0.3);color:var(--magenta);padding:4px 10px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.7em;letter-spacing:0.1em;">✕ ВИЙТИ</button>`;
         if (streakData.streak >= 2) {
           // streak shown in chip
         }

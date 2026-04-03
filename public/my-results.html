@@ -106,6 +106,12 @@
         return;
       }
 
+      // Render nav auth area
+      document.getElementById('authArea').innerHTML = `
+        <div class="nav-avatar">${(user.name||'U')[0].toUpperCase()}</div>
+        <div class="nav-username">${user.name}<span>${user.email||''}</span></div>
+        <button onclick="Auth.signOut()" style="background:none;border:1px solid rgba(255,0,170,0.3);color:var(--magenta);padding:4px 10px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.7em;letter-spacing:0.1em;">✕ ВИЙТИ</button>`;
+
       // Render user info card
       document.getElementById('userInfoArea').innerHTML = `
         <div class="card" style="display:flex; align-items:center; gap:24px; margin-bottom:24px;">

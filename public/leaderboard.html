@@ -92,6 +92,15 @@
     const content = document.getElementById('content');
     const currentUser = Auth.getUser();
 
+    // Render nav auth area
+    const authArea = document.getElementById('authArea');
+    if (currentUser) {
+      authArea.innerHTML = `
+        <div class="nav-avatar">${(currentUser.name||'U')[0].toUpperCase()}</div>
+        <div class="nav-username">${currentUser.name}<span>${currentUser.email||''}</span></div>
+        <button onclick="Auth.signOut()" style="background:none;border:1px solid rgba(255,0,170,0.3);color:var(--magenta);padding:4px 10px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:0.7em;letter-spacing:0.1em;">✕ ВИЙТИ</button>`;
+    }
+
     const allResults = await API.getResults();
     const leaderboard = buildLeaderboard(allResults);
 
