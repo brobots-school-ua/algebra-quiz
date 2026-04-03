@@ -1,5 +1,5 @@
 // Service Worker for Algebra Quiz PWA
-const CACHE = 'algebra-quiz-v3';
+const CACHE = 'algebra-quiz-v4';
 const BASE = '/algebra-quiz';
 
 // Only cache static assets that rarely change — NOT html files
