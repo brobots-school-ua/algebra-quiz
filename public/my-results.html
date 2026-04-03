@@ -3,165 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мої результати — Алгебра</title>
+  <title>Мої результати — ALGEBRA.SYS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <script src="https://unpkg.com/lucide@latest"></script>
-  <style>
-    :root {
-      --bg-dark: #09090b;
-      --card-bg: rgba(24, 24, 27, 0.6);
-      --accent-purple: #8b5cf6;
-      --accent-blue: #3b82f6;
-      --text-main: #fafafa;
-      --text-muted: #a1a1aa;
-      --border-color: rgba(255, 255, 255, 0.08);
-      --success: #10b981;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-      background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.1) 0%, transparent 35%),
-        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 35%);
-      min-height: 100vh;
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .header {
-      text-align: center;
-      padding: 40px 0 20px;
-    }
-
-    .header h1 {
-      font-size: 2.5em;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      background: linear-gradient(to right, #fff, #a1a1aa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9em;
-      font-weight: 600;
-      margin-bottom: 20px;
-      transition: color 0.2s;
-    }
-
-    .back-link:hover { color: var(--accent-purple); }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      border-radius: 32px;
-      padding: 24px 32px;
-      margin-bottom: 32px;
-    }
-
-    .user-info img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 3px solid var(--border-color);
-    }
-
-    .user-details h2 { font-size: 1.5em; font-weight: 800; }
-    .user-details p { color: var(--text-muted); font-size: 0.95em; }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .stat-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 24px;
-      text-align: center;
-    }
-
-    .stat-card .value { font-size: 2em; font-weight: 800; color: var(--accent-purple); display: block; }
-    .stat-card .label { font-size: 0.85em; color: var(--text-muted); font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-
-    .results-table {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 32px;
-      overflow: hidden;
-    }
-
-    .result-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      align-items: center;
-      gap: 20px;
-      padding: 20px 32px;
-      border-bottom: 1px solid var(--border-color);
-      transition: background 0.2s;
-    }
-
-    .result-row:last-child { border-bottom: none; }
-    .result-row:hover { background: rgba(255,255,255,0.02); }
-
-    .res-title { font-weight: 700; color: #fff; }
-    .res-meta { font-size: 0.85em; color: var(--text-muted); margin-top: 2px; }
-    .res-score {
-      font-size: 1.25em;
-      font-weight: 800;
-      color: var(--success);
-      background: rgba(16, 185, 129, 0.1);
-      padding: 6px 16px;
-      border-radius: 12px;
-    }
-    .res-mode { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700; color: var(--text-muted); }
-
-    .empty { text-align: center; padding: 80px 20px; color: var(--text-muted); }
-
-    @media (max-width: 600px) {
-      .user-info { flex-direction: column; text-align: center; padding: 32px 20px; }
-      .result-row { grid-template-columns: 1fr auto; padding: 20px; }
-      .res-mode { grid-column: 1 / span 2; margin-top: 8px; }
-    }
-  </style>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <div class="container">
-    <a href="./" class="back-link"><i data-lucide="arrow-left" size="18"></i> До каталогу</a>
-    
-    <div id="userInfoArea"></div>
-    
-    <div id="statsArea" class="stats-grid"></div>
 
-    <h2 style="margin-bottom: 20px; font-weight: 800;">Історія проходження</h2>
-    <div id="historyArea" class="results-table">
-      <p style="text-align:center; color: var(--text-muted); padding: 40px;">Завантаження історії...</p>
+  <!-- Decorative pixel background -->
+  <div class="pixel-bg"></div>
+
+  <!-- Corner brackets -->
+  <div class="corner-tl"></div>
+  <div class="corner-tr"></div>
+  <div class="corner-bl"></div>
+  <div class="corner-br"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="stripe-bar"></div>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="./" class="nav-logo">
+          <div class="nav-logo-icon">Σ</div>
+          <div>
+            <span class="nav-logo-text">ALGEBRA.SYS</span>
+            <span class="nav-logo-sub">◈ SIGNAL GRAPHICS V2.0 ◈</span>
+          </div>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="./">КАТАЛОГ</a></li>
+          <li><a href="my-results.html" class="active">МОЇ РЕЗУЛЬТАТИ</a></li>
+          <li><a href="leaderboard.html">РЕЙТИНГ</a></li>
+          <li><a href="results.html">ДЛЯ ВЧИТЕЛЯ</a></li>
+        </ul>
+
+        <div id="authArea" class="nav-user"></div>
+      </div>
     </div>
-  </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container">
+
+    <!-- Hero section -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <span class="sys-label">STUDENT // PROFILE</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="holo-text">МОЇ РЕЗУЛЬТАТИ</span>
+      </h1>
+    </section>
+
+    <!-- User info area (filled by JS) -->
+    <div id="userInfoArea"></div>
+
+    <!-- Stats chips row (filled by JS) -->
+    <div id="statsArea"></div>
+
+    <!-- History section -->
+    <div class="section-divider">
+      <div class="line"></div>
+      <div class="title"><span class="holo-text">ІСТОРІЯ ПРОХОДЖЕННЯ</span></div>
+      <div class="line"></div>
+    </div>
+
+    <div class="card" id="historyArea">
+      <p style="text-align:center; color: var(--text); padding: 40px;">Завантаження історії...</p>
+    </div>
+
+    <!-- System bar -->
+    <div class="system-bar">
+      <div class="sys-status">
+        <div class="live-dot"></div>
+        <span>STUDENT_PROFILE // АКТИВНА СЕСІЯ</span>
+      </div>
+      <div class="sys-right">
+        <span>ALGEBRA.SYS V2.0</span>
+        <span class="sys-label lime">10-А</span>
+      </div>
+    </div>
+
+  </div><!-- /container -->
 
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
@@ -175,20 +106,31 @@
         return;
       }
 
+      // Render user info card
       document.getElementById('userInfoArea').innerHTML = `
-        <div class="user-info">
-          <img src="${user.picture}" referrerpolicy="no-referrer">
-          <div class="user-details">
-            <h2>Привіт, ${user.name}!</h2>
-            <p>${user.email}</p>
+        <div class="card" style="display:flex; align-items:center; gap:24px; margin-bottom:24px;">
+          <img src="${user.picture}" referrerpolicy="no-referrer"
+            style="width:72px; height:72px; border-radius:50%; border:2px solid var(--cyan); flex-shrink:0;">
+          <div>
+            <div style="font-family:'Russo One',sans-serif; font-size:1.3em; color:var(--text-bright); margin-bottom:4px;">
+              ${user.name}
+            </div>
+            <div style="font-size:0.8em; color:var(--text); letter-spacing:0.08em;">${user.email}</div>
+            <span class="sys-label cyan" style="margin-top:8px; display:inline-block;">STUDENT // АКТИВНИЙ</span>
           </div>
         </div>
       `;
 
       const results = await API.getResultsByEmail(user.email);
-      
+
       if (results.length === 0) {
-        document.getElementById('historyArea').innerHTML = '<div class="empty"><i data-lucide="line-chart" size="48" style="margin-bottom:16px;opacity:0.5;"></i><h3>Історія порожня</h3><p>Пройди свій перший квіз!</p></div>';
+        document.getElementById('historyArea').innerHTML = `
+          <div style="text-align:center; padding:60px 20px; color:var(--text);">
+            <div style="font-size:3em; margin-bottom:16px;">📊</div>
+            <div style="font-family:'Russo One',sans-serif; font-size:1.1em; color:var(--text-bright); margin-bottom:8px;">ІСТОРІЯ ПОРОЖНЯ</div>
+            <div style="font-size:0.8em; letter-spacing:0.08em;">Пройди свій перший квіз!</div>
+          </div>
+        `;
         lucide.createIcons();
         return;
       }
@@ -198,27 +140,60 @@
       const avgScore = Math.round(results.reduce((acc, r) => acc + (r.percentage || 0), 0) / results.length);
       const totalAttempts = results.length;
 
+      // Render stats as chips row
       document.getElementById('statsArea').innerHTML = `
-        <div class="stat-card"><span class="value">${totalQuizzes}</span><span class="label">Теми</span></div>
-        <div class="stat-card"><span class="value">${avgScore}%</span><span class="label">Середній бал</span></div>
-        <div class="stat-card"><span class="value">${totalAttempts}</span><span class="label">Спроб</span></div>
+        <div class="chips-row" style="margin-bottom:32px;">
+          <div class="chip c-cyan">
+            <span class="chip-icon">📚</span>
+            <div class="chip-data">
+              <span class="chip-value">${totalQuizzes}</span>
+              <span class="chip-label">Теми</span>
+            </div>
+          </div>
+          <div class="chip c-lime">
+            <span class="chip-icon">🎯</span>
+            <div class="chip-data">
+              <span class="chip-value">${avgScore}%</span>
+              <span class="chip-label">Середній бал</span>
+            </div>
+          </div>
+          <div class="chip c-mag">
+            <span class="chip-icon">⚡</span>
+            <div class="chip-data">
+              <span class="chip-value">${totalAttempts}</span>
+              <span class="chip-label">Спроб</span>
+            </div>
+          </div>
+        </div>
       `;
 
-      // Render history
+      // Render history rows inside the card
       document.getElementById('historyArea').innerHTML = results.reverse().map(r => {
         const date = new Date(r.timestamp).toLocaleDateString('uk-UA');
+        const pct = r.percentage;
+        const pctColor = pct >= 80 ? 'var(--lime)' : pct >= 50 ? 'var(--cyan)' : 'var(--magenta)';
         return `
-          <div class="result-row">
+          <div style="display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:20px;
+                      padding:16px 0; border-bottom:1px solid var(--border-c);">
             <div>
-              <div class="res-title">${r.quizTitle}</div>
-              <div class="res-meta">${date} · ${r.score}/${r.total} вірно</div>
+              <div style="font-family:'Russo One',sans-serif; font-size:0.95em; color:var(--text-bright); margin-bottom:4px;">
+                ${r.quizTitle}
+              </div>
+              <div style="font-size:0.75em; color:var(--text); letter-spacing:0.06em;">
+                ${date} · ${r.score}/${r.total} вірно
+              </div>
             </div>
-            <div class="res-score">${r.percentage}%</div>
-            <div class="res-mode">${r.mode === 'blitz' ? '⚡ Бліц' : r.mode === 'exam' ? '📝 Контрольна' : '📚 Тренування'}</div>
+            <div style="font-family:'Russo One',sans-serif; font-size:1.3em; color:${pctColor};
+                        text-shadow:0 0 10px ${pctColor}; min-width:60px; text-align:right;">
+              ${r.percentage}%
+            </div>
+            <span class="sys-label" style="font-size:0.65em;">
+              ${r.mode === 'blitz' ? '⚡ БЛІЦ' : r.mode === 'exam' ? '📝 КОНТР.' : '📚 ТРЕНУВ.'}
+            </span>
           </div>
         `;
-      }).join('');
-      
+      }).join('') + '<div style="height:8px;"></div>';
+
       lucide.createIcons();
     });
   </script>
