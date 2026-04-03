@@ -221,5 +221,19 @@
     ],
     "timeSpent": 52,
     "date": "2026-04-01T22:29:26.134Z"
+  },
+  {
+    "id": 1775225403936,
+    "name": "Olena Pavliuk",
+    "email": "pavliuk.olenka@gmail.com",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocJLtxl078ntga-LtkVZ7h6_HicSNMRuxq9bfrqi32Ag7JOQQ6mU=s96-c",
+    "score": 8,
+    "total": 8,
+    "percentage": 100,
+    "quizId": "1-5-graphs",
+    "quizTitle": "Способи задання функції. Графік функції",
+    "mode": "exam",
+    "timeSpent": 123,
+    "date": "2026-04-03T14:10:03.936Z"
   }
 ]
