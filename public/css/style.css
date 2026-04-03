@@ -213,6 +213,21 @@ body::after {
 .sys-label.mag    { color: var(--magenta); border-color: var(--magenta); }
 .sys-label.purple { color: #aa66ff;        border-color: #aa66ff; }
 
+/* Difficulty buttons */
+.difficulty-btn {
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.15s, box-shadow 0.15s;
+}
+.difficulty-btn:hover { opacity: 0.75; }
+.difficulty-easy  { color: var(--lime);    border-color: var(--lime); }
+.difficulty-standard { color: var(--cyan); border-color: var(--cyan); }
+.difficulty-hard  { color: var(--magenta); border-color: var(--magenta); }
+.active-diff-easy     { opacity: 1; box-shadow: 0 0 8px var(--lime); }
+.active-diff-standard { opacity: 1; box-shadow: 0 0 8px var(--cyan); }
+.active-diff-hard     { opacity: 1; box-shadow: 0 0 8px var(--magenta); }
+
 /* Diagonal stripe accent bar */
 .stripe-bar {
   height: 6px;
