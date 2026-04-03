@@ -2,10 +2,8 @@
 const CACHE = 'algebra-quiz-v3';
 const BASE = '/algebra-quiz';
 
+// Only cache static assets that rarely change — NOT html files
 const ASSETS = [
-  BASE + '/',
-  BASE + '/index.html',
-  BASE + '/quiz.html',
   BASE + '/manifest.json',
   BASE + '/icon.svg',
   BASE + '/js/quizzes.js',
@@ -33,10 +31,24 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   const url = e.request.url;
-  // Don't cache: cat images, Google APIs, GitHub API calls, teacher dashboard
-  if (url.includes('cataas') || url.includes('googleapis') || url.includes('api.github.com') || url.includes('accounts.google') || url.includes('results.html')) {
-    return;
+
+  // Always fetch fresh from network (no cache) for HTML pages and API calls
+  if (
+    url.includes('.html') ||
+    url.endsWith('/') ||
+    url.includes('cataas') ||
+    url.includes('googleapis') ||
+    url.includes('api.github.com') ||
+    url.includes('accounts.google') ||
+    url.includes('fonts.google') ||
+    url.includes('unpkg.com') ||
+    url.includes('jsdelivr') ||
+    url.includes('css/style.css')
+  ) {
+    return; // browser fetches normally, no SW intervention
   }
+
+  // Cache-first for JS assets
   e.respondWith(
     caches.match(e.request).then(cached => {
       if (cached) return cached;
