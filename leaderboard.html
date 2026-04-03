@@ -3,147 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Рейтинг — Алгебра</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-      min-height: 100vh;
-      color: #e0e0e0;
-    }
-    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-
-    .header { text-align: center; padding: 30px 0 20px; }
-    .header h1 {
-      font-size: 2em;
-      background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-    .header p { color: #a0a0c0; }
-
-    .back-link { color: #818cf8; text-decoration: none; font-size: 0.95em; }
-    .back-link:hover { text-decoration: underline; }
-
-    .card {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px; padding: 25px; margin-bottom: 20px;
-    }
-
-    /* Podium */
-    .podium {
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      gap: 12px;
-      margin: 30px 0;
-      min-height: 200px;
-    }
-
-    .podium-place {
-      text-align: center;
-      border-radius: 14px 14px 0 0;
-      padding: 20px 15px 15px;
-      min-width: 120px;
-      position: relative;
-    }
-
-    .podium-place.first {
-      background: linear-gradient(180deg, rgba(251,191,36,0.2), rgba(251,191,36,0.05));
-      border: 1px solid rgba(251,191,36,0.3);
-      min-height: 180px;
-      order: 2;
-    }
-    .podium-place.second {
-      background: linear-gradient(180deg, rgba(192,192,192,0.15), rgba(192,192,192,0.03));
-      border: 1px solid rgba(192,192,192,0.2);
-      min-height: 140px;
-      order: 1;
-    }
-    .podium-place.third {
-      background: linear-gradient(180deg, rgba(205,127,50,0.15), rgba(205,127,50,0.03));
-      border: 1px solid rgba(205,127,50,0.2);
-      min-height: 110px;
-      order: 3;
-    }
-
-    .podium-medal { font-size: 2em; margin-bottom: 8px; }
-    .podium-avatar {
-      width: 48px; height: 48px; border-radius: 50%;
-      margin: 0 auto 8px; display: block;
-      border: 2px solid rgba(255,255,255,0.2);
-    }
-    .podium-name { color: #fff; font-weight: 700; font-size: 0.95em; }
-    .podium-score { color: #a0a0c0; font-size: 0.85em; margin-top: 4px; }
-
-    /* Table */
-    .leader-row {
-      display: flex; align-items: center; gap: 15px;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .leader-row:last-child { border-bottom: none; }
-
-    .leader-rank {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 0.9em; color: #888;
-      flex-shrink: 0;
-    }
-    .leader-rank.top1 { background: rgba(251,191,36,0.2); color: #fbbf24; }
-    .leader-rank.top2 { background: rgba(192,192,192,0.15); color: #c0c0c0; }
-    .leader-rank.top3 { background: rgba(205,127,50,0.15); color: #cd7f32; }
-
-    .leader-avatar {
-      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
-    }
-    .leader-info { flex: 1; }
-    .leader-name { color: #fff; font-weight: 600; font-size: 0.95em; }
-    .leader-meta { color: #888; font-size: 0.8em; margin-top: 2px; }
-
-    .leader-score {
-      text-align: right;
-    }
-    .leader-avg {
-      font-size: 1.3em; font-weight: 700; color: #fff;
-    }
-    .leader-label { font-size: 0.75em; color: #888; }
-
-    .leader-highlight {
-      background: rgba(129,140,248,0.08);
-      border-radius: 10px;
-      padding: 14px 12px;
-      margin: 0 -12px;
-    }
-
-    .empty { text-align: center; padding: 40px; color: #888; }
-
-    @media (max-width: 600px) {
-      .podium-place { min-width: 90px; padding: 15px 10px; }
-      .podium-place.first { min-height: 140px; }
-      .podium-place.second { min-height: 110px; }
-      .podium-place.third { min-height: 90px; }
-    }
-  </style>
+  <title>Рейтинг — ALGEBRA.SYS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <div class="container">
-    <a href="./" class="back-link">← Всі квізи</a>
-    <div class="header">
-      <h1>Рейтинг учнів</h1>
-      <p>Хто найкращий у математиці?</p>
+
+  <!-- Decorative pixel background -->
+  <div class="pixel-bg"></div>
+
+  <!-- Corner brackets -->
+  <div class="corner-tl"></div>
+  <div class="corner-tr"></div>
+  <div class="corner-bl"></div>
+  <div class="corner-br"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="stripe-bar"></div>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="./" class="nav-logo">
+          <div class="nav-logo-icon">Σ</div>
+          <div>
+            <span class="nav-logo-text">ALGEBRA.SYS</span>
+            <span class="nav-logo-sub">◈ SIGNAL GRAPHICS V2.0 ◈</span>
+          </div>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="./">КАТАЛОГ</a></li>
+          <li><a href="my-results.html">МОЇ РЕЗУЛЬТАТИ</a></li>
+          <li><a href="leaderboard.html" class="active">РЕЙТИНГ</a></li>
+          <li><a href="results.html">ДЛЯ ВЧИТЕЛЯ</a></li>
+        </ul>
+
+        <div id="authArea" class="nav-user"></div>
+      </div>
     </div>
-    <div id="content"><p style="text-align:center; color:#888;">Завантаження...</p></div>
-  </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container">
+
+    <!-- Hero section -->
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <span class="sys-label mag">LEADERBOARD // TOP PLAYERS</span>
+      </div>
+      <h1 class="hero-title">
+        <span class="holo-text">РЕЙТИНГ</span>
+      </h1>
+    </section>
+
+    <!-- Content area (filled by JS) -->
+    <div id="content">
+      <p style="text-align:center; color:var(--text); padding:60px 20px;">Завантаження рейтингу...</p>
+    </div>
+
+    <!-- System bar -->
+    <div class="system-bar">
+      <div class="sys-status">
+        <div class="live-dot"></div>
+        <span>LEADERBOARD // LIVE RANKINGS</span>
+      </div>
+      <div class="sys-right">
+        <span>ALGEBRA.SYS V2.0</span>
+        <span class="sys-label lime">10-А</span>
+      </div>
+    </div>
+
+  </div><!-- /container -->
 
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/achievements.js"></script>
   <script>
+  lucide.createIcons();
+
   window.addEventListener('load', async () => {
     const content = document.getElementById('content');
     const currentUser = Auth.getUser();
@@ -152,60 +96,152 @@
     const leaderboard = buildLeaderboard(allResults);
 
     if (leaderboard.length === 0) {
-      content.innerHTML = '<div class="empty"><h3>Поки немає результатів</h3><p>Рейтинг з\'явиться після проходження квізів</p></div>';
+      content.innerHTML = `
+        <div class="card" style="text-align:center; padding:60px 20px;">
+          <div style="font-size:3em; margin-bottom:16px;">🏆</div>
+          <div style="font-family:'Russo One',sans-serif; font-size:1.1em; color:var(--text-bright); margin-bottom:8px;">
+            ПОКИ ЩО ТУТ ПОРОЖНЬО
+          </div>
+          <div style="font-size:0.8em; color:var(--text); letter-spacing:0.08em;">
+            Стань першим, хто пройде квіз!
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
       return;
     }
 
     let html = '';
 
-    // Podium for top 3
+    // Podium section
     if (leaderboard.length >= 1) {
-      const medals = ['🥇', '🥈', '🥉'];
-      const classes = ['first', 'second', 'third'];
       const top3 = leaderboard.slice(0, 3);
-
-      html += '<div class="podium">';
-      // Show in order: 2nd, 1st, 3rd
+      // Colors: 1st=lime, 2nd=cyan, 3rd=magenta
+      const podiumColors   = ['var(--lime)', 'var(--cyan)', 'var(--magenta)'];
+      const podiumBg       = ['rgba(179,255,0,0.08)', 'rgba(0,255,238,0.08)', 'rgba(255,0,170,0.08)'];
+      const podiumBorder   = ['rgba(179,255,0,0.35)', 'rgba(0,255,238,0.35)', 'rgba(255,0,170,0.35)'];
+      const podiumGlow     = ['rgba(179,255,0,0.3)', 'rgba(0,255,238,0.3)', 'rgba(255,0,170,0.3)'];
+      const medals         = ['🥇', '🥈', '🥉'];
+      const podiumHeights  = ['200px', '160px', '130px'];
+      // Display order: 2nd, 1st, 3rd
       const podiumOrder = top3.length >= 3 ? [1, 0, 2] : top3.length >= 2 ? [1, 0] : [0];
+
+      html += `
+        <div class="section-divider">
+          <div class="line"></div>
+          <div class="title"><span class="holo-text">ПРИЗЕРИ</span></div>
+          <div class="line"></div>
+        </div>
+        <div style="display:flex; justify-content:center; align-items:flex-end; gap:16px; margin-bottom:40px; flex-wrap:wrap;">
+      `;
+
       podiumOrder.forEach(i => {
-        if (top3[i]) {
-          const s = top3[i];
-          html += `
-            <div class="podium-place ${classes[i]}">
-              <div class="podium-medal">${medals[i]}</div>
-              ${s.picture ? `<img src="${s.picture}" class="podium-avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}
-              <div class="podium-name">${s.name}</div>
-              <div class="podium-score">${s.avgScore}% середній</div>
-              <div class="podium-score">${s.quizCount} квізів</div>
-            </div>`;
-        }
+        if (!top3[i]) return;
+        const s = top3[i];
+        const color  = podiumColors[i];
+        const bg     = podiumBg[i];
+        const border = podiumBorder[i];
+        const glow   = podiumGlow[i];
+        const height = podiumHeights[i];
+
+        const avatarHtml = s.picture
+          ? `<img src="${s.picture}" referrerpolicy="no-referrer" onerror="this.style.display='none'"
+               style="width:60px;height:60px;border-radius:50%;border:2px solid ${color};margin:0 auto 12px;display:block;">`
+          : `<div style="width:60px;height:60px;border-radius:50%;border:2px solid ${color};margin:0 auto 12px;
+               background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;
+               font-family:'Russo One',sans-serif;font-size:1.4em;color:${color};">${s.name[0]}</div>`;
+
+        html += `
+          <div style="text-align:center; background:${bg}; border:1px solid ${border};
+                      clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,16px 100%,0 calc(100% - 16px));
+                      padding:20px 16px; min-width:130px; min-height:${height};
+                      display:flex; flex-direction:column; justify-content:flex-end;
+                      box-shadow:0 0 20px ${glow}; transition:transform 0.3s;"
+               onmouseover="this.style.transform='translateY(-6px)'"
+               onmouseout="this.style.transform='translateY(0)'">
+            <span style="font-size:2.2em; display:block; margin-bottom:12px;">${medals[i]}</span>
+            ${avatarHtml}
+            <div style="font-family:'Russo One',sans-serif; font-size:0.9em; color:var(--text-bright); margin-bottom:4px;">
+              ${s.name}
+            </div>
+            <div style="font-family:'Russo One',sans-serif; font-size:1.2em; color:${color};
+                        text-shadow:0 0 10px ${color};">
+              ${s.avgScore}%
+            </div>
+          </div>
+        `;
       });
+
       html += '</div>';
     }
 
-    // Full list
-    html += '<div class="card">';
+    // Full leaderboard list
+    html += `
+      <div class="section-divider">
+        <div class="line"></div>
+        <div class="title"><span class="holo-text">ТАБЛИЦЯ ЛІДЕРІВ</span></div>
+        <div class="line"></div>
+      </div>
+      <div class="card">
+    `;
+
     leaderboard.forEach((s, i) => {
-      const rankClass = i === 0 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : '';
       const isMe = currentUser && currentUser.email && s.email.toLowerCase() === currentUser.email.toLowerCase();
+      // Rank color: 1st=lime, 2nd=cyan, 3rd=magenta, rest=text
+      const rankColor = i === 0 ? 'var(--lime)' : i === 1 ? 'var(--cyan)' : i === 2 ? 'var(--magenta)' : 'var(--text)';
+      const rankBg    = i === 0 ? 'rgba(179,255,0,0.1)' : i === 1 ? 'rgba(0,255,238,0.1)' : i === 2 ? 'rgba(255,0,170,0.1)' : 'rgba(255,255,255,0.03)';
+      const rankGlow  = i === 0 ? 'var(--lime)' : i === 1 ? 'var(--cyan)' : i === 2 ? 'var(--magenta)' : null;
+      const rankShadow = rankGlow ? `text-shadow:0 0 8px ${rankGlow};` : '';
+
+      const avatarHtml = s.picture
+        ? `<img src="${s.picture}" referrerpolicy="no-referrer"
+             onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23334%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2225%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2216%22>${s.name[0]}</text></svg>'"
+             style="width:40px;height:40px;border-radius:50%;border:2px solid var(--border-c);flex-shrink:0;">`
+        : `<div style="width:40px;height:40px;border-radius:50%;border:2px solid var(--border-c);
+             background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;
+             font-family:'Russo One',sans-serif;color:var(--text);flex-shrink:0;">${s.name[0]}</div>`;
+
+      const meStyle = isMe
+        ? `background:rgba(119,0,255,0.06); border:1px solid rgba(119,0,255,0.25);
+           clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));
+           padding:12px; margin:4px -12px;`
+        : '';
 
       html += `
-        <div class="leader-row ${isMe ? 'leader-highlight' : ''}">
-          <div class="leader-rank ${rankClass}">${i + 1}</div>
-          ${s.picture ? `<img src="${s.picture}" class="leader-avatar" referrerpolicy="no-referrer" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23334%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2225%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2216%22>${s.name[0]}</text></svg>'">` : `<div class="leader-avatar" style="background:#334;display:flex;align-items:center;justify-content:center;color:#888;font-weight:700;">${s.name[0]}</div>`}
-          <div class="leader-info">
-            <div class="leader-name">${s.name}${isMe ? ' (ти)' : ''}</div>
-            <div class="leader-meta">${s.quizCount} квізів · ${s.totalAttempts} спроб · найкращий ${s.bestScore}%</div>
+        <div style="display:flex; align-items:center; gap:16px; padding:14px 0;
+                    border-bottom:1px solid var(--border-c); ${meStyle}">
+          <div style="width:36px; height:36px; background:${rankBg}; border:1px solid ${rankColor};
+                      clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
+                      display:flex; align-items:center; justify-content:center;
+                      font-family:'Russo One',sans-serif; font-size:0.85em; color:${rankColor};
+                      ${rankShadow} flex-shrink:0;">
+            ${i + 1}
           </div>
-          <div class="leader-score">
-            <div class="leader-avg">${s.avgScore}%</div>
-            <div class="leader-label">середній</div>
+          ${avatarHtml}
+          <div style="flex:1;">
+            <div style="font-family:'Russo One',sans-serif; font-size:0.95em; color:var(--text-bright);">
+              ${s.name}${isMe ? ' <span style="font-size:0.75em; color:var(--purple);">(це ти)</span>' : ''}
+            </div>
+            <div style="font-size:0.72em; color:var(--text); letter-spacing:0.06em; margin-top:2px;">
+              ${s.quizCount} квізів · ${s.totalAttempts} спроб
+            </div>
           </div>
-        </div>`;
+          <div style="text-align:right; flex-shrink:0;">
+            <div style="font-family:'Russo One',sans-serif; font-size:1.3em; color:${rankColor}; ${rankShadow} line-height:1;">
+              ${s.avgScore}%
+            </div>
+            <div style="font-size:0.65em; color:var(--text); letter-spacing:0.1em; text-transform:uppercase; margin-top:2px;">
+              СЕРЕДНІЙ
+            </div>
+          </div>
+        </div>
+      `;
     });
+
     html += '</div>';
 
     content.innerHTML = html;
+    lucide.createIcons();
   });
   </script>
 </body>
