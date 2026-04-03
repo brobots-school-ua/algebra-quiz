@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Чернетка — Frutiger Aero</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky: #d4eeff;
+      --sky-mid: #a8d8f8;
+      --sky-deep: #5ab4f0;
+      --teal: #1eb8b0;
+      --teal-light: #a8f0ec;
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --text: #1a3a4a;
+      --text-mid: #4a7a8a;
+      --text-light: #8ab0bc;
+      --green: #3ecf6e;
+      --green-light: #b8f5d0;
+      --orange: #ff8c42;
+      --glow-teal: rgba(30, 184, 176, 0.4);
+      --glow-sky: rgba(90, 180, 240, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+      color: var(--text);
+      overflow-x: hidden;
+
+      /* Sky gradient background — signature Aero look */
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(120, 210, 255, 0.6) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(180, 240, 230, 0.4) 0%, transparent 50%),
+        linear-gradient(180deg, #cce8ff 0%, #e8f5ff 30%, #f0fbf8 60%, #e0f6ef 100%);
+    }
+
+    /* Decorative clouds */
+    .cloud {
+      position: fixed; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 70%);
+      border-radius: 50%;
+    }
+    .cloud-1 { width: 600px; height: 200px; top: -60px; left: -100px; }
+    .cloud-2 { width: 400px; height: 140px; top: 20px; right: -50px; opacity: 0.7; }
+    .cloud-3 { width: 300px; height: 100px; top: 180px; left: 30%; opacity: 0.5; }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 32px 20px; position: relative; z-index: 1; }
+
+    /* Glassmorphism card */
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(16px) saturate(1.8);
+      -webkit-backdrop-filter: blur(16px) saturate(1.8);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      box-shadow:
+        0 8px 32px rgba(90, 180, 240, 0.2),
+        inset 0 1px 0 rgba(255,255,255,0.9);
+    }
+
+    /* Nav */
+    .top-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 28px;
+      margin-bottom: 32px;
+    }
+    .logo {
+      font-size: 1.3em; font-weight: 900; color: var(--text);
+      text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+    }
+    .logo span {
+      background: linear-gradient(135deg, var(--teal), var(--sky-deep));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-link {
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 0.88em; font-weight: 700; color: var(--text-mid);
+      text-decoration: none;
+      transition: all 0.2s;
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+    .nav-link:hover, .nav-link.active {
+      background: linear-gradient(135deg, rgba(30,184,176,0.2), rgba(90,180,240,0.2));
+      color: var(--teal);
+      border-color: rgba(30,184,176,0.4);
+      box-shadow: 0 4px 12px rgba(30,184,176,0.15);
+    }
+    .nav-user {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 16px 6px 6px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid var(--glass-border);
+      font-size: 0.88em; font-weight: 700; color: var(--text);
+    }
+    .nav-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.9);
+      box-shadow: 0 2px 8px rgba(90,180,240,0.3);
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 40px 20px 32px;
+      margin-bottom: 28px;
+    }
+    .header-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 18px; border-radius: 100px;
+      background: linear-gradient(135deg, rgba(30,184,176,0.15), rgba(90,180,240,0.15));
+      border: 1px solid rgba(30,184,176,0.3);
+      color: var(--teal); font-size: 0.82em; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 3.2em; font-weight: 900;
+      color: var(--text);
+      text-shadow: 0 2px 0 rgba(255,255,255,0.7);
+      line-height: 1.1; margin-bottom: 14px;
+    }
+    .header h1 span {
+      background: linear-gradient(135deg, var(--teal), var(--sky-deep));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header p { color: var(--text-mid); font-size: 1.05em; max-width: 480px; margin: 0 auto; }
+
+    /* Streak */
+    .streak-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; margin-top: 20px;
+      background: linear-gradient(135deg, rgba(255,140,66,0.15), rgba(255,180,66,0.15));
+      border: 1px solid rgba(255,140,66,0.35);
+      border-radius: 100px;
+      font-weight: 800; font-size: 0.92em; color: var(--orange);
+      box-shadow: 0 4px 12px rgba(255,140,66,0.15);
+    }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      padding: 22px 18px; text-align: center;
+    }
+    .stat-card .val {
+      font-size: 2em; font-weight: 900; display: block;
+      background: linear-gradient(135deg, var(--teal), var(--sky-deep));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-card .lbl { font-size: 0.8em; font-weight: 700; color: var(--text-mid); margin-top: 4px; }
+
+    /* Section header */
+    .section-head {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px; padding: 0 4px;
+    }
+    .section-badge {
+      padding: 6px 16px; border-radius: 100px;
+      background: linear-gradient(135deg, var(--teal), #2dd4bf);
+      color: #fff; font-size: 0.78em; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      box-shadow: 0 4px 12px var(--glow-teal);
+    }
+    .section-title { font-size: 1.2em; font-weight: 900; color: var(--text); }
+
+    /* Quiz cards */
+    .quiz-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-bottom: 32px; }
+
+    .quiz-card {
+      padding: 24px;
+      text-decoration: none; color: inherit;
+      display: block;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      cursor: pointer;
+    }
+    .quiz-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(90,180,240,0.25), inset 0 1px 0 rgba(255,255,255,0.95) !important;
+    }
+
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .card-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--teal-light), var(--sky-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4em;
+      box-shadow: 0 4px 12px var(--glow-teal), inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+    .card-done {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 12px; border-radius: 100px;
+      background: linear-gradient(135deg, rgba(62,207,110,0.15), rgba(100,230,130,0.15));
+      border: 1px solid rgba(62,207,110,0.35);
+      color: #1ea854; font-size: 0.75em; font-weight: 800;
+    }
+    .card-title { font-size: 0.95em; font-weight: 800; color: var(--text); margin-bottom: 6px; line-height: 1.3; }
+    .card-section { font-size: 0.78em; color: var(--text-light); font-weight: 600; }
+
+    .card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.5);
+    }
+    .card-qs { font-size: 0.78em; color: var(--text-mid); font-weight: 700; }
+
+    /* Progress bar */
+    .card-progress { margin-top: 10px; height: 5px; background: rgba(90,180,240,0.15); border-radius: 100px; overflow: hidden; }
+    .card-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--sky-deep));
+      border-radius: 100px;
+      box-shadow: 0 0 8px var(--glow-teal);
+    }
+
+    /* Mode buttons */
+    .mode-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .chip {
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 0.72em; font-weight: 700;
+      border: 1px solid;
+    }
+    .chip-train { background: rgba(30,184,176,0.08); color: var(--teal); border-color: rgba(30,184,176,0.25); }
+    .chip-exam  { background: rgba(90,130,240,0.08); color: #5a82f0; border-color: rgba(90,130,240,0.25); }
+    .chip-blitz { background: rgba(255,140,66,0.08); color: var(--orange); border-color: rgba(255,140,66,0.25); }
+
+    /* CTA row */
+    .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    .cta-card {
+      padding: 28px 28px;
+      text-decoration: none; color: inherit; display: block;
+      transition: all 0.3s;
+    }
+    .cta-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(90,180,240,0.25), inset 0 1px 0 rgba(255,255,255,0.95) !important;
+    }
+    .cta-icon {
+      width: 56px; height: 56px; border-radius: 18px;
+      background: linear-gradient(135deg, var(--teal), var(--sky-deep));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6em; margin-bottom: 16px;
+      box-shadow: 0 8px 20px var(--glow-teal), inset 0 1px 0 rgba(255,255,255,0.4);
+    }
+    .cta-title { font-size: 1.1em; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+    .cta-desc { font-size: 0.83em; color: var(--text-mid); font-weight: 600; }
+
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 16px; padding: 10px 20px; border-radius: 100px;
+      background: linear-gradient(135deg, var(--teal), #2dd4bf);
+      color: #fff; font-size: 0.85em; font-weight: 800;
+      box-shadow: 0 6px 16px var(--glow-teal);
+      cursor: pointer; border: none; font-family: inherit;
+    }
+
+    /* Achievements */
+    .ach-card { padding: 28px; margin-bottom: 32px; }
+    .ach-card h3 { font-size: 1em; font-weight: 800; color: var(--text); margin-bottom: 16px; }
+    .ach-list { display: flex; gap: 12px; flex-wrap: wrap; }
+    .ach-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 100px;
+      background: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.85);
+      font-size: 0.82em; font-weight: 700; color: var(--text);
+      box-shadow: 0 2px 8px rgba(90,180,240,0.12);
+    }
+    .ach-item.locked {
+      opacity: 0.4;
+      background: rgba(255,255,255,0.3);
+    }
+    .ach-item .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--sky-deep));
+      box-shadow: 0 0 6px var(--glow-teal);
+    }
+    .ach-item.locked .dot { background: #ccc; box-shadow: none; }
+  </style>
+</head>
+<body>
+
+  <!-- Clouds -->
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+
+  <div class="container">
+
+    <!-- Nav -->
+    <nav class="glass-card top-nav">
+      <div class="logo">Алгебра <span>10</span></div>
+      <div class="nav-links">
+        <a href="#" class="nav-link active">Квізи</a>
+        <a href="#" class="nav-link">Рейтинг</a>
+        <a href="#" class="nav-link">Для вчителя</a>
+      </div>
+      <div class="nav-user">
+        <img src="https://i.pravatar.cc/60?img=5" class="nav-avatar">
+        Олена П.
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-pill">✦ Алгебра та початки аналізу</div>
+      <h1>Квізи<br><span>10 класу</span></h1>
+      <p>30 тем, від множин до похідних. Тренуйся та покращуй результат щодня.</p>
+      <div class="streak-pill">🔥 7 днів поспіль</div>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="glass-card stat-card"><span class="val">30</span><div class="lbl">Квізів</div></div>
+      <div class="glass-card stat-card"><span class="val">18</span><div class="lbl">Пройдено</div></div>
+      <div class="glass-card stat-card"><span class="val">76%</span><div class="lbl">Середній бал</div></div>
+      <div class="glass-card stat-card"><span class="val">3</span><div class="lbl">Досягнення</div></div>
+    </div>
+
+    <!-- Section -->
+    <div class="section-head">
+      <span class="section-badge">Розділ 3</span>
+      <span class="section-title">Тригонометрія</span>
+    </div>
+
+    <div class="quiz-grid">
+
+      <a href="#" class="glass-card quiz-card">
+        <div class="card-top">
+          <div class="card-icon">📐</div>
+          <span class="card-done">✓ 84%</span>
+        </div>
+        <div class="card-title">Основні тригонометричні тотожності</div>
+        <div class="card-section">Тригонометрія · 10 питань</div>
+        <div class="card-progress"><div class="card-progress-fill" style="width:84%"></div></div>
+        <div class="mode-chips">
+          <span class="chip chip-train">📚 Тренування</span>
+          <span class="chip chip-exam">📝 Контрольна</span>
+          <span class="chip chip-blitz">⚡ Бліц</span>
+        </div>
+      </a>
+
+      <a href="#" class="glass-card quiz-card">
+        <div class="card-top">
+          <div class="card-icon">🔄</div>
+          <span class="card-done">✓ 90%</span>
+        </div>
+        <div class="card-title">Формули зведення</div>
+        <div class="card-section">Тригонометрія · 10 питань</div>
+        <div class="card-progress"><div class="card-progress-fill" style="width:90%"></div></div>
+        <div class="mode-chips">
+          <span class="chip chip-train">📚 Тренування</span>
+          <span class="chip chip-exam">📝 Контрольна</span>
+        </div>
+      </a>
+
+      <a href="#" class="glass-card quiz-card">
+        <div class="card-top">
+          <div class="card-icon">➕</div>
+        </div>
+        <div class="card-title">Формули додавання та пониження степеня</div>
+        <div class="card-section">Тригонометрія · 12 питань</div>
+        <div class="mode-chips">
+          <span class="chip chip-train">📚 Тренування</span>
+          <span class="chip chip-exam">📝 Контрольна</span>
+          <span class="chip chip-blitz">⚡ Бліц</span>
+        </div>
+      </a>
+
+      <a href="#" class="glass-card quiz-card">
+        <div class="card-top">
+          <div class="card-icon">×2</div>
+        </div>
+        <div class="card-title">Формули подвійного аргументу</div>
+        <div class="card-section">Тригонометрія · 10 питань</div>
+        <div class="mode-chips">
+          <span class="chip chip-train">📚 Тренування</span>
+          <span class="chip chip-exam">📝 Контрольна</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-row">
+      <a href="#" class="glass-card cta-card">
+        <div class="cta-icon">🏆</div>
+        <div class="cta-title">Рейтинг класу</div>
+        <div class="cta-desc">Дивись де ти серед однокласників і покращуй позицію</div>
+        <button class="cta-btn">Відкрити рейтинг →</button>
+      </a>
+      <a href="#" class="glass-card cta-card">
+        <div class="cta-icon">📊</div>
+        <div class="cta-title">Для вчителя</div>
+        <div class="cta-desc">Графіки, статистика, найскладніші питання, CSV</div>
+        <button class="cta-btn" style="background: linear-gradient(135deg, #5a82f0, #818cf8); box-shadow: 0 6px 16px rgba(90,130,240,0.3);">Відкрити дашборд →</button>
+      </a>
+    </div>
+
+    <!-- Achievements -->
+    <div class="glass-card ach-card">
+      <h3>🎖 Мої досягнення</h3>
+      <div class="ach-list">
+        <div class="ach-item"><div class="dot"></div>⚡ Перший квіз</div>
+        <div class="ach-item"><div class="dot"></div>🔥 7-денна серія</div>
+        <div class="ach-item"><div class="dot"></div>💪 Наполегливість</div>
+        <div class="ach-item locked"><div class="dot"></div>🏆 Відмінник</div>
+        <div class="ach-item locked"><div class="dot"></div>⏱ Блискавка</div>
+        <div class="ach-item locked"><div class="dot"></div>💫 Всезнайка</div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
