@@ -96,6 +96,12 @@
             <div class="mode-desc" id="retryDesc">Пусто</div>
           </div>
         </div>
+        <p style="color: var(--text); font-size:0.78em; letter-spacing:0.1em; text-transform:uppercase; margin-top:20px; margin-bottom:10px; text-align:left;">СКЛАДНІСТЬ:</p>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="sys-label difficulty-btn difficulty-easy" onclick="selectDifficulty('easy')" data-diff="easy" style="cursor:pointer;">ЛЕГКИЙ — 5 питань</button>
+          <button class="sys-label difficulty-btn difficulty-standard active-diff-standard" onclick="selectDifficulty('standard')" data-diff="standard" style="cursor:pointer;">СТАНДАРТ — всі питання</button>
+          <button class="sys-label difficulty-btn difficulty-hard" onclick="selectDifficulty('hard')" data-diff="hard" style="cursor:pointer;">ХАРД — без підказок</button>
+        </div>
       </div>
       <div id="loginArea" style="margin-bottom: 24px;"></div>
       <button class="btn btn-primary" onclick="startQuiz()" id="startBtn" style="display:none;">
@@ -222,7 +228,7 @@
       });
     }
 
-    let preparedQuestions = [], currentQuestion = 0, score = 0, answers = [], startTime, timerInterval, studentName = '', studentUser = null, hintUsed = false, quizMode = 'training', blitzInterval = null, blitzTimeLeft = 30;
+    let preparedQuestions = [], currentQuestion = 0, score = 0, answers = [], startTime, timerInterval, studentName = '', studentUser = null, hintUsed = false, quizMode = 'training', blitzInterval = null, blitzTimeLeft = 30, difficulty = 'standard';
     const BLITZ_TIME = 30, EXAM_MINUTES = 15;
     let lastResult = {};
 
@@ -261,6 +267,17 @@
       Sound.click();
     }
 
+    function selectDifficulty(diff) {
+      difficulty = diff;
+      // Remove active classes from all difficulty buttons
+      document.querySelectorAll('.difficulty-btn').forEach(b => {
+        b.classList.remove('active-diff-easy', 'active-diff-standard', 'active-diff-hard');
+      });
+      // Add active class to selected button
+      document.querySelector(`[data-diff="${diff}"]`).classList.add(`active-diff-${diff}`);
+      Sound.click();
+    }
+
     function startBlitzTimer() {
       blitzTimeLeft = BLITZ_TIME; updateBlitzDisplay();
       document.getElementById('blitzTimerWrap').style.display = 'block';
@@ -284,10 +301,23 @@
     function startQuiz() {
       if (quizMode === 'training') preparedQuestions = buildPreparedQuestions(quizData.questions, null);
       else if (quizMode === 'exam') preparedQuestions = buildPreparedQuestions(quizData.examQuestions || quizData.questions, null);
-      else if (quizMode === 'blitz') preparedQuestions = buildPreparedQuestions(quizData.questions, 10);
+      else if (quizMode === 'blitz') {
+        // Blitz: short theory questions only (choice + true_false, no typing/matching)
+        const blitzTypes = ['true_false', undefined, null]; // undefined = standard choice
+        const blitzPool = quizData.questions.filter(q =>
+          (!q.type || q.type === 'true_false') &&
+          q.question.length < 160
+        );
+        const pool = blitzPool.length >= 5 ? blitzPool : quizData.questions;
+        preparedQuestions = buildPreparedQuestions(pool, 10);
+      }
       else if (quizMode === 'retry') {
         const stored = JSON.parse(localStorage.getItem(`mistakes_${quizId}`) || '[]');
         preparedQuestions = buildPreparedQuestions(quizData.questions.filter(q => stored.includes(q.question)), null);
+      }
+      // Apply difficulty: easy = only first 5 questions after shuffle
+      if (difficulty === 'easy' && preparedQuestions.length > 5) {
+        preparedQuestions = preparedQuestions.slice(0, 5);
       }
       document.getElementById('welcome').style.display = 'none';
       document.getElementById('quiz').style.display = 'block';
@@ -340,6 +370,10 @@
     }
 
     function showHint() {
+      if (difficulty === 'hard') {
+        document.getElementById('hintArea').innerHTML = `<div class="explanation wrong-exp" style="margin-top:10px">⛔ ХАРД: підказки недоступні</div>`;
+        return;
+      }
       const q = preparedQuestions[currentQuestion];
       document.getElementById('hintArea').innerHTML = `<div class="explanation correct-exp" style="margin-top:10px">💡 ${q.hint || 'Подумай ще раз!'}</div>`;
       renderMath(document.getElementById('hintArea'));
