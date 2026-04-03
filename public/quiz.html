@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Квіз — Алгебра 10 клас</title>
+  <title>Квіз — ALGEBRA.SYS</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#09090b">
+  <meta name="theme-color" content="#05050f">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Алгебра">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <!-- KaTeX for beautiful math formulas -->
@@ -21,54 +21,82 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <div class="container">
-    <div class="sound-toggle" onclick="toggleSoundUI()" title="Звук" id="soundToggle">
-      <i data-lucide="volume-2" size="20"></i>
-    </div>
-    <a href="./" class="back-link"><i data-lucide="arrow-left" size="18"></i> Всі квізи</a>
 
+  <!-- Decorative pixel background -->
+  <div class="pixel-bg"></div>
+
+  <!-- Corner brackets -->
+  <div class="corner-tl"></div>
+  <div class="corner-tr"></div>
+  <div class="corner-bl"></div>
+  <div class="corner-br"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="stripe-bar cyan-stripe"></div>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="./" class="nav-logo">
+          <div class="nav-logo-icon">Σ</div>
+          <div>
+            <span class="nav-logo-text">ALGEBRA.SYS</span>
+            <span class="nav-logo-sub">◈ SIGNAL GRAPHICS V2.0 ◈</span>
+          </div>
+        </a>
+        <a href="./" class="back-link" style="margin:0;">
+          <i data-lucide="arrow-left" size="16"></i> КАТАЛОГ
+        </a>
+        <div class="sound-toggle" onclick="toggleSoundUI()" title="Звук" id="soundToggle">
+          <i data-lucide="volume-2" size="18"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 32px;">
+
+    <!-- Quiz header -->
     <div class="header">
-      <h1 id="quizTitle">Квіз</h1>
+      <h1 id="quizTitle">КВІЗ</h1>
       <p id="quizDescription"></p>
     </div>
 
     <!-- Welcome Screen -->
     <div id="welcome" class="card">
-      <h2>Готовий перевірити знання?</h2>
       <div class="info-box">
-        <h3 id="quizInfoTitle">Тема:</h3>
-        <p id="quizInfoDesc" style="color: var(--text-muted); margin: 0;"></p>
+        <h3 id="quizInfoTitle">ТЕМА:</h3>
+        <p id="quizInfoDesc" style="color: var(--text); margin: 0; font-size: 0.9em;"></p>
       </div>
       <div id="theoryToggleWrap"></div>
       <div class="theory-block" id="theoryBlock"></div>
       <div id="modeSelect" style="margin-bottom:30px; display:none;">
-        <p style="color: var(--text-muted); font-size:0.9em; font-weight:600; margin-bottom:12px; text-align:left;">Режим проходження:</p>
+        <p style="color: var(--text); font-size:0.78em; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px; text-align:left;">РЕЖИМ ПРОХОДЖЕННЯ:</p>
         <div class="mode-select">
           <div class="mode-card selected" data-mode="training" onclick="selectMode('training')">
             <span class="mode-icon">📚</span>
-            <div class="mode-name">Тренування</div>
+            <div class="mode-name">ТРЕНУВАННЯ</div>
             <div class="mode-desc">Підказки та спокій</div>
           </div>
           <div class="mode-card" data-mode="exam" onclick="selectMode('exam')">
             <span class="mode-icon">📝</span>
-            <div class="mode-name">Контрольна</div>
+            <div class="mode-name">КОНТРОЛЬНА</div>
             <div class="mode-desc">15 хв на все</div>
           </div>
           <div class="mode-card" data-mode="blitz" onclick="selectMode('blitz')">
             <span class="mode-icon">⚡</span>
-            <div class="mode-name">Бліц</div>
+            <div class="mode-name">БЛІЦ</div>
             <div class="mode-desc">30 сек на питання</div>
           </div>
           <div class="mode-card disabled" id="retryModeCard" data-mode="retry" onclick="selectMode('retry')">
             <span class="mode-icon">🔄</span>
-            <div class="mode-name">Помилки</div>
+            <div class="mode-name">ПОМИЛКИ</div>
             <div class="mode-desc" id="retryDesc">Пусто</div>
           </div>
         </div>
       </div>
       <div id="loginArea" style="margin-bottom: 24px;"></div>
       <button class="btn btn-primary" onclick="startQuiz()" id="startBtn" style="display:none;">
-        Почати квіз <i data-lucide="play" size="18"></i>
+        ПОЧАТИ КВІЗ <i data-lucide="play" size="16"></i>
       </button>
     </div>
 
@@ -76,7 +104,7 @@
     <div id="quiz" class="card" style="display:none;">
       <div class="question-counter">
         <span id="questionNum"></span>
-        <span id="timer"><i data-lucide="clock" size="14" style="vertical-align:middle;margin-right:4px;"></i> 0:00</span>
+        <span id="timer" style="color:var(--cyan);"><i data-lucide="clock" size="14" style="vertical-align:middle;margin-right:4px;"></i> 0:00</span>
       </div>
       <div class="progress-wrapper">
         <div class="progress-bar">
@@ -91,12 +119,25 @@
       <div class="options" id="options"></div>
       <div id="explanationBox"></div>
       <div class="next-btn-wrap" id="nextBtnWrap" style="display:none; text-align:center; margin-top:30px;">
-        <button class="btn btn-primary" onclick="nextQuestion()">Далі <i data-lucide="arrow-right" size="18"></i></button>
+        <button class="btn btn-primary" onclick="nextQuestion()">ДАЛІ <i data-lucide="arrow-right" size="16"></i></button>
       </div>
     </div>
 
     <!-- Results Screen -->
     <div id="results" class="card" style="display:none;"></div>
+
+    <!-- System bar -->
+    <div class="system-bar">
+      <div class="sys-status">
+        <div class="live-dot"></div>
+        <span>QUIZ.MODULE // АКТИВНИЙ</span>
+      </div>
+      <div class="sys-right">
+        <span style="color: var(--cyan);">KATEX // MATH ENGINE</span>
+        <span style="color: var(--lime);">◈ V2.0</span>
+      </div>
+    </div>
+
   </div>
 
   <script src="js/quizzes.js"></script>
@@ -112,7 +153,7 @@
     function toggleSoundUI() {
       const isOn = Sound.toggle();
       const icon = document.getElementById('soundToggle');
-      icon.innerHTML = isOn ? '<i data-lucide="volume-2" size="20"></i>' : '<i data-lucide="volume-x" size="20"></i>';
+      icon.innerHTML = isOn ? '<i data-lucide="volume-2" size="18"></i>' : '<i data-lucide="volume-x" size="18"></i>';
       lucide.createIcons();
     }
 
@@ -157,13 +198,13 @@
     const quizData = QUIZZES.find(q => q.id === quizId);
 
     if (!quizData) {
-      document.querySelector('.container').innerHTML = `<div style="text-align:center; padding: 60px 20px;"><h2>Квіз не знайдено</h2><a href="./" class="btn btn-primary">← До каталогу</a></div>`;
+      document.querySelector('.container').innerHTML = `<div style="text-align:center; padding: 60px 20px;"><h2 style="font-family:'Russo One',sans-serif;color:var(--magenta);">КВІЗ НЕ ЗНАЙДЕНО</h2><a href="./" class="btn btn-primary" style="margin-top:20px;">← ДО КАТАЛОГУ</a></div>`;
     } else {
       document.getElementById('quizTitle').textContent = quizData.title;
       document.getElementById('quizDescription').textContent = quizData.sectionName;
       document.getElementById('quizInfoTitle').textContent = quizData.title;
       document.getElementById('quizInfoDesc').textContent = quizData.description;
-      document.title = `${quizData.title} — Квіз`;
+      document.title = `${quizData.title} — ALGEBRA.SYS`;
     }
 
     function buildPreparedQuestions(questions, count) {
@@ -184,7 +225,7 @@
 
     if (quizData && THEORY[quizData.id]) {
       const t = THEORY[quizData.id];
-      document.getElementById('theoryToggleWrap').innerHTML = `<div class="theory-toggle" onclick="document.getElementById('theoryBlock').classList.toggle('open'); this.textContent = this.textContent.includes('Переглянути') ? '▲ Сховати теорію' : '📖 Переглянути теорію'">📖 Переглянути теорію</div>`;
+      document.getElementById('theoryToggleWrap').innerHTML = `<div class="theory-toggle" onclick="document.getElementById('theoryBlock').classList.toggle('open'); this.textContent = this.textContent.includes('ПЕРЕГЛЯНУТИ') ? '▲ СХОВАТИ ТЕОРІЮ' : '📖 ПЕРЕГЛЯНУТИ ТЕОРІЮ'">📖 ПЕРЕГЛЯНУТИ ТЕОРІЮ</div>`;
       document.getElementById('theoryBlock').innerHTML = `<h4>${t.title}</h4><ul>${t.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
     }
 
@@ -203,7 +244,7 @@
           document.getElementById('retryDesc').textContent = `Повтори ${mistakesCount} помилок`;
         }
       } else {
-        document.getElementById('loginArea').innerHTML = '<p style="margin-bottom:15px;color:var(--text-muted);">Увійди, щоб зберегти прогрес</p><div id="googleBtn" style="display:flex;justify-content:center;"></div>';
+        document.getElementById('loginArea').innerHTML = '<p style="margin-bottom:15px;color:var(--text);font-size:0.85em;letter-spacing:0.05em;">Увійди, щоб зберегти прогрес</p><div id="googleBtn" style="display:flex;justify-content:center;"></div>';
         Auth.init(() => location.reload());
         setTimeout(() => { Auth.renderButton('googleBtn'); Auth.prompt(); }, 200);
       }
@@ -263,12 +304,12 @@
     function showQuestion() {
       const q = preparedQuestions[currentQuestion];
       const total = preparedQuestions.length;
-      document.getElementById('questionNum').textContent = `Питання ${currentQuestion + 1} / ${total}`;
+      document.getElementById('questionNum').textContent = `ПИТАННЯ ${currentQuestion + 1} / ${total}`;
       document.getElementById('progressFill').style.width = `${(currentQuestion / total) * 100}%`;
-      
+
       const badges = { true_false: 'badge-tf', text_input: 'badge-input', matching: 'badge-matching', fill_blanks: 'badge-fill', ordering: 'badge-order' };
-      const labels = { true_false: 'Правда чи брехня', text_input: 'Введи відповідь', matching: 'Встанови відповідність', fill_blanks: 'Заповни пропуски', ordering: 'Розстав по черзі' };
-      
+      const labels = { true_false: 'ПРАВДА ЧИ БРЕХНЯ', text_input: 'ВВЕДИ ВІДПОВІДЬ', matching: 'ВСТАНОВИ ВІДПОВІДНІСТЬ', fill_blanks: 'ЗАПОВНИ ПРОПУСКИ', ordering: 'РОЗСТАВ ПО ЧЕРЗІ' };
+
       let badgeHtml = q.type ? `<span class="q-type-badge ${badges[q.type]}">${labels[q.type]}</span><br>` : '';
       document.getElementById('questionText').innerHTML = badgeHtml + q.question;
 
@@ -277,7 +318,7 @@
       optionsEl.innerHTML = '';
 
       if (q.type === 'text_input') {
-        optionsEl.innerHTML = `<div class="text-input-wrap"><input type="text" id="textAnswer" placeholder="Твоя відповідь..."><button class="btn-check" onclick="checkTextAnswer()">Перевірити</button></div><div id="correctAnswerShow"></div>`;
+        optionsEl.innerHTML = `<div class="text-input-wrap"><input type="text" id="textAnswer" placeholder="Твоя відповідь..."><button class="btn-check" onclick="checkTextAnswer()">ПЕРЕВІРИТИ</button></div><div id="correctAnswerShow"></div>`;
       } else if (q.type === 'matching') { renderMatching(q, optionsEl); }
       else if (q.type === 'fill_blanks') { renderFillBlanks(q, optionsEl); }
       else if (q.type === 'ordering') { renderOrdering(q, optionsEl); }
@@ -288,9 +329,9 @@
 
       document.getElementById('explanationBox').innerHTML = '';
       document.getElementById('nextBtnWrap').style.display = 'none';
-      if (quizMode === 'training') document.getElementById('hintArea').innerHTML = `<button class="theory-toggle" style="margin-top:10px" onclick="showHint()">💡 Підказка</button>`;
+      if (quizMode === 'training') document.getElementById('hintArea').innerHTML = `<button class="theory-toggle" style="margin-top:10px" onclick="showHint()">💡 ПІДКАЗКА</button>`;
       else document.getElementById('hintArea').innerHTML = '';
-      
+
       if (quizMode === 'blitz') { if (blitzInterval) clearInterval(blitzInterval); startBlitzTimer(); }
       setTimeout(() => renderMath(document.getElementById('quiz')), 10);
     }
@@ -304,7 +345,7 @@
     function showFeedback(isCorrect, explanation) {
       if (isCorrect) Sound.correct(); else Sound.wrong();
       const catMsg = isCorrect ? rand(correctCatMessages) : rand(wrongCatMessages);
-      document.getElementById('explanationBox').innerHTML = `<div class="explanation ${isCorrect ? 'correct-exp' : 'wrong-exp'}"><strong>${isCorrect ? '✓ Супер!' : '✗ Ой...'}</strong> ${explanation}</div><div class="cat-meme"><img src="${getCatUrl()}"><div class="cat-caption ${isCorrect ? 'correct-cat' : 'wrong-cat'}">${catMsg}</div></div>`;
+      document.getElementById('explanationBox').innerHTML = `<div class="explanation ${isCorrect ? 'correct-exp' : 'wrong-exp'}"><strong>${isCorrect ? '✓ СУПЕР!' : '✗ ОЙ...'}</strong> ${explanation}</div><div class="cat-meme"><img src="${getCatUrl()}"><div class="cat-caption ${isCorrect ? 'correct-cat' : 'wrong-cat'}">${catMsg}</div></div>`;
       document.getElementById('nextBtnWrap').style.display = 'block';
       lucide.createIcons();
       renderMath(document.getElementById('explanationBox'));
@@ -357,19 +398,19 @@
       Sound.complete();
       if (percentage >= 70) showConfetti();
 
-      let grade = percentage >= 90 ? 'Відмінно!' : percentage >= 70 ? 'Добре!' : percentage >= 50 ? 'Задовільно' : 'Спробуй ще!';
+      let grade = percentage >= 90 ? 'ВІДМІННО!' : percentage >= 70 ? 'ДОБРЕ!' : percentage >= 50 ? 'ЗАДОВІЛЬНО' : 'СПРОБУЙ ЩЕ!';
       resultsDiv.innerHTML = `
         <div class="score-circle"><span class="score-num">${score}/${total}</span><span class="score-label">${percentage}%</span></div>
         <div class="grade-text">${grade}</div>
         <div class="result-cat"><img src="${getCatUrl()}"></div>
         <div class="results-details">
-          <div class="detail-box"><div class="value">${score}</div><div class="label">Вірно</div></div>
-          <div class="detail-box"><div class="value">${total-score}</div><div class="label">Помилок</div></div>
-          <div class="detail-box"><div class="value">${percentage}%</div><div class="label">Успіх</div></div>
+          <div class="detail-box"><div class="value">${score}</div><div class="label">ВІРНО</div></div>
+          <div class="detail-box"><div class="value">${total-score}</div><div class="label">ПОМИЛОК</div></div>
+          <div class="detail-box"><div class="value">${percentage}%</div><div class="label">УСПІХ</div></div>
         </div>
         <div class="results-buttons">
-          <button class="btn btn-primary" onclick="location.reload()">Ще раз</button>
-          <a href="./" class="btn btn-secondary">До каталогу</a>
+          <button class="btn btn-primary" onclick="location.reload()">ЩЕ РАЗ</button>
+          <a href="./" class="btn btn-secondary">ДО КАТАЛОГУ</a>
         </div>
       `;
       lucide.createIcons();

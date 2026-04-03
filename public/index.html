@@ -3,37 +3,164 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Алгебра та початки аналізу — Квізи</title>
+  <title>ALGEBRA.SYS — Квіз-Платформа</title>
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#09090b">
+  <meta name="theme-color" content="#05050f">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Алгебра">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Алгебра</h1>
-      <p>Твій шлях до математичного дзену</p>
-      <div class="auth-area" id="authArea"></div>
-    </div>
 
-    <div class="card" style="text-align: center; border-radius: 32px;">
-      <img src="https://cataas.com/cat?t=welcome" alt="Welcome cat" id="catAvatar" style="width: 120px; height: 120px; border-radius: 30px; border: 2px solid var(--border-color); margin-bottom: 15px;" onerror="this.src='https://placekitten.com/160/160'">
-      <div style="font-size: 1.1em; font-weight: 600;">Мяу! Готовий підкорити нову тему?</div>
-      <div style="display: flex; justify-content: center; gap: 20px; margin-top: 15px;">
-        <a href="leaderboard.html" style="color: var(--accent-purple); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;"><i data-lucide="trophy" size="18"></i> Рейтинг</a>
-        <a href="my-results.html" style="color: var(--accent-purple); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 6px;"><i data-lucide="bar-chart-2" size="18"></i> Прогрес</a>
+  <!-- Decorative pixel background -->
+  <div class="pixel-bg"></div>
+
+  <!-- Corner brackets -->
+  <div class="corner-tl"></div>
+  <div class="corner-tr"></div>
+  <div class="corner-bl"></div>
+  <div class="corner-br"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="stripe-bar"></div>
+    <div class="container">
+      <div class="nav-inner">
+        <a href="./" class="nav-logo">
+          <div class="nav-logo-icon">Σ</div>
+          <div>
+            <span class="nav-logo-text">ALGEBRA.SYS</span>
+            <span class="nav-logo-sub">◈ SIGNAL GRAPHICS V2.0 ◈</span>
+          </div>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="./" class="active">КАТАЛОГ</a></li>
+          <li><a href="my-results.html">МОЇ РЕЗУЛЬТАТИ</a></li>
+          <li><a href="leaderboard.html">РЕЙТИНГ</a></li>
+          <li><a href="results.html">ДЛЯ ВЧИТЕЛЯ</a></li>
+        </ul>
+
+        <div id="authArea" class="nav-user"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <div class="container">
+
+    <!-- HERO section -->
+    <section class="hero">
+      <div class="hero-top">
+        <div class="hero-title-block">
+          <div class="hero-eyebrow">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <span class="sys-label">SYS // ALGEBRA QUIZ PLATFORM</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="holo-text">АЛГЕБРА</span>
+            <span class="title-line2">КВІЗ-ПЛАТФОРМА</span>
+            <span class="title-line3">◈ 10-й КЛАС // МАТЕМАТИКА // [READY] ◈</span>
+          </h1>
+
+          <p class="hero-desc">
+            [SYS_MSG] Ласкаво просимо // Активна сесія //
+            Підключення до бази знань... Твій прогрес синхронізується в реальному часі.
+          </p>
+        </div>
+
+        <!-- Stats panel -->
+        <div class="stats-panel">
+          <div class="stats-header">
+            <span class="stats-title">SYS_STATS</span>
+            <span class="sys-label lime">LIVE</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">КВІЗІВ</span>
+            <span class="stat-value cursor-blink" id="statTotal">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">ТЕМ</span>
+            <span class="stat-value cyan" id="statSections">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">ВИКОНАНО</span>
+            <span class="stat-value mag" id="statDone">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick stats chips -->
+      <div class="chips-row">
+        <div class="chip c-lime">
+          <span class="chip-icon">🏆</span>
+          <div class="chip-data">
+            <span class="chip-value" id="chipStreak">0</span>
+            <span class="chip-label">Днів поспіль</span>
+          </div>
+        </div>
+        <div class="chip c-cyan">
+          <span class="chip-icon">⚡</span>
+          <div class="chip-data">
+            <span class="chip-value" id="chipQuizzes">0</span>
+            <span class="chip-label">Квізів пройдено</span>
+          </div>
+        </div>
+        <div class="chip c-mag">
+          <span class="chip-icon">🎯</span>
+          <div class="chip-data">
+            <span class="chip-value" id="chipBest">—</span>
+            <span class="chip-label">Кращий результат</span>
+          </div>
+        </div>
+        <div class="chip c-purp">
+          <span class="chip-icon">🐱</span>
+          <div class="chip-data">
+            <span class="chip-value">10-А</span>
+            <span class="chip-label">Клас</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalog -->
+    <div id="catalog"></div>
+
+    <!-- CTA row -->
+    <div class="cta-row">
+      <div class="cta-card cta-lime">
+        <div class="cta-card-title">🏆 РЕЙТИНГ</div>
+        <div class="cta-card-text">Змагайся з однокласниками. Хто набере найбільше балів?</div>
+        <a href="leaderboard.html" class="cta-btn btn-lime">ПЕРЕГЛЯНУТИ</a>
+      </div>
+      <div class="cta-card cta-mag">
+        <div class="cta-card-title">📊 ДЛЯ ВЧИТЕЛЯ</div>
+        <div class="cta-card-text">Аналітика та результати всіх учнів у зручному дашборді.</div>
+        <a href="results.html" class="cta-btn btn-mag">УВІЙТИ</a>
       </div>
     </div>
 
-    <div id="catalog"></div>
+    <!-- System bar -->
+    <div class="system-bar">
+      <div class="sys-status">
+        <div class="live-dot"></div>
+        <span>ALGEBRA.SYS // ОНЛАЙН</span>
+      </div>
+      <div class="sys-right">
+        <span>10 КЛАС // 2024-2025</span>
+        <span style="color: var(--lime);">◈ SIGNAL GRAPHICS V2.0</span>
+      </div>
+    </div>
+
   </div>
 
   <script src="js/quizzes.js"></script>
@@ -43,21 +170,41 @@
   <script>
     lucide.createIcons();
 
+    // Color palette for sections
+    const colColors = ['col-lime', 'col-cyan', 'col-mag', 'col-purple'];
+    const colTags = {
+      'col-lime':   { color: 'lime',   label: 'ТЕМА' },
+      'col-cyan':   { color: 'cyan',   label: 'ТЕМА' },
+      'col-mag':    { color: 'mag',    label: 'ТЕМА' },
+      'col-purple': { color: 'purple', label: 'ТЕМА' },
+    };
+
     window.addEventListener('load', () => {
       const user = Auth.getUser();
       const authArea = document.getElementById('authArea');
       const streakData = JSON.parse(localStorage.getItem('quiz_streak') || '{"streak":0}');
-      const streakHtml = streakData.streak >= 2 ? `<div><span class="streak-bar">🔥 <strong>${streakData.streak} дні поспіль</strong></span></div>` : '';
+
+      // Update streak chip
+      document.getElementById('chipStreak').textContent = streakData.streak || 0;
 
       if (user) {
-        authArea.innerHTML = Auth.profileBadgeHTML(user) + streakHtml;
+        authArea.innerHTML = `
+          <div class="nav-avatar">${(user.name||'U')[0].toUpperCase()}</div>
+          <div class="nav-username">
+            ${user.name}
+            <span>УЧЕНЬ // 10-А</span>
+          </div>`;
+        if (streakData.streak >= 2) {
+          // streak shown in chip
+        }
       } else {
-        authArea.innerHTML = '<div id="googleBtn" style="display:flex;justify-content:center;"></div>' + streakHtml;
+        authArea.innerHTML = '<div id="googleBtn" style="display:flex;justify-content:center;"></div>';
         Auth.init(() => location.reload());
         setTimeout(() => { Auth.renderButton('googleBtn'); Auth.prompt(); }, 100);
       }
     });
 
+    // Build sections from QUIZZES
     const sections = {};
     QUIZZES.forEach(q => {
       const key = q.section;
@@ -65,12 +212,46 @@
       sections[key].quizzes.push(q);
     });
 
+    // Count stats
+    let totalDone = 0;
+    let bestPct = 0;
+    let totalCompleted = 0;
+    QUIZZES.forEach(q => {
+      const progress = JSON.parse(localStorage.getItem(`progress_${q.id}`) || 'null');
+      if (progress) {
+        totalDone++;
+        if (progress.percentage > bestPct) bestPct = progress.percentage;
+      }
+    });
+    const allDone = JSON.parse(localStorage.getItem('quiz_completed_count') || '0');
+
+    document.getElementById('statTotal').textContent = QUIZZES.length;
+    document.getElementById('statSections').textContent = Object.keys(sections).length;
+    document.getElementById('statDone').textContent = totalDone;
+    document.getElementById('chipQuizzes').textContent = totalDone;
+    document.getElementById('chipBest').textContent = bestPct > 0 ? bestPct + '%' : '—';
+
     const catalog = document.getElementById('catalog');
-    Object.keys(sections).sort((a, b) => a - b).forEach(secNum => {
+    const sectionKeys = Object.keys(sections).sort((a, b) => a - b);
+
+    sectionKeys.forEach((secNum, secIdx) => {
       const sec = sections[secNum];
+      const colClass = colColors[secIdx % colColors.length];
+      const tagInfo = colTags[colClass];
+
       const group = document.createElement('div');
       group.style.marginBottom = '40px';
-      group.innerHTML = `<div style="font-size: 0.9em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-purple); margin-bottom: 20px; display: flex; align-items: center; gap: 12px;">Розділ ${secNum}. ${sec.name} <div style="flex: 1; height: 1px; background: linear-gradient(to right, rgba(139, 92, 246, 0.3), transparent);"></div></div>`;
+
+      // Section header
+      group.innerHTML = `
+        <div class="sec-head">
+          <h2>
+            <span class="holo-text">РОЗДІЛ ${secNum}</span>
+          </h2>
+          <span style="font-family:'Share Tech Mono',monospace; font-size:0.75em; color:var(--text); letter-spacing:0.1em;">${sec.name}</span>
+          <div class="sec-line"></div>
+          <span class="sys-label">R-${secNum}</span>
+        </div>`;
 
       const grid = document.createElement('div');
       grid.className = 'quiz-grid';
@@ -78,10 +259,34 @@
       sec.quizzes.forEach(quiz => {
         const progress = JSON.parse(localStorage.getItem(`progress_${quiz.id}`) || 'null');
         const card = document.createElement('a');
-        card.className = 'quiz-card' + (progress ? ' done' : '');
+        card.className = `quiz-card ${colClass}` + (progress ? ' done' : '');
         card.href = `quiz.html?id=${quiz.id}`;
-        const doneBadge = progress ? `<span class="done-badge"><i data-lucide="check-circle-2" size="14"></i> ${progress.percentage}%</span>` : '';
-        card.innerHTML = `${doneBadge}<div class="quiz-icon">${quiz.icon}</div><h3>${quiz.title}</h3><p style="color: var(--text-muted); font-size: 0.95em; margin-bottom: 20px; flex-grow: 1;">${quiz.description}</p><div style="display: flex; align-items: center; gap: 16px; font-size: 0.85em; font-weight: 600; color: var(--text-muted);"><span><i data-lucide="help-circle" size="16" style="vertical-align:middle;margin-right:4px;"></i> ${quiz.questions.length} питань</span></div>`;
+
+        const doneBadge = progress
+          ? `<span class="done-badge">✓ ${progress.percentage}%</span>`
+          : '';
+
+        card.innerHTML = `
+          ${doneBadge}
+          <div class="card-glow"></div>
+          <div class="card-stripe"></div>
+          <div class="card-inner">
+            <div class="card-header">
+              <div class="card-icon-wrap">${quiz.icon}</div>
+              <div class="card-meta">
+                <span class="sys-label ${tagInfo.color}" style="font-size:0.6em;">${tagInfo.label}</span>
+              </div>
+            </div>
+            <div class="card-title">${quiz.title}</div>
+            <div class="card-desc">${quiz.description}</div>
+            <div class="card-footer">
+              <div class="card-tags">
+                <span class="ctag">${quiz.questions.length} питань</span>
+              </div>
+              <button class="card-btn">СТАРТ</button>
+            </div>
+          </div>`;
+
         grid.appendChild(card);
       });
 
@@ -91,9 +296,6 @@
     });
   </script>
 
-  <div style="text-align:center; padding: 40px 0;">
-    <a href="results.html" style="color: var(--text-muted); text-decoration:none; font-size:0.8em; opacity: 0.5;">Для вчителя</a>
-  </div>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
