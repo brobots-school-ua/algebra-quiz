@@ -235,5 +235,19 @@
     "mode": "exam",
     "timeSpent": 123,
     "date": "2026-04-03T14:10:03.936Z"
+  },
+  {
+    "id": 1776368033225,
+    "name": "Danylo Samedov",
+    "email": "112845@g.elearn.uz.zgora.pl",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocJjitShpXnseVjMlXOkky-TBR79BOkAXGSdv5SjoAvs1qPGog=s96-c",
+    "score": 6,
+    "total": 10,
+    "percentage": 60,
+    "quizId": "1-4-functions",
+    "quizTitle": "Функція. Область визначення та значень",
+    "mode": "blitz",
+    "timeSpent": 107,
+    "date": "2026-04-16T19:33:53.225Z"
   }
 ]
